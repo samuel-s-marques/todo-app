@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
+import 'package:todoapp/widgets/task_tile.dart';
 
 part 'main.g.dart';
 
@@ -19,7 +20,10 @@ class Task {
   @HiveField(2)
   bool isDone;
 
-  Task(this.name, this.description, this.isDone);
+  @HiveField(3)
+  DateTime creationDate;
+
+  Task(this.name, this.description, this.isDone, this.creationDate);
 }
 
 void main() async {
@@ -53,194 +57,136 @@ class MyHome extends StatefulWidget {
 
 class _MyHomeState extends State<MyHome> {
   final controller = SheetController();
-  bool isSelected = false;
-  List<int> selectedTiles = [];
-  var _temporaryBox;
-
-  void checkAndSelect(int index) {
-    if (selectedTiles.contains(index)) {
-      selectedTiles.remove(index);
-    } else {
-      selectedTiles.add(index);
-    }
-  }
-
-  void deleteTasks() async {
-    for (var index in selectedTiles) {
-      await _temporaryBox.deleteAt(index);
-    }
-
-    selectedTiles = [];
-  }
+  final TextEditingController _newTaskController = TextEditingController();
+  final TextEditingController _taskDetailsController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (selectedTiles.isNotEmpty) {
-          setState(() {
-            selectedTiles = [];
-          });
-        }
-        return false;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("To-Do App"),
-          actions: [
-            selectedTiles.isNotEmpty
-                ? IconButton(
-                    onPressed: () => deleteTasks(),
-                    icon: const Icon(Icons.delete_outlined))
-                : IconButton(
-                    icon: const Icon(Icons.settings_outlined), onPressed: () {})
-          ],
-        ),
-        body: ValueListenableBuilder(
-          valueListenable: Hive.box<Task>(tasksBoxName).listenable(),
-          builder: (BuildContext context, Box<Task> box, Widget? child) {
-            _temporaryBox = box;
 
-            if (box.values.isEmpty) {
-              return const Center(
-                child: Text("Sem tarefas"),
-              );
-            }
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("To-Do App"),
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.settings_outlined), onPressed: () {})
+        ],
+      ),
+      body: ValueListenableBuilder(
+        valueListenable: Hive.box<Task>(tasksBoxName).listenable(),
+        builder: (BuildContext context, Box<Task> box, Widget? child) {
+          if (box.values.isEmpty) {
+            return const Center(
+              child: Text("Sem tarefas"),
+            );
+          }
 
-            return Column(
-              children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: box.values.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Task? currentTask = box.getAt(index);
+          int doneTasks = box.values.where((task) => task.isDone).length;
+          int allTasks = box.values.length;
 
-                    return !currentTask!.isDone ? ListTile(
-                      selectedTileColor: Colors.grey.shade200,
-                      selected: selectedTiles.contains(index),
-                      onLongPress: () {
-                        setState(() {
-                          checkAndSelect(index);
-                        });
-                      },
-                      onTap: () {
-                        setState(() {
-                          if (selectedTiles.isNotEmpty) {
-                            checkAndSelect(index);
-                          }
-                        });
-                      },
-                      title: Text(currentTask.name),
-                      subtitle: currentTask.description.isNotEmpty
-                          ? Text(currentTask.description)
-                          : null,
-                      leading: IconButton(
+          /*
+          * TODO
+          * Merge the two listviews builder
+          */
+
+          return ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: [
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: allTasks,
+                itemBuilder: (BuildContext context, int index) {
+                  Task? currentTask = box.getAt(index);
+
+                  return !currentTask!.isDone
+                      ? TaskTile(
+                      index: index,
+                          title: currentTask.name,
+                          description: currentTask.description,
+                          date: currentTask.creationDate,
+                          isDone: currentTask.isDone,
                           onPressed: () {
-                            setState(() {
-                              if (selectedTiles.isNotEmpty) {
-                                checkAndSelect(index);
-                              } else {
-                                currentTask.isDone = !currentTask.isDone;
-                              }
-                            });
-                          },
-                          icon: selectedTiles.contains(index)
-                              ? const Icon(Icons.circle)
-                              : currentTask.isDone
-                                  ? const Icon(
-                                      Icons.check_circle_outline,
-                                      color: Colors.green,
-                                    )
-                                  : const Icon(Icons.circle_outlined)),
-                    ) : Container();
-                  },
-                ),
-                Divider(),
-                Row(
-                  children: const [
-                    Text("Tarefas completadas")
+                            currentTask.isDone = !currentTask.isDone;
+                            box.putAt(index, currentTask);
+                          }, tasksBox: box,
+                        )
+                      : Container();
+                },
+              ),
+              if (doneTasks > 0)
+                const Divider(),
+              if (doneTasks > 0)
+                Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Tarefas completadas",
+                      style: GoogleFonts.getFont(
+                        "Inter",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      "$doneTasks/$allTasks",
+                      style: GoogleFonts.getFont(
+                        "Inter",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                        color: Color(0xFFB9B9BE)
+                      ),
+                    ),
                   ],
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: box.values.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Task? currentTask = box.getAt(index);
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: allTasks,
+                itemBuilder: (BuildContext context, int index) {
+                  Task? currentTask = box.getAt(index);
 
-                    return currentTask!.isDone ? ListTile(
-                      selectedTileColor: Colors.grey.shade200,
-                      selected: selectedTiles.contains(index),
-                      onLongPress: () {
-                        setState(() {
-                          checkAndSelect(index);
-                        });
-                      },
-                      onTap: () {
-                        setState(() {
-                          if (selectedTiles.isNotEmpty) {
-                            checkAndSelect(index);
-                          }
-                        });
-                      },
-                      title: Text(currentTask.name),
-                      subtitle: currentTask.description.isNotEmpty
-                          ? Text(currentTask.description)
-                          : null,
-                      leading: IconButton(
+                  return currentTask!.isDone
+                      ? TaskTile(
+                          index: index,
+                          title: currentTask.name,
+                          description: currentTask.description,
+                          date: currentTask.creationDate,
+                          isDone: currentTask.isDone,
                           onPressed: () {
-                            setState(() {
-                              if (selectedTiles.isNotEmpty) {
-                                checkAndSelect(index);
-                              } else {
-                                currentTask.isDone = !currentTask.isDone;
-                              }
-                            });
-                          },
-                          icon: selectedTiles.contains(index)
-                              ? const Icon(Icons.circle)
-                              : currentTask.isDone
-                                  ? const Icon(
-                                      Icons.check_circle_outline,
-                                      color: Colors.green,
-                                    )
-                                  : const Icon(Icons.circle_outlined)),
-                    ) : Container();
-                  },
-                )
-              ],
-            );
-          },
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async => showBottomSheetDialog(context),
-          shape: const RoundedRectangleBorder(
-              side: BorderSide(color: Color(0xFF515CC6), width: 2),
-              borderRadius: BorderRadius.all(Radius.circular(50))),
-          backgroundColor: const Color(0xFF473FA0),
-          child: const Icon(Icons.add),
-        ),
+                            currentTask.isDone = !currentTask.isDone;
+                            box.putAt(index, currentTask);
+                          }, tasksBox: box,
+                        )
+                      : Container();
+                },
+              )
+            ],
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async => showBottomSheetDialog(context),
+        shape: const RoundedRectangleBorder(
+            side: BorderSide(color: Color(0xFF515CC6), width: 2),
+            borderRadius: BorderRadius.all(Radius.circular(50))),
+        backgroundColor: const Color(0xFF473FA0),
+        child: const Icon(Icons.add),
       ),
     );
   }
 
   Future<void> showBottomSheetDialog(BuildContext context) async {
-    TextEditingController _newTaskController = TextEditingController();
-    TextEditingController _taskDetailsController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     await showSlidingBottomSheet(context, builder: (context) {
       return SlidingSheetDialog(
         cornerRadius: 15,
+        color: const Color(0xFFFAFAFA),
         controller: controller,
         duration: const Duration(milliseconds: 500),
-        snapSpec: const SnapSpec(
-          snap: true,
-          initialSnap: 0.3,
-        ),
-        scrollSpec: const ScrollSpec(
-          showScrollbar: true,
-        ),
-        minHeight: 200,
         isDismissable: true,
         dismissOnBackdropTap: true,
         isBackdropInteractable: true,
@@ -306,8 +252,15 @@ class _MyHomeState extends State<MyHome> {
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       Box<Task> tasksBox = Hive.box<Task>(tasksBoxName);
-                      tasksBox.add(Task(_newTaskController.text.trim(),
-                          _taskDetailsController.text.trim(), false));
+                      tasksBox.add(Task(
+                        _newTaskController.text.trim(),
+                        _taskDetailsController.text.trim(),
+                        false,
+                        DateTime.now(),
+                      ));
+
+                      _newTaskController.text = "";
+                      _taskDetailsController.text = "";
                     }
                   },
                   child: Text(
