@@ -35,7 +35,8 @@ class _TaskTileState extends State<TaskTile> {
   final TextEditingController _newTaskController = TextEditingController();
   final TextEditingController _taskDetailsController = TextEditingController();
   final controller = SheetController();
-  DateFormat dateFormatter = DateFormat("d/M/y");
+  DateFormat dateTimeFormatter = DateFormat("yMd").add_jm();
+  DateFormat dateFormatter = DateFormat("yMd");
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +135,7 @@ class _TaskTileState extends State<TaskTile> {
                     maxLines: null,
                     textCapitalization: TextCapitalization.sentences,
                     style: GoogleFonts.getFont("Inter", fontSize: 16),
-                    autofocus: true,
+                    enabled: widget.isDone ? false : true,
                     decoration: const InputDecoration(
                       labelText: "Nova tarefa",
                       border: OutlineInputBorder(
@@ -151,6 +152,7 @@ class _TaskTileState extends State<TaskTile> {
                   TextFormField(
                     controller: _taskDetailsController,
                     maxLines: null,
+                    enabled: widget.isDone ? false : true,
                     style: GoogleFonts.getFont("Inter", fontSize: 16),
                     decoration: const InputDecoration(
                       labelText: "Detalhes",
@@ -162,7 +164,7 @@ class _TaskTileState extends State<TaskTile> {
                   Row(
                     children: [
                       Text(
-                        dateFormatter.format(widget.date),
+                        dateTimeFormatter.format(widget.date),
                         style: GoogleFonts.getFont(
                           "Inter",
                           color: Color(0xFFB9B9BE),
@@ -183,7 +185,7 @@ class _TaskTileState extends State<TaskTile> {
               SizedBox(
                 width: 120,
                 child: TextButton(
-                  onPressed: () {
+                  onPressed: !widget.isDone ? () {
                     if (formKey.currentState!.validate()) {
                       widget.tasksBox.putAt(
                         widget.index,
@@ -201,7 +203,7 @@ class _TaskTileState extends State<TaskTile> {
                         Navigator.pop(context);
                       });
                     }
-                  },
+                  } : null,
                   child: Text(
                     "Salvar",
                     style: GoogleFonts.getFont("Inter", fontSize: 18),
