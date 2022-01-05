@@ -13,6 +13,7 @@ dependencies:
   hive:
   hive_flutter:
   google_fonts:
+  intl:
 
 dev_dependencies:
   flutter_test:
