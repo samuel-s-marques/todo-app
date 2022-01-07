@@ -1,0 +1,27 @@
+CREATE TABLE folders (
+    id INT NOT NULL PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    colorHexCode INT,
+    iconCodePoint INT NOT NULL,
+    createdAt INT NOT NULL,
+    updatedAt INT NOT NULL,
+);
+
+CREATE TABLE tasks (
+    id INT NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    description TEXT,
+    isDone TINYINT NOT NULL DEFAULT 0,
+    folder_id INT NOT NULL,
+    createdAt INT NOT NULL,
+    updatedAt INT NOT NULL,
+    FOREIGN KEY (folder_id) REFERENCES folders (id) ON DELETE CASCADE
+);
+
+allFolders: SELECT * FROM folders;
+allTasks: SELECT * FROM tasks;
+getTasksById: SELECT * FROM tasks WHERE folder_id = :id;
+deleteTaskById: DELETE FROM tasks WHERE id = :id;
+deleteFolderById: DELETE FROM folders WHERE id = :id;
+createFolder: INSERT INTO folders (title, iconCodePoint, createdAt, updatedAt) VALUES (:title, :iconCodePoint, :createdAt, :updatedAt);
+createTask: INSERT INTO tasks (name, description, isDone, folder_id, createdAt, updatedAt) VALUES (:name, :description, :isDone, :folder_id, :createdAt, :updatedAt);
