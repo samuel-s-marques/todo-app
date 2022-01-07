@@ -48,10 +48,13 @@ class _TaskTileState extends State<TaskTile> {
     return ListTile(
       title: Text(
         widget.title,
-        style: GoogleFonts.getFont("Inter",
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-            color: widget.isDone ? const Color(0xFFB9B9BE) : Colors.black),
+        style: GoogleFonts.getFont(
+          "Inter",
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+          color: widget.isDone ? const Color(0xFFB9B9BE) : Colors.black,
+          decoration: widget.isDone ? TextDecoration.lineThrough : null,
+        ),
       ),
       subtitle: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,7 +77,8 @@ class _TaskTileState extends State<TaskTile> {
           ),
         ],
       ),
-      onTap: () => WidgetsBinding.instance!.addPostFrameCallback((timeStamp) => showBottomSheetDialog(context)),
+      onTap: () => WidgetsBinding.instance!
+          .addPostFrameCallback((timeStamp) => showBottomSheetDialog(context)),
       leading: IconButton(
           onPressed: widget.onPressed,
           icon: widget.isDone
@@ -167,7 +171,7 @@ class _TaskTileState extends State<TaskTile> {
                         dateTimeFormatter.format(widget.date),
                         style: GoogleFonts.getFont(
                           "Inter",
-                          color: Color(0xFFB9B9BE),
+                          color: const Color(0xFFB9B9BE),
                           fontWeight: FontWeight.w500,
                         ),
                       )
@@ -185,25 +189,28 @@ class _TaskTileState extends State<TaskTile> {
               SizedBox(
                 width: 120,
                 child: TextButton(
-                  onPressed: !widget.isDone ? () {
-                    if (formKey.currentState!.validate()) {
-                      widget.tasksBox.putAt(
-                        widget.index,
-                        Task(
-                          _newTaskController.text.trim(),
-                          _taskDetailsController.text.trim(),
-                          widget.isDone,
-                          widget.date,
-                        ),
-                      );
+                  onPressed: !widget.isDone
+                      ? () {
+                          if (formKey.currentState!.validate()) {
+                            widget.tasksBox.putAt(
+                              widget.index,
+                              Task(
+                                _newTaskController.text.trim(),
+                                _taskDetailsController.text.trim(),
+                                widget.isDone,
+                                widget.date,
+                              ),
+                            );
 
-                      SchedulerBinding.instance!.addPostFrameCallback((_) {
-                        _newTaskController.text = "";
-                        _taskDetailsController.text = "";
-                        Navigator.pop(context);
-                      });
-                    }
-                  } : null,
+                            SchedulerBinding.instance!
+                                .addPostFrameCallback((_) {
+                              _newTaskController.text = "";
+                              _taskDetailsController.text = "";
+                              Navigator.pop(context);
+                            });
+                          }
+                        }
+                      : null,
                   child: Text(
                     "Salvar",
                     style: GoogleFonts.getFont("Inter", fontSize: 18),
