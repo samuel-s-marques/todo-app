@@ -10,17 +10,21 @@ dependencies:
   flutter:
     sdk: flutter
   sliding_sheet: ^0.5.2
-  hive:
-  hive_flutter:
   google_fonts:
   intl:
+  flutter_iconpicker:
+  path_provider:
+  drift:
+  sqlite3_flutter_libs:
+  path:
+  provider: ^6.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  hive_generator:
-  build_runner:
   flutter_lints: ^1.0.0
+  drift_dev:
+  build_runner:
 
 flutter:
   uses-material-design: true
