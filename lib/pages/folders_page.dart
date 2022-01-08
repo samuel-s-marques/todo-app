@@ -27,15 +27,37 @@ class _FoldersPageState extends State<FoldersPage> {
       appBar: AppBar(
         title: const Text("To-Do App"),
         actions: [
-          IconButton(icon: const Icon(Icons.settings_outlined), onPressed: () {})
+          IconButton(
+              icon: const Icon(Icons.settings_outlined), onPressed: () {})
         ],
       ),
       body: StreamBuilder(
         stream: Provider.of<MyDb>(context).allFolders().watch(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: Text("Sem pastas"),
+          if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 16.0),
+                    child: Icon(
+                      Icons.create_new_folder_outlined,
+                      color: Color(0xFFB9B9BE),
+                      size: 48,
+                    ),
+                  ),
+                  Text(
+                    "Sem pastas",
+                    style: GoogleFonts.getFont(
+                      "Inter",
+                      color: const Color(0xFFB9B9BE),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 28
+                    ),
+                  )
+                ],
+              ),
             );
           }
 
@@ -49,11 +71,13 @@ class _FoldersPageState extends State<FoldersPage> {
               String title = folder.title;
               int colorHexCode = folder.colorHexCode ?? Colors.grey.value;
               int iconCodePoint = folder.iconCodePoint;
-              DateTime createdAt = DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000);
+              DateTime createdAt =
+                  DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000);
 
               return Card(
                 elevation: 2.0,
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: ListTile(
                   dense: true,
                   title: Text(
@@ -127,6 +151,11 @@ class _FoldersPageState extends State<FoldersPage> {
         isDismissable: true,
         dismissOnBackdropTap: true,
         isBackdropInteractable: true,
+        snapSpec: const SnapSpec(
+          snap: true,
+          snappings: [1.0],
+          positioning: SnapPositioning.relativeToSheetHeight,
+        ),
         onDismissPrevented: (backButton, backDrop) async {
           HapticFeedback.heavyImpact();
 
@@ -183,7 +212,8 @@ class _FoldersPageState extends State<FoldersPage> {
                   ),
                   OutlinedButton(
                     onPressed: () async {
-                      IconData? icon = await FlutterIconPicker.showIconPicker(context);
+                      IconData? icon =
+                          await FlutterIconPicker.showIconPicker(context);
 
                       setState(() {
                         _chosenIcon = icon!;
@@ -192,7 +222,10 @@ class _FoldersPageState extends State<FoldersPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(_chosenIcon, color: _chosenColor,),
+                        Icon(
+                          _chosenIcon,
+                          color: _chosenColor,
+                        ),
                         Text(
                           "Escolher ícone",
                           style: GoogleFonts.getFont("Inter", fontSize: 18),
@@ -207,8 +240,8 @@ class _FoldersPageState extends State<FoldersPage> {
                         showDialog(
                             context: context,
                             builder: (_) => AlertDialog(
-                                  title:
-                                      const Text("Escolha uma cor para a pasta"),
+                                  title: const Text(
+                                      "Escolha uma cor para a pasta"),
                                   content: SingleChildScrollView(
                                     child: BlockPicker(
                                         pickerColor: _chosenColor,
@@ -269,13 +302,13 @@ class _FoldersPageState extends State<FoldersPage> {
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     if (folder != null) {
-                      Provider.of<MyDb>(context, listen: false).updateFolderById(
-                        _newFolderController.text.trim(),
-                        _chosenColor.value,
-                        _chosenIcon.codePoint,
-                        DateTime.now().millisecondsSinceEpoch,
-                        folder.id
-                      );
+                      Provider.of<MyDb>(context, listen: false)
+                          .updateFolderById(
+                              _newFolderController.text.trim(),
+                              _chosenColor.value,
+                              _chosenIcon.codePoint,
+                              DateTime.now().millisecondsSinceEpoch,
+                              folder.id);
                     } else {
                       Provider.of<MyDb>(context, listen: false).createFolder(
                         _newFolderController.text.trim(),
