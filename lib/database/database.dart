@@ -15,9 +15,7 @@ LazyDatabase _openConnection() {
   });
 }
 
-@DriftDatabase(
-  include: {'tables.drift'}
-)
+@DriftDatabase(include: {'tables.drift'})
 class MyDb extends _$MyDb {
   MyDb() : super(_openConnection());
 
