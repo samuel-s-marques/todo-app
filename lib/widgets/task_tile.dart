@@ -2,29 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
-import 'package:todoapp/main.dart';
+import 'package:todoapp/database/database.dart';
 
 class TaskTile extends StatefulWidget {
-  int index;
-  String title;
-  String description;
-  DateTime date;
-  bool isDone = false;
-  VoidCallback? onPressed;
-  Box<Task> tasksBox;
+  Task task;
 
   TaskTile({
     Key? key,
-    required this.index,
-    required this.title,
-    required this.description,
-    required this.date,
-    required this.isDone,
-    required this.onPressed,
-    required this.tasksBox,
+    required this.task,
   }) : super(key: key);
 
   @override
@@ -32,28 +20,25 @@ class TaskTile extends StatefulWidget {
 }
 
 class _TaskTileState extends State<TaskTile> {
-  final TextEditingController _newTaskController = TextEditingController();
-  final TextEditingController _taskDetailsController = TextEditingController();
   final controller = SheetController();
   DateFormat dateTimeFormatter = DateFormat("yMd").add_jm();
   DateFormat dateFormatter = DateFormat("yMd");
 
   @override
   Widget build(BuildContext context) {
-    SchedulerBinding.instance!.addPostFrameCallback((_) {
-      _newTaskController.text = widget.title;
-      _taskDetailsController.text = widget.description;
-    });
+    bool isDone = widget.task.isDone == 0 ? false : true;
 
     return ListTile(
       title: Text(
-        widget.title,
+        widget.task.name,
         style: GoogleFonts.getFont(
           "Inter",
           fontSize: 18,
           fontWeight: FontWeight.w500,
-          color: widget.isDone ? const Color(0xFFB9B9BE) : Colors.black,
-          decoration: widget.isDone ? TextDecoration.lineThrough : null,
+          color:
+              widget.task.isDone == 1 ? const Color(0xFFB9B9BE) : Colors.black,
+          decoration:
+              widget.task.isDone == 1 ? TextDecoration.lineThrough : null,
         ),
       ),
       subtitle: Row(
@@ -61,27 +46,42 @@ class _TaskTileState extends State<TaskTile> {
         children: [
           Expanded(
             child: Text(
-              widget.description,
-              style: GoogleFonts.getFont("Inter",
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFFB9B9BE)),
+              widget.task.description ?? "",
+              style: GoogleFonts.getFont(
+                "Inter",
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: const Color(0xFFB9B9BE),
+              ),
             ),
           ),
           Text(
-            dateFormatter.format(widget.date),
-            style: GoogleFonts.getFont("Inter",
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: const Color(0xFFB9B9BE)),
+            dateFormatter.format(DateTime.fromMicrosecondsSinceEpoch(
+                widget.task.updatedAt * 1000)),
+            style: GoogleFonts.getFont(
+              "Inter",
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: const Color(0xFFB9B9BE),
+            ),
           ),
         ],
       ),
       onTap: () => WidgetsBinding.instance!
           .addPostFrameCallback((timeStamp) => showBottomSheetDialog(context)),
       leading: IconButton(
-          onPressed: widget.onPressed,
-          icon: widget.isDone
+          onPressed: () {
+            isDone = !isDone;
+
+            Provider.of<MyDb>(context, listen: false).updateTaskById(
+              widget.task.name,
+              widget.task.description,
+              isDone ? 1 : 0,
+              widget.task.updatedAt,
+              widget.task.id,
+            );
+          },
+          icon: widget.task.isDone == 1
               ? const Icon(
                   Icons.check_circle_outline,
                   color: Colors.green,
@@ -92,6 +92,11 @@ class _TaskTileState extends State<TaskTile> {
 
   Future<void> showBottomSheetDialog(BuildContext context) async {
     final formKey = GlobalKey<FormState>();
+    final TextEditingController _newTaskController = TextEditingController();
+    final TextEditingController _taskDetailsController = TextEditingController();
+
+    _newTaskController.text = widget.task.name;
+    _taskDetailsController.text = widget.task.description!;
 
     await showSlidingBottomSheet(context, builder: (context) {
       return SlidingSheetDialog(
@@ -124,7 +129,8 @@ class _TaskTileState extends State<TaskTile> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          widget.tasksBox.deleteAt(widget.index);
+                          Provider.of<MyDb>(context, listen: false)
+                              .deleteTaskById(widget.task.id);
                           Navigator.pop(context);
                         },
                         icon: const Icon(
@@ -139,7 +145,7 @@ class _TaskTileState extends State<TaskTile> {
                     maxLines: null,
                     textCapitalization: TextCapitalization.sentences,
                     style: GoogleFonts.getFont("Inter", fontSize: 16),
-                    enabled: widget.isDone ? false : true,
+                    enabled: widget.task.isDone == 1 ? false : true,
                     decoration: const InputDecoration(
                       labelText: "Nova tarefa",
                       border: OutlineInputBorder(
@@ -156,7 +162,7 @@ class _TaskTileState extends State<TaskTile> {
                   TextFormField(
                     controller: _taskDetailsController,
                     maxLines: null,
-                    enabled: widget.isDone ? false : true,
+                    enabled: widget.task.isDone == 1 ? false : true,
                     style: GoogleFonts.getFont("Inter", fontSize: 16),
                     decoration: const InputDecoration(
                       labelText: "Detalhes",
@@ -165,16 +171,25 @@ class _TaskTileState extends State<TaskTile> {
                       ),
                     ),
                   ),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        dateTimeFormatter.format(widget.date),
+                        "Criado em ${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(widget.task.createdAt * 1000))}",
                         style: GoogleFonts.getFont(
                           "Inter",
                           color: const Color(0xFFB9B9BE),
                           fontWeight: FontWeight.w500,
                         ),
-                      )
+                      ),
+                      Text(
+                        "Última modificação: ${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(widget.task.updatedAt * 1000))}",
+                        style: GoogleFonts.getFont(
+                          "Inter",
+                          color: const Color(0xFFB9B9BE),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ],
                   )
                 ],
@@ -189,25 +204,18 @@ class _TaskTileState extends State<TaskTile> {
               SizedBox(
                 width: 120,
                 child: TextButton(
-                  onPressed: !widget.isDone
+                  onPressed: widget.task.isDone == 0
                       ? () {
                           if (formKey.currentState!.validate()) {
-                            widget.tasksBox.putAt(
-                              widget.index,
-                              Task(
-                                _newTaskController.text.trim(),
-                                _taskDetailsController.text.trim(),
-                                widget.isDone,
-                                widget.date,
-                              ),
+                            Provider.of<MyDb>(context, listen: false).updateTaskById(
+                              _newTaskController.text.trim(),
+                              _taskDetailsController.text.trim(),
+                              widget.task.isDone,
+                              DateTime.now().millisecondsSinceEpoch,
+                              widget.task.id,
                             );
 
-                            SchedulerBinding.instance!
-                                .addPostFrameCallback((_) {
-                              _newTaskController.text = "";
-                              _taskDetailsController.text = "";
-                              Navigator.pop(context);
-                            });
+                            Navigator.pop(context);
                           }
                         }
                       : null,
