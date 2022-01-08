@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -35,10 +34,8 @@ class _TaskTileState extends State<TaskTile> {
           "Inter",
           fontSize: 18,
           fontWeight: FontWeight.w500,
-          color:
-              widget.task.isDone == 1 ? const Color(0xFFB9B9BE) : Colors.black,
-          decoration:
-              widget.task.isDone == 1 ? TextDecoration.lineThrough : null,
+          color: widget.task.isDone == 1 ? const Color(0xFFB9B9BE) : Colors.black,
+          decoration: widget.task.isDone == 1 ? TextDecoration.lineThrough : null,
         ),
       ),
       subtitle: Row(
@@ -88,6 +85,7 @@ class _TaskTileState extends State<TaskTile> {
                   color: Colors.green,
                 )
               : const Icon(Icons.circle_outlined)),
+      trailing: IconButton(onPressed: () => Provider.of<MyDb>(context, listen: false).deleteTaskById(widget.task.id), icon: Icon(Icons.close)),
     );
   }
 
@@ -131,8 +129,7 @@ class _TaskTileState extends State<TaskTile> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          Provider.of<MyDb>(context, listen: false)
-                              .deleteTaskById(widget.task.id);
+                          Provider.of<MyDb>(context, listen: false).deleteTaskById(widget.task.id);
                           Navigator.pop(context);
                         },
                         icon: const Icon(
