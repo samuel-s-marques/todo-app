@@ -24,18 +24,39 @@ class _TasksPageState extends State<TasksPage> {
       appBar: AppBar(
         title: const Text("To-Do App"),
         actions: [
-          IconButton(
-              icon: const Icon(Icons.settings_outlined), onPressed: () {})
+          IconButton(icon: const Icon(Icons.settings_outlined), onPressed: () {})
         ],
       ),
       body: StreamBuilder(
-        stream:
-            Provider.of<MyDb>(context).getTasksById(widget.folderId).watch(),
+        stream: Provider.of<MyDb>(context).getTasksById(widget.folderId).watch(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (!snapshot.hasData) {
-            return const Center(
-              child: Text("Sem tarefas"),
-            );
+            if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 16.0),
+                      child: Icon(
+                        Icons.add_task_outlined,
+                        color: Color(0xFFB9B9BE),
+                        size: 48,
+                      ),
+                    ),
+                    Text(
+                      "Sem tarefas",
+                      style: GoogleFonts.getFont(
+                          "Inter",
+                          color: const Color(0xFFB9B9BE),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 28
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }
           }
 
           return ListView.builder(
@@ -76,6 +97,11 @@ class _TasksPageState extends State<TasksPage> {
         isDismissable: true,
         dismissOnBackdropTap: true,
         isBackdropInteractable: true,
+        snapSpec: const SnapSpec(
+          snap: true,
+          snappings: [1.0],
+          positioning: SnapPositioning.relativeToSheetHeight,
+        ),
         onDismissPrevented: (backButton, backDrop) async {
           HapticFeedback.heavyImpact();
 
