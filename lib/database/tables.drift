@@ -1,7 +1,7 @@
 CREATE TABLE folders (
     id INT NOT NULL PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
-    colorHexCode INT,
+    colorHexCode INT DEFAULT 4288585374,
     iconCodePoint INT NOT NULL,
     createdAt INT NOT NULL,
     updatedAt INT NOT NULL,
@@ -23,7 +23,7 @@ allTasks: SELECT * FROM tasks;
 getTasksById: SELECT * FROM tasks WHERE folder_id = :id;
 deleteTaskById: DELETE FROM tasks WHERE id = :id;
 deleteFolderById: DELETE FROM folders WHERE id = :id;
-createFolder: INSERT INTO folders (title, iconCodePoint, createdAt, updatedAt) VALUES (:title, :iconCodePoint, :createdAt, :updatedAt);
+createFolder: INSERT INTO folders (title, colorHexCode, iconCodePoint, createdAt, updatedAt) VALUES (:title, :colorHexCode, :iconCodePoint, :createdAt, :updatedAt);
 createTask: INSERT INTO tasks (name, description, isDone, folder_id, createdAt, updatedAt) VALUES (:name, :description, :isDone, :folder_id, :createdAt, :updatedAt);
 updateTaskById: UPDATE tasks SET name = :name, description = :description, isDone = :isDone, updatedAt = :updatedAt WHERE id = :id;
-updateFolderById: UPDATE folders SET title = :title, iconCodePoint = :iconCodePoint, updatedAt = :updatedAt;
+updateFolderById: UPDATE folders SET title = :title, colorHexCode = :colorHexCode, iconCodePoint = :iconCodePoint, updatedAt = :updatedAt WHERE id = :id;
