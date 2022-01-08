@@ -735,6 +735,17 @@ abstract class _$MyDb extends GeneratedDatabase {
         }).map(tasks.mapFromRow);
   }
 
+  Selectable<Task> getDoneTasks(int id) {
+    return customSelect(
+        'SELECT * FROM tasks WHERE folder_id = :id ORDER BY isDone ASC, updatedAt ASC',
+        variables: [
+          Variable<int>(id)
+        ],
+        readsFrom: {
+          tasks,
+        }).map(tasks.mapFromRow);
+  }
+
   Future<int> deleteTaskById(int id) {
     return customUpdate(
       'DELETE FROM tasks WHERE id = :id',
