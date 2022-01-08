@@ -21,6 +21,7 @@ CREATE TABLE tasks (
 allFolders: SELECT * FROM folders;
 allTasks: SELECT * FROM tasks;
 getTasksById: SELECT * FROM tasks WHERE folder_id = :id;
+getDoneTasks: SELECT * FROM tasks WHERE folder_id = :id ORDER BY isDone ASC, updatedAt ASC;
 deleteTaskById: DELETE FROM tasks WHERE id = :id;
 deleteFolderById: DELETE FROM folders WHERE id = :id;
 createFolder: INSERT INTO folders (title, colorHexCode, iconCodePoint, createdAt, updatedAt) VALUES (:title, :colorHexCode, :iconCodePoint, :createdAt, :updatedAt);
