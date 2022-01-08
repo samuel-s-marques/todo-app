@@ -49,12 +49,10 @@ class _FoldersPageState extends State<FoldersPage> {
                   ),
                   Text(
                     "Sem pastas",
-                    style: GoogleFonts.getFont(
-                      "Inter",
-                      color: const Color(0xFFB9B9BE),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 28
-                    ),
+                    style: GoogleFonts.getFont("Inter",
+                        color: const Color(0xFFB9B9BE),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 28),
                   )
                 ],
               ),
@@ -71,8 +69,8 @@ class _FoldersPageState extends State<FoldersPage> {
               String title = folder.title;
               int colorHexCode = folder.colorHexCode ?? Colors.grey.value;
               int iconCodePoint = folder.iconCodePoint;
-              DateTime createdAt =
-                  DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000);
+              DateTime createdAt = DateTime.fromMicrosecondsSinceEpoch(
+                  folder.createdAt * 1000);
 
               return Card(
                 elevation: 2.0,
@@ -108,7 +106,8 @@ class _FoldersPageState extends State<FoldersPage> {
                   ),
                   trailing: IconButton(
                     onPressed: () {
-                      showBottomSheetDialog(context: context, folder: folder);
+                      showBottomSheetDialog(
+                          context: context, folder: folder);
                     },
                     icon: const Icon(Icons.more_vert),
                   ),
@@ -190,48 +189,48 @@ class _FoldersPageState extends State<FoldersPage> {
                         )
                       ],
                     ),
-                  TextFormField(
-                    controller: _newFolderController,
-                    maxLines: null,
-                    textCapitalization: TextCapitalization.sentences,
-                    style: GoogleFonts.getFont("Inter", fontSize: 16),
-                    autofocus: folder != null ? false : true,
-                    decoration: InputDecoration(
-                      labelText:
-                          folder != null ? "Modificar pasta" : "Nova pasta",
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Este campo é necessário';
-                      }
-                      return null;
-                    },
-                  ),
-                  OutlinedButton(
-                    onPressed: () async {
-                      IconData? icon =
-                          await FlutterIconPicker.showIconPicker(context);
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      IconButton(
+                        onPressed: () async {
+                          IconData? icon =
+                              await FlutterIconPicker.showIconPicker(context);
 
-                      setState(() {
-                        _chosenIcon = icon!;
-                      });
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(
+                          setState(() {
+                            _chosenIcon = icon!;
+                          });
+                        },
+                        icon: Icon(
                           _chosenIcon,
                           color: _chosenColor,
                         ),
-                        Text(
-                          "Escolher ícone",
-                          style: GoogleFonts.getFont("Inter", fontSize: 18),
+                      ),
+                      Flexible(
+                        child: TextFormField(
+                          controller: _newFolderController,
+                          maxLines: null,
+                          textCapitalization: TextCapitalization.sentences,
+                          style: GoogleFonts.getFont("Inter", fontSize: 16),
+                          autofocus: folder != null ? false : true,
+                          decoration: InputDecoration(
+                            labelText: folder != null
+                                ? "Modificar pasta"
+                                : "Nova pasta",
+                            border: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Este campo é necessário';
+                            }
+                            return null;
+                          },
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     width: double.infinity,
