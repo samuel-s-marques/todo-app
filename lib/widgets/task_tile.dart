@@ -44,19 +44,20 @@ class _TaskTileState extends State<TaskTile> {
       subtitle: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            child: Text(
-              widget.task.description ?? "",
-              style: GoogleFonts.getFont(
-                "Inter",
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: const Color(0xFFB9B9BE),
+          if (widget.task.description != null && widget.task.description!.isNotEmpty)
+            Expanded(
+              child: Text(
+                widget.task.description ?? "",
+                style: GoogleFonts.getFont(
+                  "Inter",
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFFB9B9BE),
+                ),
               ),
             ),
-          ),
           Text(
-            dateFormatter.format(DateTime.fromMicrosecondsSinceEpoch(
+            dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(
                 widget.task.updatedAt * 1000)),
             style: GoogleFonts.getFont(
               "Inter",
@@ -93,7 +94,8 @@ class _TaskTileState extends State<TaskTile> {
   Future<void> showBottomSheetDialog(BuildContext context) async {
     final formKey = GlobalKey<FormState>();
     final TextEditingController _newTaskController = TextEditingController();
-    final TextEditingController _taskDetailsController = TextEditingController();
+    final TextEditingController _taskDetailsController =
+        TextEditingController();
 
     _newTaskController.text = widget.task.name;
     _taskDetailsController.text = widget.task.description!;
@@ -207,7 +209,8 @@ class _TaskTileState extends State<TaskTile> {
                   onPressed: widget.task.isDone == 0
                       ? () {
                           if (formKey.currentState!.validate()) {
-                            Provider.of<MyDb>(context, listen: false).updateTaskById(
+                            Provider.of<MyDb>(context, listen: false)
+                                .updateTaskById(
                               _newTaskController.text.trim(),
                               _taskDetailsController.text.trim(),
                               widget.task.isDone,
