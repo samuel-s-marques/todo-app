@@ -28,35 +28,33 @@ class _TasksPageState extends State<TasksPage> {
         ],
       ),
       body: StreamBuilder(
-        stream: Provider.of<MyDb>(context).getTasksById(widget.folderId).watch(),
+        stream: Provider.of<MyDb>(context).getDoneTasks(widget.folderId).watch(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (!snapshot.hasData) {
-            if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 16.0),
-                      child: Icon(
-                        Icons.add_task_outlined,
-                        color: Color(0xFFB9B9BE),
-                        size: 48,
-                      ),
+          if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 16.0),
+                    child: Icon(
+                      Icons.add_task_outlined,
+                      color: Color(0xFFB9B9BE),
+                      size: 48,
                     ),
-                    Text(
-                      "Sem tarefas",
-                      style: GoogleFonts.getFont(
-                          "Inter",
-                          color: const Color(0xFFB9B9BE),
-                          fontWeight: FontWeight.w500,
-                          fontSize: 28
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }
+                  ),
+                  Text(
+                    "Sem tarefas",
+                    style: GoogleFonts.getFont(
+                        "Inter",
+                        color: const Color(0xFFB9B9BE),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 28
+                    ),
+                  )
+                ],
+              ),
+            );
           }
 
           return ListView.builder(
