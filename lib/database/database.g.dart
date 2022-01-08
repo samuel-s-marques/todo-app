@@ -252,7 +252,10 @@ class Folders extends Table with TableInfo<Folders, Folder> {
       const VerificationMeta('colorHexCode');
   late final GeneratedColumn<int?> colorHexCode = GeneratedColumn<int?>(
       'colorHexCode', aliasedName, true,
-      typeName: 'INTEGER', requiredDuringInsert: false, $customConstraints: '');
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      $customConstraints: 'DEFAULT 4288585374',
+      defaultValue: const CustomExpression<int>('4288585374'));
   final VerificationMeta _iconCodePointMeta =
       const VerificationMeta('iconCodePoint');
   late final GeneratedColumn<int?> iconCodePoint = GeneratedColumn<int?>(
@@ -750,12 +753,13 @@ abstract class _$MyDb extends GeneratedDatabase {
     );
   }
 
-  Future<int> createFolder(
-      String title, int iconCodePoint, int createdAt, int updatedAt) {
+  Future<int> createFolder(String title, int? colorHexCode, int iconCodePoint,
+      int createdAt, int updatedAt) {
     return customInsert(
-      'INSERT INTO folders (title, iconCodePoint, createdAt, updatedAt) VALUES (:title, :iconCodePoint, :createdAt, :updatedAt)',
+      'INSERT INTO folders (title, colorHexCode, iconCodePoint, createdAt, updatedAt) VALUES (:title, :colorHexCode, :iconCodePoint, :createdAt, :updatedAt)',
       variables: [
         Variable<String>(title),
+        Variable<int?>(colorHexCode),
         Variable<int>(iconCodePoint),
         Variable<int>(createdAt),
         Variable<int>(updatedAt)
@@ -796,13 +800,16 @@ abstract class _$MyDb extends GeneratedDatabase {
     );
   }
 
-  Future<int> updateFolderById(String title, int iconCodePoint, int updatedAt) {
+  Future<int> updateFolderById(String title, int? colorHexCode,
+      int iconCodePoint, int updatedAt, int id) {
     return customUpdate(
-      'UPDATE folders SET title = :title, iconCodePoint = :iconCodePoint, updatedAt = :updatedAt',
+      'UPDATE folders SET title = :title, colorHexCode = :colorHexCode, iconCodePoint = :iconCodePoint, updatedAt = :updatedAt WHERE id = :id',
       variables: [
         Variable<String>(title),
+        Variable<int?>(colorHexCode),
         Variable<int>(iconCodePoint),
-        Variable<int>(updatedAt)
+        Variable<int>(updatedAt),
+        Variable<int>(id)
       ],
       updates: {folders},
       updateKind: UpdateKind.update,
