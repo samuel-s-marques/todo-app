@@ -1,36 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
-import 'package:todoapp/widgets/task_tile.dart';
-
-part 'main.g.dart';
-
-const String tasksBoxName = "tasks";
-
-@HiveType(typeId: 0)
-class Task {
-  @HiveField(0)
-  String name;
-
-  @HiveField(1)
-  String description;
-
-  @HiveField(2)
-  bool isDone;
-
-  @HiveField(3)
-  DateTime creationDate;
-
-  Task(this.name, this.description, this.isDone, this.creationDate);
-}
+import 'package:todoapp/database/database.dart';
+import 'package:todoapp/pages/tasks_page.dart';
 
 void main() async {
-  await Hive.initFlutter();
-  Hive.registerAdapter<Task>(TaskAdapter());
-  await Hive.openBox<Task>(tasksBoxName);
-  runApp(const MyApp());
+  runApp(Provider<MyDb>(
+    create: (context) => MyDb(),
+    child: const MyApp(),
+    dispose: (context, db) => db.close(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -40,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'To-do app',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -57,11 +41,13 @@ class MyHome extends StatefulWidget {
 
 class _MyHomeState extends State<MyHome> {
   final controller = SheetController();
-  final TextEditingController _newTaskController = TextEditingController();
-  final TextEditingController _taskDetailsController = TextEditingController();
+  DateFormat dateTimeFormatter = DateFormat("yMd").add_jm();
+  DateFormat dateFormatter = DateFormat("yMd");
 
   @override
   Widget build(BuildContext context) {
+    var tall = Provider.of<MyDb>(context).allTasks();
+    tall.get().then((value) => print(value.length));
 
     return Scaffold(
       appBar: AppBar(
@@ -71,104 +57,69 @@ class _MyHomeState extends State<MyHome> {
               icon: const Icon(Icons.settings_outlined), onPressed: () {})
         ],
       ),
-      body: ValueListenableBuilder(
-        valueListenable: Hive.box<Task>(tasksBoxName).listenable(),
-        builder: (BuildContext context, Box<Task> box, Widget? child) {
-          if (box.values.isEmpty) {
+      body: StreamBuilder(
+        stream: Provider.of<MyDb>(context).allFolders().watch(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (!snapshot.hasData) {
             return const Center(
-              child: Text("Sem tarefas"),
+              child: Text("Sem pastas"),
             );
           }
 
-          int doneTasks = box.values.where((task) => task.isDone).length;
-          int allTasks = box.values.length;
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: snapshot.data.length,
+            itemBuilder: (BuildContext context, int index) {
+              Folder folder = snapshot.data[index];
 
-          /*
-          * TODO
-          * Merge the two listviews builder
-          */
+              int id = folder.id;
+              String title = folder.title;
+              int colorHexCode = folder.colorHexCode ?? 0xFFFFFFFF;
+              int iconCodePoint = folder.iconCodePoint;
+              DateTime createdAt =
+                  DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000);
 
-          return ListView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            children: [
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: allTasks,
-                itemBuilder: (BuildContext context, int index) {
-                  Task? currentTask = box.getAt(index);
-
-                  return !currentTask!.isDone
-                      ? TaskTile(
-                      index: index,
-                          title: currentTask.name,
-                          description: currentTask.description,
-                          date: currentTask.creationDate,
-                          isDone: currentTask.isDone,
-                          onPressed: () {
-                            currentTask.isDone = !currentTask.isDone;
-                            box.putAt(index, currentTask);
-                          }, tasksBox: box,
-                        )
-                      : Container();
-                },
-              ),
-              if (doneTasks > 0)
-                const Divider(),
-              if (doneTasks > 0)
-                Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Tarefas completadas",
-                      style: GoogleFonts.getFont(
-                        "Inter",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
+              return Card(
+                color: Color(colorHexCode),
+                child: ListTile(
+                  dense: true,
+                  title: Text(
+                    title,
+                    style: GoogleFonts.getFont(
+                      "Inter",
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
                     ),
-                    Text(
-                      "$doneTasks/$allTasks",
-                      style: GoogleFonts.getFont(
-                        "Inter",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        color: Color(0xFFB9B9BE)
-                      ),
+                  ),
+                  subtitle: Text(
+                    "Criado em ${dateFormatter.format(createdAt)}",
+                    style: GoogleFonts.getFont(
+                      "Inter",
+                      color: const Color(0xFFB9B9BE),
+                      fontWeight: FontWeight.w500,
                     ),
-                  ],
+                  ),
+                  leading: Icon(
+                      IconData(iconCodePoint, fontFamily: "MaterialIcons")),
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TasksPage(folderId: id))),
+                  trailing: IconButton(
+                    onPressed: () {
+                      showBottomSheetDialog(context: context, folder: folder);
+                    },
+                    icon: const Icon(Icons.more_vert),
+                  ),
                 ),
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: allTasks,
-                itemBuilder: (BuildContext context, int index) {
-                  Task? currentTask = box.getAt(index);
-
-                  return currentTask!.isDone
-                      ? TaskTile(
-                          index: index,
-                          title: currentTask.name,
-                          description: currentTask.description,
-                          date: currentTask.creationDate,
-                          isDone: currentTask.isDone,
-                          onPressed: () {
-                            currentTask.isDone = !currentTask.isDone;
-                            box.putAt(index, currentTask);
-                          }, tasksBox: box,
-                        )
-                      : Container();
-                },
-              )
-            ],
+              );
+            },
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async => showBottomSheetDialog(context),
+        onPressed: () async => showBottomSheetDialog(context: context),
         shape: const RoundedRectangleBorder(
             side: BorderSide(color: Color(0xFF515CC6), width: 2),
             borderRadius: BorderRadius.all(Radius.circular(50))),
@@ -178,8 +129,16 @@ class _MyHomeState extends State<MyHome> {
     );
   }
 
-  Future<void> showBottomSheetDialog(BuildContext context) async {
+  Future<void> showBottomSheetDialog(
+      {required BuildContext context, Folder? folder}) async {
     final formKey = GlobalKey<FormState>();
+    IconData _chosenIcon = Icons.folder;
+    final TextEditingController _newFolderController = TextEditingController();
+
+    if (folder != null) {
+      _newFolderController.text = folder.title;
+      _chosenIcon = IconData(folder.iconCodePoint, fontFamily: "MaterialIcons");
+    }
 
     await showSlidingBottomSheet(context, builder: (context) {
       return SlidingSheetDialog(
@@ -207,15 +166,33 @@ class _MyHomeState extends State<MyHome> {
               child: Wrap(
                 runSpacing: 15,
                 children: [
+                  if (folder != null)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Provider.of<MyDb>(context, listen: false)
+                                .deleteFolderById(folder.id);
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.delete_outline,
+                            color: Colors.red,
+                          ),
+                        )
+                      ],
+                    ),
                   TextFormField(
-                    controller: _newTaskController,
+                    controller: _newFolderController,
                     maxLines: null,
                     textCapitalization: TextCapitalization.sentences,
                     style: GoogleFonts.getFont("Inter", fontSize: 16),
                     autofocus: true,
-                    decoration: const InputDecoration(
-                      labelText: "Nova tarefa",
-                      border: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      labelText:
+                          folder != null ? "Modificar pasta" : "Nova pasta",
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                     ),
@@ -226,41 +203,79 @@ class _MyHomeState extends State<MyHome> {
                       return null;
                     },
                   ),
-                  TextFormField(
-                    controller: _taskDetailsController,
-                    maxLines: null,
-                    style: GoogleFonts.getFont("Inter", fontSize: 16),
-                    decoration: const InputDecoration(
-                      labelText: "Detalhes",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
+                  OutlinedButton(
+                    onPressed: () async {
+                      IconData? icon =
+                          await FlutterIconPicker.showIconPicker(context);
+
+                      setState(() {
+                        _chosenIcon = icon!;
+                      });
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(_chosenIcon),
+                        Text(
+                          "Escolher ícone",
+                          style: GoogleFonts.getFont("Inter", fontSize: 18),
+                        ),
+                      ],
                     ),
                   ),
+                  if (folder != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Criado em ${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000))}",
+                          style: GoogleFonts.getFont(
+                            "Inter",
+                            color: const Color(0xFFB9B9BE),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          "Última modificação: ${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.updatedAt * 1000))}",
+                          style: GoogleFonts.getFont(
+                            "Inter",
+                            color: const Color(0xFFB9B9BE),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    )
                 ],
               ),
             ),
           ),
         ),
         footerBuilder: (context, state) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(
-                width: 120,
-                child: TextButton(
+          return SizedBox(
+            width: 120,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      Box<Task> tasksBox = Hive.box<Task>(tasksBoxName);
-                      tasksBox.add(Task(
-                        _newTaskController.text.trim(),
-                        _taskDetailsController.text.trim(),
-                        false,
-                        DateTime.now(),
-                      ));
+                      if (folder != null) {
+                        Provider.of<MyDb>(context, listen: false)
+                            .updateFolderById(
+                          _newFolderController.text.trim(),
+                          _chosenIcon.codePoint,
+                          DateTime.now().millisecondsSinceEpoch,
+                        );
+                      } else {
+                        Provider.of<MyDb>(context, listen: false).createFolder(
+                          _newFolderController.text.trim(),
+                          _chosenIcon.codePoint,
+                          DateTime.now().millisecondsSinceEpoch,
+                          DateTime.now().millisecondsSinceEpoch,
+                        );
+                      }
 
-                      _newTaskController.text = "";
-                      _taskDetailsController.text = "";
+                      Navigator.pop(context);
                     }
                   },
                   child: Text(
@@ -268,8 +283,8 @@ class _MyHomeState extends State<MyHome> {
                     style: GoogleFonts.getFont("Inter", fontSize: 18),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       );
