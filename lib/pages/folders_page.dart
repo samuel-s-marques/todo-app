@@ -26,10 +26,7 @@ class _FoldersPageState extends State<FoldersPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("To-Do App"),
-        actions: [
-          IconButton(
-              icon: const Icon(Icons.settings_outlined), onPressed: () {})
-        ],
+        centerTitle: true,
       ),
       body: StreamBuilder(
         stream: Provider.of<MyDb>(context).allFolders().watch(),

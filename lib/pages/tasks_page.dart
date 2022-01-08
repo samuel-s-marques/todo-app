@@ -23,9 +23,7 @@ class _TasksPageState extends State<TasksPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("To-Do App"),
-        actions: [
-          IconButton(icon: const Icon(Icons.settings_outlined), onPressed: () {})
-        ],
+        centerTitle: true,
       ),
       body: StreamBuilder(
         stream: Provider.of<MyDb>(context).getDoneTasks(widget.folderId).watch(),
