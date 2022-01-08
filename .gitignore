@@ -25,3 +25,5 @@ doc/api/
 *.iws
 *.ipr
 *.iml
+.flutter-plugins
+.flutter-plugins-dependencies
