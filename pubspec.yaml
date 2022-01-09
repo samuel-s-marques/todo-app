@@ -19,6 +19,7 @@ dependencies:
   path: ^1.8.0
   provider: ^6.0.2
   flutter_colorpicker: ^1.0.3
+  settings_ui: ^2.0.0
   flutter_localizations:
     sdk: flutter
 
