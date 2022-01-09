@@ -24,6 +24,8 @@ getTasksById: SELECT * FROM tasks WHERE folder_id = :id;
 getDoneTasks: SELECT * FROM tasks WHERE folder_id = :id ORDER BY isDone ASC, updatedAt ASC;
 deleteTaskById: DELETE FROM tasks WHERE id = :id;
 deleteFolderById: DELETE FROM folders WHERE id = :id;
+deleteAllFolders: DELETE FROM folders;
+deleteAllTasks: DELETE FROM tasks;
 createFolder: INSERT INTO folders (title, colorHexCode, iconCodePoint, createdAt, updatedAt) VALUES (:title, :colorHexCode, :iconCodePoint, :createdAt, :updatedAt);
 createTask: INSERT INTO tasks (name, description, isDone, folder_id, createdAt, updatedAt) VALUES (:name, :description, :isDone, :folder_id, :createdAt, :updatedAt);
 updateTaskById: UPDATE tasks SET name = :name, description = :description, isDone = :isDone, updatedAt = :updatedAt WHERE id = :id;
