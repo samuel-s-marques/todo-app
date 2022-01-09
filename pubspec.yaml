@@ -21,6 +21,7 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   settings_ui: ^2.0.0
   shared_preferences: ^2.0.11
+  flutter_translate: ^3.0.1
   flutter_localizations:
     sdk: flutter
 
@@ -33,7 +34,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  generate: true
+  assets:
+    - assets/i18n/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
