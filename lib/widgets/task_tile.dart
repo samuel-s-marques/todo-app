@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:todoapp/database/database.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskTile extends StatefulWidget {
   Task task;
@@ -30,43 +31,28 @@ class _TaskTileState extends State<TaskTile> {
     return ListTile(
       title: Text(
         widget.task.name,
-        style: GoogleFonts.getFont(
-          "Inter",
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
-          color: widget.task.isDone == 1 ? const Color(0xFFB9B9BE) : Colors.black,
-          decoration: widget.task.isDone == 1 ? TextDecoration.lineThrough : null,
-        ),
+        style: widget.task.isDone == 1 ? Theme.of(context).textTheme.headline2 : Theme.of(context).textTheme.headline1,
       ),
       subtitle: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (widget.task.description != null && widget.task.description!.isNotEmpty)
+          if (widget.task.description != null &&
+              widget.task.description!.isNotEmpty)
             Expanded(
               child: Text(
                 widget.task.description ?? "",
-                style: GoogleFonts.getFont(
-                  "Inter",
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFFB9B9BE),
-                ),
-              ),
+                style: Theme.of(context).textTheme.subtitle1
+              )
             ),
           Text(
             dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(
                 widget.task.updatedAt * 1000)),
-            style: GoogleFonts.getFont(
-              "Inter",
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: const Color(0xFFB9B9BE),
-            ),
+              style: Theme.of(context).textTheme.subtitle1
           ),
         ],
       ),
-      onTap: () => WidgetsBinding.instance!
-          .addPostFrameCallback((timeStamp) => showBottomSheetDialog(context)),
+      onTap: () => WidgetsBinding.instance!.addPostFrameCallback(
+          (timeStamp) => showBottomSheetDialog(context)),
       leading: IconButton(
           onPressed: () {
             isDone = !isDone;
@@ -85,7 +71,10 @@ class _TaskTileState extends State<TaskTile> {
                   color: Colors.green,
                 )
               : const Icon(Icons.circle_outlined)),
-      trailing: IconButton(onPressed: () => Provider.of<MyDb>(context, listen: false).deleteTaskById(widget.task.id), icon: Icon(Icons.close)),
+      trailing: IconButton(
+          onPressed: () => Provider.of<MyDb>(context, listen: false)
+              .deleteTaskById(widget.task.id),
+          icon: const Icon(Icons.close)),
     );
   }
 
@@ -100,7 +89,6 @@ class _TaskTileState extends State<TaskTile> {
 
     await showSlidingBottomSheet(context, builder: (context) {
       return SlidingSheetDialog(
-        color: const Color(0xFFFAFAFA),
         cornerRadius: 15,
         controller: controller,
         duration: const Duration(milliseconds: 500),
@@ -129,7 +117,8 @@ class _TaskTileState extends State<TaskTile> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          Provider.of<MyDb>(context, listen: false).deleteTaskById(widget.task.id);
+                          Provider.of<MyDb>(context, listen: false)
+                              .deleteTaskById(widget.task.id);
                           Navigator.pop(context);
                         },
                         icon: const Icon(
@@ -143,17 +132,17 @@ class _TaskTileState extends State<TaskTile> {
                     controller: _newTaskController,
                     maxLines: null,
                     textCapitalization: TextCapitalization.sentences,
-                    style: GoogleFonts.getFont("Inter", fontSize: 16),
+                    style: Theme.of(context).textTheme.bodyText1,
                     enabled: widget.task.isDone == 1 ? false : true,
-                    decoration: const InputDecoration(
-                      labelText: "Nova tarefa",
-                      border: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.newTask,
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Este campo é necessário';
+                        return AppLocalizations.of(context)!.requiredField;
                       }
                       return null;
                     },
@@ -162,10 +151,10 @@ class _TaskTileState extends State<TaskTile> {
                     controller: _taskDetailsController,
                     maxLines: null,
                     enabled: widget.task.isDone == 1 ? false : true,
-                    style: GoogleFonts.getFont("Inter", fontSize: 16),
-                    decoration: const InputDecoration(
-                      labelText: "Detalhes",
-                      border: OutlineInputBorder(
+                      style: Theme.of(context).textTheme.bodyText1,
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.details,
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                     ),
@@ -174,7 +163,7 @@ class _TaskTileState extends State<TaskTile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Criado em ${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(widget.task.createdAt * 1000))}",
+                        "${AppLocalizations.of(context)!.createdAt}${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(widget.task.createdAt * 1000))}",
                         style: GoogleFonts.getFont(
                           "Inter",
                           color: const Color(0xFFB9B9BE),
@@ -182,7 +171,7 @@ class _TaskTileState extends State<TaskTile> {
                         ),
                       ),
                       Text(
-                        "Última modificação: ${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(widget.task.updatedAt * 1000))}",
+                        "${AppLocalizations.of(context)!.updatedAt}${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(widget.task.updatedAt * 1000))}",
                         style: GoogleFonts.getFont(
                           "Inter",
                           color: const Color(0xFFB9B9BE),
@@ -220,7 +209,7 @@ class _TaskTileState extends State<TaskTile> {
                         }
                       : null,
                   child: Text(
-                    "Salvar",
+                    AppLocalizations.of(context)!.save,
                     style: GoogleFonts.getFont("Inter", fontSize: 18),
                   ),
                 ),
