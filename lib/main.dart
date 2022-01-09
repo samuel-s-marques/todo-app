@@ -5,6 +5,8 @@ import 'package:todoapp/database/database.dart';
 import 'package:todoapp/pages/folders_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todoapp/pages/settings_page.dart';
+import 'package:todoapp/pages/tasks_page.dart';
 
 void main() async {
   runApp(Provider<MyDb>(
@@ -95,7 +97,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.system,
-      home: const FoldersPage(),
+      initialRoute: "/folders",
+      routes: {
+        "/folders": (context) => const FoldersPage(),
+        "/tasks": (context) => const TasksPage(),
+        "/settings": (context) => const SettingsPage()
+      },
     );
   }
 }
