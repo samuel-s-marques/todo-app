@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:todoapp/database/database.dart';
 import 'package:todoapp/widgets/task_tile.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TasksPage extends StatefulWidget {
   const TasksPage({Key? key, required this.folderId}) : super(key: key);
@@ -42,7 +43,7 @@ class _TasksPageState extends State<TasksPage> {
                     ),
                   ),
                   Text(
-                    "Sem tarefas",
+                    AppLocalizations.of(context)!.noTasks,
                     style: GoogleFonts.getFont(
                         "Inter",
                         color: const Color(0xFFB9B9BE),
@@ -121,15 +122,15 @@ class _TasksPageState extends State<TasksPage> {
                     textCapitalization: TextCapitalization.sentences,
                     style: GoogleFonts.getFont("Inter", fontSize: 16),
                     autofocus: true,
-                    decoration: const InputDecoration(
-                      labelText: "Nova tarefa",
-                      border: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.newTask,
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Este campo é necessário';
+                        return AppLocalizations.of(context)!.requiredField;
                       }
                       return null;
                     },
@@ -138,9 +139,9 @@ class _TasksPageState extends State<TasksPage> {
                     controller: _taskDetailsController,
                     maxLines: null,
                     style: GoogleFonts.getFont("Inter", fontSize: 16),
-                    decoration: const InputDecoration(
-                      labelText: "Detalhes",
-                      border: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.details,
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                     ),
@@ -172,7 +173,7 @@ class _TasksPageState extends State<TasksPage> {
                     }
                   },
                   child: Text(
-                    "Salvar",
+                    AppLocalizations.of(context)!.save,
                     style: GoogleFonts.getFont("Inter", fontSize: 18),
                   ),
                 ),

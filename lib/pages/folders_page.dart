@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:todoapp/database/database.dart';
 import 'package:todoapp/pages/tasks_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FoldersPage extends StatefulWidget {
   const FoldersPage({Key? key}) : super(key: key);
@@ -45,7 +46,7 @@ class _FoldersPageState extends State<FoldersPage> {
                     ),
                   ),
                   Text(
-                    "Sem pastas",
+                    AppLocalizations.of(context)!.noFolders,
                     style: GoogleFonts.getFont("Inter",
                         color: const Color(0xFFB9B9BE),
                         fontWeight: FontWeight.w500,
@@ -85,7 +86,7 @@ class _FoldersPageState extends State<FoldersPage> {
                     ),
                   ),
                   subtitle: Text(
-                    "Criado em ${dateFormatter.format(createdAt)}",
+                    "${AppLocalizations.of(context)!.createdAt}${dateFormatter.format(createdAt)}",
                     style: GoogleFonts.getFont(
                       "Inter",
                       color: const Color(0xFFB9B9BE),
@@ -191,8 +192,7 @@ class _FoldersPageState extends State<FoldersPage> {
                     children: [
                       IconButton(
                         onPressed: () async {
-                          IconData? icon =
-                              await FlutterIconPicker.showIconPicker(context);
+                          IconData? icon = await FlutterIconPicker.showIconPicker(context);
 
                           setState(() {
                             _chosenIcon = icon!;
@@ -212,8 +212,8 @@ class _FoldersPageState extends State<FoldersPage> {
                           autofocus: folder != null ? false : true,
                           decoration: InputDecoration(
                             labelText: folder != null
-                                ? "Modificar pasta"
-                                : "Nova pasta",
+                                ? AppLocalizations.of(context)!.modifyFolder
+                                : AppLocalizations.of(context)!.newFolder,
                             border: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)),
@@ -221,7 +221,7 @@ class _FoldersPageState extends State<FoldersPage> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Este campo é necessário';
+                              return AppLocalizations.of(context)!.requiredField;
                             }
                             return null;
                           },
@@ -236,8 +236,7 @@ class _FoldersPageState extends State<FoldersPage> {
                         showDialog(
                             context: context,
                             builder: (_) => AlertDialog(
-                                  title: const Text(
-                                      "Escolha uma cor para a pasta"),
+                                  title: Text(AppLocalizations.of(context)!.chooseColor),
                                   content: SingleChildScrollView(
                                     child: BlockPicker(
                                         pickerColor: _chosenColor,
@@ -252,12 +251,13 @@ class _FoldersPageState extends State<FoldersPage> {
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        child: const Text("Escolher"))
+                                        child: Text(AppLocalizations.of(context)!.choose),
+                                    )
                                   ],
                                 ));
                       },
                       child: Text(
-                        "Escolher cor",
+                        AppLocalizations.of(context)!.saveColor,
                         style: GoogleFonts.getFont("Inter", fontSize: 18),
                       ),
                     ),
@@ -267,7 +267,7 @@ class _FoldersPageState extends State<FoldersPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Criado em ${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000))}",
+                          "${AppLocalizations.of(context)!.createdAt}${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000))}",
                           style: GoogleFonts.getFont(
                             "Inter",
                             color: const Color(0xFFB9B9BE),
@@ -275,7 +275,7 @@ class _FoldersPageState extends State<FoldersPage> {
                           ),
                         ),
                         Text(
-                          "Última modificação: ${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.updatedAt * 1000))}",
+                          "${AppLocalizations.of(context)!.updatedAt}${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.updatedAt * 1000))}",
                           style: GoogleFonts.getFont(
                             "Inter",
                             color: const Color(0xFFB9B9BE),
@@ -319,7 +319,7 @@ class _FoldersPageState extends State<FoldersPage> {
                   }
                 },
                 child: Text(
-                  "Salvar",
+                  AppLocalizations.of(context)!.save,
                   style: GoogleFonts.getFont("Inter", fontSize: 18),
                 ),
               ),
