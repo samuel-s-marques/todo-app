@@ -1,0 +1,55 @@
+{
+  "tasks_page": {
+    "no_tasks": "Sem tarefas",
+    "new_task": "Nova tarefa",
+    "modify_task": "Modificar tarefa",
+    "details": "Detalhes"
+  },
+  "folders_page": {
+    "no_folders": "Sem pastas",
+    "new_folder": "Nova pasta",
+    "modify_folder": "Modificar pasta",
+    "choose_color": "Escolha a cor da pasta",
+    "choose": "Escolher",
+    "save_color": "Salvar cor"
+  },
+  "settings_page": {
+    "settings_section": {
+      "title": "Configurações",
+      "language": "Linguagem",
+      "hour_pattern": "Padrão de hora",
+      "light_theme": "Tema claro"
+    },
+    "misc_section": {
+      "title": "Misc.",
+      "about": "Sobre",
+      "license": "Licença",
+      "terms_of_use": "Termos of use"
+    },
+    "danger_section": {
+      "title": "Perigo",
+      "delete_all": "Deletar todos os dados",
+      "are_you_sure": "Tem certeza que quer deletar todos os dados?",
+      "cancel": "Cancelar",
+      "delete": "Deletar"
+    }
+  },
+  "all_pages": {
+    "save": "Salvar",
+    "required_field": "Este campo é necessário",
+    "created_at": "Criado em {date}",
+    "updated_at": "Atualizado em {date}"
+  },
+  "language": {
+    "name": {
+      "en": "Inglês",
+      "pt": "Português",
+      "es": "Espanhol",
+      "ar": "Árabe"
+    },
+    "selection": {
+      "message": "Por favor selecione uma linguagem da lista",
+      "title": "Seleção de linguagem"
+    }
+  }
+}
