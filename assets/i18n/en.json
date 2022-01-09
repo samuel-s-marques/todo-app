@@ -1,0 +1,56 @@
+{
+  "tasks_page": {
+    "no_tasks": "No tasks",
+    "new_task": "New task",
+    "modify_task": "Modify task",
+    "details": "Details",
+    "required_field": "This field is required"
+  },
+  "folders_page": {
+    "no_folders": "No folders",
+    "new_folder": "New folder",
+    "modify_folder": "Modify folder",
+    "choose_color": "Choose the folder color",
+    "choose": "Choose",
+    "save_color": "Save color"
+  },
+  "settings_page": {
+    "settings_section": {
+      "title": "Settings",
+      "language": "Language",
+      "hour_pattern": "Hour pattern",
+      "light_theme": "Light theme"
+    },
+    "misc_section": {
+      "title": "Misc.",
+      "about": "About",
+      "license": "License",
+      "terms_of_use": "Terms of use"
+    },
+    "danger_section": {
+      "title": "Danger",
+      "delete_all": "Delete all data",
+      "are_you_sure": "Are you sure you want to delete all data?",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    }
+  },
+  "all_pages": {
+    "save": "Save",
+    "required_field": "This field is required",
+    "created_at": "Created at {date}",
+    "updated_at": "Updated at {date}"
+  },
+  "language": {
+    "name": {
+      "en": "English",
+      "pt": "Portuguese",
+      "es": "Spanish",
+      "ar": "Arabic"
+    },
+    "selection": {
+      "message": "Please select a language from the list",
+      "title": "Language Selection"
+    }
+  }
+}
