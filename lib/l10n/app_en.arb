@@ -1,0 +1,15 @@
+{
+  "noTasks": "No tasks",
+  "newTask": "New task",
+  "details": "Details",
+  "save": "Save",
+  "requiredField": "This field is required",
+  "noFolders": "No folders",
+  "createdAt": "Created at ",
+  "updatedAt": "Updated at ",
+  "modifyFolder": "Modify folder",
+  "newFolder": "New folder",
+  "chooseColor": "Choose a color to the folder",
+  "choose": "Choose",
+  "saveColor": "Save color"
+}
