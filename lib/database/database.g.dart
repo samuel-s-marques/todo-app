@@ -764,6 +764,24 @@ abstract class _$MyDb extends GeneratedDatabase {
     );
   }
 
+  Future<int> deleteAllFolders() {
+    return customUpdate(
+      'DELETE FROM folders',
+      variables: [],
+      updates: {folders},
+      updateKind: UpdateKind.delete,
+    );
+  }
+
+  Future<int> deleteAllTasks() {
+    return customUpdate(
+      'DELETE FROM tasks',
+      variables: [],
+      updates: {tasks},
+      updateKind: UpdateKind.delete,
+    );
+  }
+
   Future<int> createFolder(String title, int? colorHexCode, int iconCodePoint,
       int createdAt, int updatedAt) {
     return customInsert(
