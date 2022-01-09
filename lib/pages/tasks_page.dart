@@ -88,7 +88,6 @@ class _TasksPageState extends State<TasksPage> {
     await showSlidingBottomSheet(context, builder: (context) {
       return SlidingSheetDialog(
         cornerRadius: 15,
-        color: const Color(0xFFFAFAFA),
         controller: controller,
         duration: const Duration(milliseconds: 500),
         isDismissable: true,
@@ -120,7 +119,7 @@ class _TasksPageState extends State<TasksPage> {
                     controller: _newTaskController,
                     maxLines: null,
                     textCapitalization: TextCapitalization.sentences,
-                    style: GoogleFonts.getFont("Inter", fontSize: 16),
+                    style: Theme.of(context).textTheme.bodyText1,
                     autofocus: true,
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.newTask,
@@ -138,7 +137,7 @@ class _TasksPageState extends State<TasksPage> {
                   TextFormField(
                     controller: _taskDetailsController,
                     maxLines: null,
-                    style: GoogleFonts.getFont("Inter", fontSize: 16),
+                    style: Theme.of(context).textTheme.bodyText1,
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.details,
                       border: const OutlineInputBorder(
