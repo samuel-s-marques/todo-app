@@ -78,20 +78,11 @@ class _FoldersPageState extends State<FoldersPage> {
                   dense: true,
                   title: Text(
                     title,
-                    style: GoogleFonts.getFont(
-                      "Inter",
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
+                    style: Theme.of(context).textTheme.headline1
                   ),
                   subtitle: Text(
                     "${AppLocalizations.of(context)!.createdAt}${dateFormatter.format(createdAt)}",
-                    style: GoogleFonts.getFont(
-                      "Inter",
-                      color: const Color(0xFFB9B9BE),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: Theme.of(context).textTheme.subtitle1
                   ),
                   leading: Icon(
                     IconData(iconCodePoint, fontFamily: "MaterialIcons"),
@@ -142,7 +133,6 @@ class _FoldersPageState extends State<FoldersPage> {
     await showSlidingBottomSheet(context, builder: (context) {
       return SlidingSheetDialog(
         cornerRadius: 15,
-        color: const Color(0xFFFAFAFA),
         controller: controller,
         duration: const Duration(milliseconds: 500),
         isDismissable: true,
@@ -208,7 +198,7 @@ class _FoldersPageState extends State<FoldersPage> {
                           controller: _newFolderController,
                           maxLines: null,
                           textCapitalization: TextCapitalization.sentences,
-                          style: GoogleFonts.getFont("Inter", fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyText1,
                           autofocus: folder != null ? false : true,
                           decoration: InputDecoration(
                             labelText: folder != null
@@ -257,7 +247,7 @@ class _FoldersPageState extends State<FoldersPage> {
                                 ));
                       },
                       child: Text(
-                        AppLocalizations.of(context)!.saveColor,
+                        AppLocalizations.of(context)!.chooseColor,
                         style: GoogleFonts.getFont("Inter", fontSize: 18),
                       ),
                     ),
