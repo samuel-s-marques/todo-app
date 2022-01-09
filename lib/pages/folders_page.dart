@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:todoapp/database/database.dart';
+import 'package:todoapp/models/tasks_arguments.dart';
 import 'package:todoapp/pages/tasks_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -28,6 +29,9 @@ class _FoldersPageState extends State<FoldersPage> {
       appBar: AppBar(
         title: const Text("To-Do App"),
         centerTitle: true,
+        actions: [
+          IconButton(onPressed: () => Navigator.pushNamed(context, "/settings"), icon: Icon(Icons.settings))
+        ],
       ),
       body: StreamBuilder(
         stream: Provider.of<MyDb>(context).allFolders().watch(),
@@ -88,11 +92,7 @@ class _FoldersPageState extends State<FoldersPage> {
                     IconData(iconCodePoint, fontFamily: "MaterialIcons"),
                     color: Color(colorHexCode),
                   ),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TasksPage(folderId: id)),
-                  ),
+                  onTap: () => Navigator.pushNamed(context, "/tasks", arguments: TasksArguments(id)),
                   trailing: IconButton(
                     onPressed: () {
                       showBottomSheetDialog(
