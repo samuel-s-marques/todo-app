@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/database/database.dart';
 import 'package:todoapp/models/theme_model.dart';
 import 'package:todoapp/pages/folders_page.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todoapp/pages/languages_page.dart';
 import 'package:todoapp/pages/settings_page.dart';
 import 'package:todoapp/pages/tasks_page.dart';
+import 'package:todoapp/utils/translate_preferences.dart';
 
 void main() async {
-  runApp(Provider<MyDb>(
+  var delegate = await LocalizationDelegate.create(
+    fallbackLocale: 'en',
+    supportedLocales: ['en', 'pt'],
+    preferences: TranslatePreferences()
+  );
+
+  runApp(LocalizedApp(delegate, Provider<MyDb>(
     create: (context) => MyDb(),
     child: const MyApp(),
     dispose: (context, db) => db.close(),
-  ));
+  ),));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,22 +30,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var localizationDelegate = LocalizedApp.of(context).delegate;
+
     return ChangeNotifierProvider(
       create: (_) => ThemeModel(),
       child: Consumer<ThemeModel>(
         builder: (context, ThemeModel themeNotifier, child) {
           return MaterialApp(
             title: 'To-do app',
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
+            localizationsDelegates: [
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
+              localizationDelegate
             ],
-            supportedLocales: const [
-              Locale('en', ''),
-              Locale('pt', ''),
-            ],
+            supportedLocales: localizationDelegate.supportedLocales,
+            locale: localizationDelegate.currentLocale,
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primarySwatch: Colors.blue,
@@ -132,7 +140,8 @@ class MyApp extends StatelessWidget {
             routes: {
               "/folders": (context) => const FoldersPage(),
               "/tasks": (context) => const TasksPage(),
-              "/settings": (context) => const SettingsPage()
+              "/settings": (context) => const SettingsPage(),
+              "/languages": (context) => const LanguagesPage()
             },
           );
         },
