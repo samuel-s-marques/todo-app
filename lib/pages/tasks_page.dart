@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:todoapp/database/database.dart';
 import 'package:todoapp/models/tasks_arguments.dart';
 import 'package:todoapp/widgets/task_tile.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TasksPage extends StatefulWidget {
   const TasksPage({Key? key}) : super(key: key);
@@ -64,14 +64,14 @@ class _TasksPageState extends State<TasksPage> {
                       style: Theme.of(context).textTheme.bodyText1,
                       autofocus: true,
                       decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.newTask,
+                        labelText: translate("tasks_page.new_task"),
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!.requiredField;
+                          return translate("all_pages.required_field");
                         }
                         return null;
                       },
@@ -81,7 +81,7 @@ class _TasksPageState extends State<TasksPage> {
                       maxLines: null,
                       style: Theme.of(context).textTheme.bodyText1,
                       decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.details,
+                        labelText: translate("tasks_page.details"),
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
@@ -114,7 +114,7 @@ class _TasksPageState extends State<TasksPage> {
                       }
                     },
                     child: Text(
-                      AppLocalizations.of(context)!.save,
+                      translate("all_pages.save"),
                       style: GoogleFonts.getFont("Inter", fontSize: 18),
                     ),
                   ),
@@ -148,7 +148,7 @@ class _TasksPageState extends State<TasksPage> {
                     ),
                   ),
                   Text(
-                    AppLocalizations.of(context)!.noTasks,
+                    translate("tasks_page.no_tasks"),
                     style: GoogleFonts.getFont(
                         "Inter",
                         color: const Color(0xFFB9B9BE),
