@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:todoapp/database/database.dart';
 import 'package:todoapp/models/theme_model.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -19,8 +19,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Consumer<ThemeModel>(
       builder: (context, ThemeModel themeNotifier, child) {
         bool lightMode = !themeNotifier.isDark;
-
-        print(AppLocalizations.of(context)!.localeName);
+        var localizedDelegate = LocalizedApp.of(context).delegate;
 
         return Scaffold(
           appBar: AppBar(),
@@ -28,16 +27,19 @@ class _SettingsPageState extends State<SettingsPage> {
             darkTheme: SettingsThemeData(settingsListBackground: Theme.of(context).scaffoldBackgroundColor),
             sections: [
               SettingsSection(
-                title: Text('Configurações', style: Theme.of(context).textTheme.headline3),
+                title: Text(translate("settings_page.settings_section.title"), style: Theme.of(context).textTheme.headline3),
                 tiles: [
                   SettingsTile.navigation(
                     leading: const Icon(Icons.language_outlined),
-                    title: Text("Linguagem", style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
-                    value: Text("Inglês", style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),),
+                    title: Text(translate("settings_page.settings_section.language"), style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
+                    value: Text(translate("language.name.${localizedDelegate.currentLocale.languageCode}"), style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),),
+                    onPressed: (context) {
+                      Navigator.pushNamed(context, "/languages");
+                    },
                   ),
                   SettingsTile.navigation(
                     leading: const Icon(Icons.access_time_outlined),
-                    title: Text("Padrão de hora", style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
+                    title: Text(translate("settings_page.settings_section.hour_pattern"), style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
                     value: Text("24H", style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),),
                   ),
                   SettingsTile.switchTile(
@@ -46,48 +48,28 @@ class _SettingsPageState extends State<SettingsPage> {
                     onToggle: (bool value) {
                       themeNotifier.isDark = !themeNotifier.isDark;
                     },
-                    title: Text("Tema claro", style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
+                    title: Text(translate("settings_page.settings_section.light_theme"), style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
                   ),
                 ],
               ),
               SettingsSection(
-                title: Text(
-                  "Misc.",
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-                tiles: [
-                  SettingsTile.navigation(
-                    leading: const Icon(Icons.info_outline),
-                    title: Text("Sobre", style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
-                  ),
-                  SettingsTile.navigation(
-                    leading: const Icon(Icons.article_outlined),
-                    title: Text("Termos de uso", style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
-                  ),
-                  SettingsTile.navigation(
-                    leading: const Icon(Icons.copyright_outlined),
-                    title: Text("Licença", style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
-                  ),
-                ],
-              ),
-              SettingsSection(
-                title: Text("Perigo", style: Theme.of(context).textTheme.headline3,),
+                title: Text(translate("settings_page.danger_section.title"), style: Theme.of(context).textTheme.headline3,),
                 tiles: [
                   SettingsTile(
                     leading: const Icon(Icons.dangerous_outlined, color: Colors.redAccent,),
-                    title: Text("Apagar todos os dados", style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
+                    title: Text(translate("settings_page.danger_section.delete_all"), style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
                     onPressed: (context) {
                       showDialog(
                         context: context,
                         builder: (_) => AlertDialog(
-                          title: const Text("Tem certeza que quer deletar todos os dados?"),
+                          title: Text(translate("settings_page.danger_section.are_you_sure")),
                           actions: [
                             TextButton(
                               onPressed: () {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                "Cancelar",
+                                translate("settings_page.danger_section.cancel"),
                                 style: GoogleFonts.getFont(
                                   "Inter",
                                   fontWeight: FontWeight.w600,
@@ -105,7 +87,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                "Apagar",
+                                translate("settings_page.danger_section.delete"),
                                 style: GoogleFonts.getFont(
                                   "Inter",
                                   fontWeight: FontWeight.w600,
