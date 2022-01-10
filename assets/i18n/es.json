@@ -1,0 +1,52 @@
+{
+  "tasks_page": {
+    "no_tasks": "Sin tareas",
+    "new_task": "Nueva tarea",
+    "modify_task": "Modificar tarea",
+    "details": "Detalles"
+  },
+  "folders_page": {
+    "no_folders": "Sin carpetas",
+    "new_folder": "Nueva carpeta",
+    "modify_folder": "Modificar carpeta",
+    "choose_color": "Elija el color de la carpeta",
+    "choose": "Elegir",
+    "save_color": "Guardar color"
+  },
+  "settings_page": {
+    "settings_section": {
+      "title": "Ajustes",
+      "language": "Idioma",
+      "hour_pattern": "Formato de tiempo",
+      "light_theme": "Tema claro"
+    },
+    "danger_section": {
+      "title": "Peligro",
+      "delete_all": "Borrar todos los datos",
+      "are_you_sure": "Está seguro de que desea eliminar todos los datos?",
+      "cancel": "Cancelar",
+      "delete": "Borrar"
+    }
+  },
+  "all_pages": {
+    "save": "Guardar",
+    "required_field": "Este campo es obligatorio",
+    "created_at": "Creado el {date}",
+    "updated_at": "Actualizado el {date}"
+  },
+  "language": {
+    "name": {
+      "en": "Inglés",
+      "pt": "Portugués",
+      "es": "Español",
+      "ar": "Arábica"
+    },
+    "selection": {
+      "message": "Seleccione un idioma de la lista",
+      "title": "Selección de idioma"
+    },
+    "snackbar": {
+      "message": "La aplicación debe reiniciarse para aplicar estos cambios"
+    }
+  }
+}
