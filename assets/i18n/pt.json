@@ -17,14 +17,8 @@
     "settings_section": {
       "title": "Configurações",
       "language": "Linguagem",
-      "hour_pattern": "Padrão de hora",
+      "hour_pattern": "Formato de hora",
       "light_theme": "Tema claro"
-    },
-    "misc_section": {
-      "title": "Misc.",
-      "about": "Sobre",
-      "license": "Licença",
-      "terms_of_use": "Termos of use"
     },
     "danger_section": {
       "title": "Perigo",
@@ -50,6 +44,9 @@
     "selection": {
       "message": "Por favor selecione uma linguagem da lista",
       "title": "Seleção de linguagem"
+    },
+    "snackbar": {
+      "message": "O aplicativo precisa reiniciar para aplicar essas alterações"
     }
   }
 }

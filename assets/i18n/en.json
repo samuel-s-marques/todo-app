@@ -3,8 +3,7 @@
     "no_tasks": "No tasks",
     "new_task": "New task",
     "modify_task": "Modify task",
-    "details": "Details",
-    "required_field": "This field is required"
+    "details": "Details"
   },
   "folders_page": {
     "no_folders": "No folders",
@@ -18,14 +17,8 @@
     "settings_section": {
       "title": "Settings",
       "language": "Language",
-      "hour_pattern": "Hour pattern",
+      "hour_pattern": "Hour format",
       "light_theme": "Light theme"
-    },
-    "misc_section": {
-      "title": "Misc.",
-      "about": "About",
-      "license": "License",
-      "terms_of_use": "Terms of use"
     },
     "danger_section": {
       "title": "Danger",
@@ -51,6 +44,9 @@
     "selection": {
       "message": "Please select a language from the list",
       "title": "Language Selection"
+    },
+    "snackbar": {
+      "message": "The app needs to restart to apply these changes"
     }
   }
 }
