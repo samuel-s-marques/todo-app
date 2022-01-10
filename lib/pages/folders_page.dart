@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:todoapp/database/database.dart';
 import 'package:todoapp/models/tasks_arguments.dart';
-import 'package:todoapp/pages/tasks_page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FoldersPage extends StatefulWidget {
   const FoldersPage({Key? key}) : super(key: key);
@@ -30,7 +29,7 @@ class _FoldersPageState extends State<FoldersPage> {
         title: const Text("To-Do App"),
         centerTitle: true,
         actions: [
-          IconButton(onPressed: () => Navigator.pushNamed(context, "/settings"), icon: Icon(Icons.settings))
+          IconButton(onPressed: () => Navigator.pushNamed(context, "/settings"), icon: const Icon(Icons.settings))
         ],
       ),
       body: StreamBuilder(
@@ -50,7 +49,7 @@ class _FoldersPageState extends State<FoldersPage> {
                     ),
                   ),
                   Text(
-                    AppLocalizations.of(context)!.noFolders,
+                    translate("folders_page.no_folders"),
                     style: GoogleFonts.getFont("Inter",
                         color: const Color(0xFFB9B9BE),
                         fontWeight: FontWeight.w500,
@@ -71,8 +70,7 @@ class _FoldersPageState extends State<FoldersPage> {
               String title = folder.title;
               int colorHexCode = folder.colorHexCode ?? Colors.grey.value;
               int iconCodePoint = folder.iconCodePoint;
-              DateTime createdAt = DateTime.fromMicrosecondsSinceEpoch(
-                  folder.createdAt * 1000);
+              DateTime createdAt = DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000);
 
               return Card(
                 elevation: 2.0,
@@ -85,7 +83,7 @@ class _FoldersPageState extends State<FoldersPage> {
                     style: Theme.of(context).textTheme.headline1
                   ),
                   subtitle: Text(
-                    "${AppLocalizations.of(context)!.createdAt}${dateFormatter.format(createdAt)}",
+                    translate("all_pages.created_at", args: {'date': dateFormatter.format(createdAt)}),
                     style: Theme.of(context).textTheme.subtitle1
                   ),
                   leading: Icon(
@@ -117,8 +115,7 @@ class _FoldersPageState extends State<FoldersPage> {
     );
   }
 
-  Future<void> showBottomSheetDialog(
-      {required BuildContext context, Folder? folder}) async {
+  Future<void> showBottomSheetDialog({required BuildContext context, Folder? folder}) async {
     final formKey = GlobalKey<FormState>();
     IconData _chosenIcon = Icons.folder;
     Color _chosenColor = Colors.grey;
@@ -202,8 +199,8 @@ class _FoldersPageState extends State<FoldersPage> {
                           autofocus: folder != null ? false : true,
                           decoration: InputDecoration(
                             labelText: folder != null
-                                ? AppLocalizations.of(context)!.modifyFolder
-                                : AppLocalizations.of(context)!.newFolder,
+                                ? translate("folders_page.modify_folder")
+                                : translate("folders_page.new_folder"),
                             border: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)),
@@ -211,7 +208,7 @@ class _FoldersPageState extends State<FoldersPage> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!.requiredField;
+                              return translate("all_pages.required_field");
                             }
                             return null;
                           },
@@ -226,7 +223,7 @@ class _FoldersPageState extends State<FoldersPage> {
                         showDialog(
                             context: context,
                             builder: (_) => AlertDialog(
-                                  title: Text(AppLocalizations.of(context)!.chooseColor),
+                                  title: Text(translate("folders_page.choose_color")),
                                   content: SingleChildScrollView(
                                     child: BlockPicker(
                                         pickerColor: _chosenColor,
@@ -241,13 +238,13 @@ class _FoldersPageState extends State<FoldersPage> {
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        child: Text(AppLocalizations.of(context)!.choose),
+                                        child: Text(translate("folders_page.save_color")),
                                     )
                                   ],
                                 ));
                       },
                       child: Text(
-                        AppLocalizations.of(context)!.chooseColor,
+                        translate("folders_page.choose_color"),
                         style: GoogleFonts.getFont("Inter", fontSize: 18),
                       ),
                     ),
@@ -257,7 +254,7 @@ class _FoldersPageState extends State<FoldersPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${AppLocalizations.of(context)!.createdAt}${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000))}",
+                          translate("all_pages.created_at", args: {'date': dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000))}),
                           style: GoogleFonts.getFont(
                             "Inter",
                             color: const Color(0xFFB9B9BE),
@@ -265,7 +262,7 @@ class _FoldersPageState extends State<FoldersPage> {
                           ),
                         ),
                         Text(
-                          "${AppLocalizations.of(context)!.updatedAt}${dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.updatedAt * 1000))}",
+                          translate("all_pages.updated_at", args: {'date': dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.updatedAt * 1000))}),
                           style: GoogleFonts.getFont(
                             "Inter",
                             color: const Color(0xFFB9B9BE),
@@ -309,7 +306,7 @@ class _FoldersPageState extends State<FoldersPage> {
                   }
                 },
                 child: Text(
-                  AppLocalizations.of(context)!.save,
+                  translate('all_pages.save'),
                   style: GoogleFonts.getFont("Inter", fontSize: 18),
                 ),
               ),
