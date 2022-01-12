@@ -23,6 +23,7 @@ class _TaskTileState extends State<TaskTile> {
     bool isDone = widget.task.isDone == 0 ? false : true;
     LocalizationDelegate localizedDelegate = LocalizedApp.of(context).delegate;
     DateFormat dateTimeFormatter = DateFormat("yMd", localizedDelegate.currentLocale.languageCode).add_Hm();
+    DateFormat dateFormatter = DateFormat("yMd", localizedDelegate.currentLocale.languageCode);
 
     Future<void> showBottomSheetDialog(BuildContext context) async {
       final formKey = GlobalKey<FormState>();
@@ -191,7 +192,7 @@ class _TaskTileState extends State<TaskTile> {
                 child: Text(widget.task.description ?? "",
                     style: Theme.of(context).textTheme.subtitle1)),
           Text(
-              dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(
+              dateFormatter.format(DateTime.fromMicrosecondsSinceEpoch(
                   widget.task.updatedAt * 1000)),
               style: Theme.of(context).textTheme.subtitle1),
         ],
