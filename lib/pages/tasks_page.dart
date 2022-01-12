@@ -128,7 +128,7 @@ class _TasksPageState extends State<TasksPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("To-Do App"),
+        title: Text(args.folderName, overflow: TextOverflow.fade,),
         centerTitle: true,
       ),
       body: StreamBuilder(
