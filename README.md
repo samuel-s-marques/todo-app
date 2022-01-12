@@ -4,6 +4,7 @@ The classic to-do application where a user can write down all the things he want
 ## Table of Contents
 - [todo-app](#todo-app)
   - [Table of Contents](#table-of-contents)
+  - [Images](#images)
   - [Features](#features)
   - [To-Do](#to-do)
   - [My process](#my-process)
@@ -14,6 +15,14 @@ The classic to-do application where a user can write down all the things he want
     - [Building](#building)
   - [Pull requests](#pull-requests)
   - [Created & Maintained By](#created--maintained-by)
+
+## Images
+<p>
+    <img src="screenshots/image1.jpeg" width="400px" height="auto" hspace="5" vspace="20">
+    <img src="screenshots/image2.jpeg" width="400px" height="auto" hspace="5" vspace="20">
+    <img src="screenshots/image3.jpeg" width="400px" height="auto" hspace="5" vspace="20">
+    <img src="screenshots/image4.jpeg" width="400px" height="auto" hspace="5" vspace="20">
+</p>
 
 ## Features
 - ✅ Multi-language (JA, PT, EN, ES...)
@@ -35,19 +44,19 @@ The classic to-do application where a user can write down all the things he want
 - Shared Preferences
 
 ### Packages I'm using
-  sliding_sheet: [link](https://pub.dev/packages/sliding_sheet)
-  google_fonts: [link](https://pub.dev/packages/google_fonts)
-  intl: [link](https://pub.dev/packages/intl)
-  flutter_iconpicker: [link](https://pub.dev/packages/flutter_iconpicker)
-  path_provider: [link](https://pub.dev/packages/path_provider)
-  drift: [link](https://pub.dev/packages/drift)
-  sqlite3_flutter_libs: [link](https://pub.dev/packages/sqlite3_flutter_libs)
-  path: [link](https://pub.dev/packages/path)
-  provider: [link](https://pub.dev/packages/provider)
-  flutter_colorpicker: [link](https://pub.dev/packages/flutter_colorpicker)
-  settings_ui: [link](https://pub.dev/packages/settings_ui)
-  shared_preferences: [link](https://pub.dev/packages/shared_preferences)
-  flutter_translate: [link](https://pub.dev/packages/flutter_translate)
+- sliding_sheet: [link](https://pub.dev/packages/sliding_sheet)
+- google_fonts: [link](https://pub.dev/packages/google_fonts)
+- intl: [link](https://pub.dev/packages/intl)
+- flutter_iconpicker: [link](https://pub.dev/packages/flutter_iconpicker)
+- path_provider: [link](https://pub.dev/packages/path_provider)
+- drift: [link](https://pub.dev/packages/drift)
+- sqlite3_flutter_libs: [link](https://pub.dev/packages/sqlite3_flutter_libs)
+- path: [link](https://pub.dev/packages/path)
+- provider: [link](https://pub.dev/packages/provider)
+- flutter_colorpicker: [link](https://pub.dev/packages/flutter_colorpicker)
+- settings_ui: [link](https://pub.dev/packages/settings_ui)
+- shared_preferences: [link](https://pub.dev/packages/shared_preferences)
+- flutter_translate: [link](https://pub.dev/packages/flutter_translate)
 
 ## How to use
 ### Requirements
@@ -74,5 +83,7 @@ I welcome and encourage all pull requests. It usually will take me within 24-48 
 
 ## Created & Maintained By
 [Samuel Marques](https://github.com/samuel-s-marques) ([LinkedIn](https://www.linkedin.com/in/samuel-s-marques/))
+
+Mockups provided by [Previewed](https://previewed.app/template/CFA62417)
 
 Icon provided by [FreeIconsPng](https://www.freeiconspng.com/img/5383)
