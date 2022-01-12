@@ -1,0 +1,55 @@
+{
+  "tasks_page": {
+    "no_tasks": "タスクなし",
+    "new_task": "新しいタスク",
+    "modify_task": "タスクを変更",
+    "details": "詳細"
+  },
+  "folders_page": {
+    "no_folders": "フォルダーなし",
+    "new_folder": "新規フォルダー",
+    "modify_folder": "フォルダーの変更",
+    "choose_color": "フォルダの色を選択する",
+    "choose": "選択",
+    "save_color": "色の保存"
+  },
+  "settings_page": {
+    "settings_section": {
+      "title": "設定",
+      "language": "言語",
+      "hour_pattern": "時間フォーマット",
+      "light_theme": "ライトテーマ"
+    },
+    "danger_section": {
+      "title": "危険",
+      "delete_all": "データを完全に削除する",
+      "are_you_sure": "データを完全に削除しますか?",
+      "cancel": "キャンセル",
+      "delete": "削除"
+    }
+  },
+  "all_pages": {
+    "save": "保存",
+    "required_field": "このフィールドを入力してください。",
+    "created_at": "作成日時 {date}",
+    "updated_at": "更新日時 {date}"
+  },
+  "language": {
+    "name": {
+      "en": "英語",
+      "pt": "ポルトガル語",
+      "es": "スペイン語",
+      "ar": "アラビア語",
+      "ja": "日本語",
+      "sv": "スウェーデン語",
+      "fr": "フランス語"
+    },
+    "selection": {
+      "message": "言語",
+      "title": "言語選択"
+    },
+    "snackbar": {
+      "message": "これらの変更を適用するには、アプリを再起動する必要があります"
+    }
+  }
+}
