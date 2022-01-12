@@ -39,7 +39,10 @@
       "en": "Inglês",
       "pt": "Português",
       "es": "Espanhol",
-      "ar": "Árabe"
+      "ar": "Árabe",
+      "ja": "Japonês",
+      "sv": "Sueco",
+      "fr": "Francês"
     },
     "selection": {
       "message": "Por favor selecione uma linguagem da lista",
