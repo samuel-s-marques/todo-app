@@ -1,5 +1,6 @@
 class TasksArguments {
   final int folderId;
+  final String folderName;
 
-  TasksArguments(this.folderId);
+  TasksArguments(this.folderId, this.folderName);
 }
