@@ -294,7 +294,7 @@ class _FoldersPageState extends State<FoldersPage> {
                     IconData(iconCodePoint, fontFamily: "MaterialIcons"),
                     color: Color(colorHexCode),
                   ),
-                  onTap: () => Navigator.pushNamed(context, "/tasks", arguments: TasksArguments(id)),
+                  onTap: () => Navigator.pushNamed(context, "/tasks", arguments: TasksArguments(id, title)),
                   trailing: IconButton(
                     onPressed: () {
                       showBottomSheetDialog(
