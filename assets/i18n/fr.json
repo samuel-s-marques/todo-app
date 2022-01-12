@@ -1,0 +1,55 @@
+{
+  "tasks_page": {
+    "no_tasks": "Aucune tâche",
+    "new_task": "Nouvelle tâche",
+    "modify_task": "Modifier une tâche",
+    "details": "Détails"
+  },
+  "folders_page": {
+    "no_folders": "Aucun dossier",
+    "new_folder": "Nouveau dossier",
+    "modify_folder": "Modifier dossi",
+    "choose_color": "Choisissez la couleur du dossier",
+    "choose": "Choisissez",
+    "save_color": "Sauvegarder la couleur"
+  },
+  "settings_page": {
+    "settings_section": {
+      "title": "Paramètres",
+      "language": "Langue",
+      "hour_pattern": "Format horaire",
+      "light_theme": "Thème lumineux"
+    },
+    "danger_section": {
+      "title": "Danger",
+      "delete_all": "Supprimer toutes les données",
+      "are_you_sure": "Êtes-vous sûr de vouloir supprimer toutes les données?",
+      "cancel": "Annuler",
+      "delete": "Supprimer"
+    }
+  },
+  "all_pages": {
+    "save": "Sauvez",
+    "required_field": "Ce champ est obligatoire",
+    "created_at": "Créé au {date}",
+    "updated_at": "Mise à jour au {date}"
+  },
+  "language": {
+    "name": {
+      "en": "Anglaise",
+      "pt": "Portugaise",
+      "es": "Espagnole",
+      "ar": "Arabe",
+      "ja": "Japonaise",
+      "sv": "Suédoise",
+      "fr": "Français"
+    },
+    "selection": {
+      "message": "Veuillez sélectionner une langue dans la liste",
+      "title": "Sélection de la langue"
+    },
+    "snackbar": {
+      "message": "L'application doit redémarrer pour appliquer ces changements"
+    }
+  }
+}
