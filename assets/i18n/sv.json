@@ -1,0 +1,55 @@
+{
+  "tasks_page": {
+    "no_tasks": "Inga uppgifter",
+    "new_task": "Ny uppgift",
+    "modify_task": "Ändra uppgift",
+    "details": "Detaljer"
+  },
+  "folders_page": {
+    "no_folders": "Inga mappar",
+    "new_folder": "Ny mapp",
+    "modify_folder": "Ändra mapp",
+    "choose_color": "Välj färg på mappen",
+    "choose": "Välj",
+    "save_color": "Spara färg"
+  },
+  "settings_page": {
+    "settings_section": {
+      "title": "Inställningar",
+      "language": "Språk",
+      "hour_pattern": "Timformat",
+      "light_theme": "Ljus tema"
+    },
+    "danger_section": {
+      "title": "Fara",
+      "delete_all": "Ta bort alla uppgifter",
+      "are_you_sure": "Är du säker på att du vill radera alla uppgifter?",
+      "cancel": "Kan",
+      "delete": "Ta bort"
+    }
+  },
+  "all_pages": {
+    "save": "Spara",
+    "required_field": "Detta fält är obligatoriskt",
+    "created_at": "Skapad den {date}",
+    "updated_at": "Uppdaterad den {date}"
+  },
+  "language": {
+    "name": {
+      "en": "Engelska",
+      "pt": "Portugisiska",
+      "es": "Spanska",
+      "ar": "Arabiska",
+      "ja": "Japanska",
+      "sv": "Svenska",
+      "fr": "Franska"
+    },
+    "selection": {
+      "message": "Välj ett språk från listan",
+      "title": "Val av språk"
+    },
+    "snackbar": {
+      "message": "Appen måste startas om för att ändringarna ska kunna tillämpas"
+    }
+  }
+}
