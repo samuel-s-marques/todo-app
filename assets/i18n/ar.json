@@ -1,0 +1,55 @@
+{
+  "tasks_page": {
+    "no_tasks": "لا مهام موجودة",
+    "new_task": "مهمة جديدة",
+    "modify_task": "تغيير مهمة",
+    "details": "تفاصيل"
+  },
+  "folders_page": {
+    "no_folders": "عدم وجود ملفات",
+    "new_folder": "ملف جديد",
+    "modify_folder": "تعديل الملف",
+    "choose_color": "اختر لون الملف",
+    "choose": "اختر",
+    "save_color": "حفظ اللون"
+  },
+  "settings_page": {
+    "settings_section": {
+      "title": "إعدادات",
+      "language": "لغة",
+      "hour_pattern": "تنسيق الساعة",
+      "light_theme": "مظهر فاتح"
+    },
+    "danger_section": {
+      "title": "خطر",
+      "delete_all": "حذف كافة البيانات",
+      "are_you_sure": "هل أنت متأكد أنك تريد حذف كافة البيانات؟",
+      "cancel": "لغي",
+      "delete": "حذف"
+    }
+  },
+  "all_pages": {
+    "save": "حفظ",
+    "required_field": "هذه الخانة مطلوبه",
+    "created_at": "تم إنشاؤه في {date}",
+    "updated_at": "تم التحديث في {date}"
+  },
+  "language": {
+    "name": {
+      "en": "الإنجليزية",
+      "pt": "البرتغالية",
+      "es": "الأسبانية",
+      "ar": "العربية",
+      "ja": "اليابانية",
+      "sv": "السويدية",
+      "fr": ""
+    },
+    "selection": {
+      "message": "الرجاء تحديد اللغة من القائمة",
+      "title": "اختر اللغة"
+    },
+    "snackbar": {
+      "message": "يحتاج التطبيق إلى إعادة التشغيل لتطبيق هذه التغييرات"
+    }
+  }
+}
