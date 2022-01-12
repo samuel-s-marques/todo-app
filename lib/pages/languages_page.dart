@@ -12,7 +12,8 @@ class LanguagesPage extends StatefulWidget {
 class _LanguagesPageState extends State<LanguagesPage> {
   @override
   Widget build(BuildContext context) {
-    var localizedDelegate = LocalizedApp.of(context).delegate;
+    LocalizationDelegate localizedDelegate = LocalizedApp.of(context).delegate;
+    String currentLocale = localizedDelegate.currentLocale.languageCode;
 
     return Scaffold(
       appBar: AppBar(
@@ -30,15 +31,12 @@ class _LanguagesPageState extends State<LanguagesPage> {
             itemBuilder: (BuildContext context, int index) {
               return RadioListTile(
                 title: Text(translate("language.name.${localizedDelegate.supportedLocales[index].languageCode}"), style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 16),),
-                value: localizedDelegate.supportedLocales[index],
-                groupValue: localizedDelegate.currentLocale,
+                value: localizedDelegate.supportedLocales[index].languageCode,
+                groupValue: currentLocale,
                 onChanged: (value) {
-                  changeLocale(context, localizedDelegate.supportedLocales[index].hashCode.toString());
-                  TranslatePreferences().savePreferredLocale(Locale(localizedDelegate.supportedLocales[index].languageCode));
-
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(translate("language.snackbar.message")))
-                  );
+                  currentLocale = value.toString();
+                  changeLocale(context, currentLocale);
+                  TranslatePreferences().savePreferredLocale(Locale(currentLocale));
                 },
               );
             },
