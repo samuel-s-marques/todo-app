@@ -45,8 +45,7 @@ class _TasksPageState extends State<TasksPage> {
 
             if (backButton || backDrop) {
               const duration = Duration(milliseconds: 300);
-              await controller.snapToExtent(0.3,
-                  duration: duration, clamp: false);
+              await controller.snapToExtent(0.3, duration: duration, clamp: false);
             }
           },
           builder: (context, state) => Material(

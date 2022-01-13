@@ -26,7 +26,8 @@ class _FoldersPageState extends State<FoldersPage> {
     DateFormat dateTimeFormatter = DateFormat("yMd", localizedDelegate.currentLocale.languageCode).add_Hm();
     DateFormat dateFormatter = DateFormat("yMd", localizedDelegate.currentLocale.languageCode);
 
-    Future<void> showBottomSheetDialog({required BuildContext context, Folder? folder}) async {
+    Future<void> showBottomSheetDialog(
+        {required BuildContext context, Folder? folder}) async {
       final formKey = GlobalKey<FormState>();
       IconData _chosenIcon = Icons.folder;
       Color _chosenColor = Colors.grey;
@@ -56,8 +57,7 @@ class _FoldersPageState extends State<FoldersPage> {
 
             if (backButton || backDrop) {
               const duration = Duration(milliseconds: 300);
-              await controller.snapToExtent(0.3,
-                  duration: duration, clamp: false);
+              await controller.snapToExtent(0.3, duration: duration, clamp: false);
             }
           },
           builder: (context, state) => Material(
@@ -74,8 +74,7 @@ class _FoldersPageState extends State<FoldersPage> {
                         children: [
                           IconButton(
                             onPressed: () {
-                              Provider.of<MyDb>(context, listen: false)
-                                  .deleteFolderById(folder.id);
+                              Provider.of<MyDb>(context, listen: false).deleteFolderById(folder.id);
                               Navigator.pop(context);
                             },
                             icon: const Icon(
@@ -114,7 +113,7 @@ class _FoldersPageState extends State<FoldersPage> {
                                   : translate("folders_page.new_folder"),
                               border: const OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
+                                    BorderRadius.all(Radius.circular(10)),
                               ),
                             ),
                             validator: (value) {
@@ -134,25 +133,23 @@ class _FoldersPageState extends State<FoldersPage> {
                           showDialog(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: Text(translate("folders_page.choose_color")),
-                                content: SingleChildScrollView(
-                                  child: BlockPicker(
-                                      pickerColor: _chosenColor,
-                                      onColorChanged: (Color color) {
-                                        setState(() {
-                                          _chosenColor = color;
-                                        });
-                                      }),
-                                ),
-                                actions: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(translate("folders_page.save_color")),
-                                  )
-                                ],
-                              ));
+                                    title: Text(translate("folders_page.choose_color")),
+                                    content: SingleChildScrollView(
+                                      child: BlockPicker(
+                                          pickerColor: _chosenColor,
+                                          onColorChanged: (Color color) {
+                                            setState(() {
+                                              _chosenColor = color;
+                                            });
+                                          }),
+                                    ),
+                                    actions: [
+                                      ElevatedButton(
+                                        onPressed: () => Navigator.of(context).pop(),
+                                        child: Text(translate("folders_page.save_color")),
+                                      )
+                                    ],
+                                  ));
                         },
                         child: Text(
                           translate("folders_page.choose_color"),
@@ -165,7 +162,9 @@ class _FoldersPageState extends State<FoldersPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            translate("all_pages.created_at", args: {'date': dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000))}),
+                            translate("all_pages.created_at", args: {
+                              'date': dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000))
+                            }),
                             style: GoogleFonts.getFont(
                               "Inter",
                               color: const Color(0xFFB9B9BE),
@@ -173,7 +172,9 @@ class _FoldersPageState extends State<FoldersPage> {
                             ),
                           ),
                           Text(
-                            translate("all_pages.updated_at", args: {'date': dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.updatedAt * 1000))}),
+                            translate("all_pages.updated_at", args: {
+                              'date': dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.updatedAt * 1000))
+                            }),
                             style: GoogleFonts.getFont(
                               "Inter",
                               color: const Color(0xFFB9B9BE),
@@ -196,13 +197,13 @@ class _FoldersPageState extends State<FoldersPage> {
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       if (folder != null) {
-                        Provider.of<MyDb>(context, listen: false)
-                            .updateFolderById(
-                            _newFolderController.text.trim(),
-                            _chosenColor.value,
-                            _chosenIcon.codePoint,
-                            DateTime.now().millisecondsSinceEpoch,
-                            folder.id);
+                        Provider.of<MyDb>(context, listen: false).updateFolderById(
+                          _newFolderController.text.trim(),
+                          _chosenColor.value,
+                          _chosenIcon.codePoint,
+                          DateTime.now().millisecondsSinceEpoch,
+                          folder.id,
+                        );
                       } else {
                         Provider.of<MyDb>(context, listen: false).createFolder(
                           _newFolderController.text.trim(),
@@ -233,7 +234,10 @@ class _FoldersPageState extends State<FoldersPage> {
         title: const Text("To-Do App"),
         centerTitle: true,
         actions: [
-          IconButton(onPressed: () => Navigator.pushNamed(context, "/settings"), icon: const Icon(Icons.settings))
+          IconButton(
+            onPressed: () => Navigator.pushNamed(context, "/settings"),
+            icon: const Icon(Icons.settings),
+          )
         ],
       ),
       body: StreamBuilder(
@@ -254,10 +258,12 @@ class _FoldersPageState extends State<FoldersPage> {
                   ),
                   Text(
                     translate("folders_page.no_folders"),
-                    style: GoogleFonts.getFont("Inter",
-                        color: const Color(0xFFB9B9BE),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 28),
+                    style: GoogleFonts.getFont(
+                      "Inter",
+                      color: const Color(0xFFB9B9BE),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 28,
+                    ),
                   )
                 ],
               ),
@@ -279,16 +285,14 @@ class _FoldersPageState extends State<FoldersPage> {
               return Card(
                 elevation: 2.0,
                 shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
                 child: ListTile(
                   dense: true,
-                  title: Text(
-                    title,
-                    style: Theme.of(context).textTheme.headline1
-                  ),
+                  title: Text(title, style: Theme.of(context).textTheme.headline1),
                   subtitle: Text(
-                    translate("all_pages.created_at", args: {'date': dateFormatter.format(createdAt)}),
-                    style: Theme.of(context).textTheme.subtitle1
+                      translate("all_pages.created_at", args: {'date': dateFormatter.format(createdAt)}),
+                      style: Theme.of(context).textTheme.subtitle1,
                   ),
                   leading: Icon(
                     IconData(iconCodePoint, fontFamily: "MaterialIcons"),
@@ -296,10 +300,7 @@ class _FoldersPageState extends State<FoldersPage> {
                   ),
                   onTap: () => Navigator.pushNamed(context, "/tasks", arguments: TasksArguments(id, title)),
                   trailing: IconButton(
-                    onPressed: () {
-                      showBottomSheetDialog(
-                          context: context, folder: folder);
-                    },
+                    onPressed: () async => showBottomSheetDialog(context: context, folder: folder),
                     icon: const Icon(Icons.more_vert),
                   ),
                 ),
@@ -311,8 +312,9 @@ class _FoldersPageState extends State<FoldersPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async => showBottomSheetDialog(context: context),
         shape: const RoundedRectangleBorder(
-            side: BorderSide(color: Color(0xFF515CC6), width: 2),
-            borderRadius: BorderRadius.all(Radius.circular(50))),
+          side: BorderSide(color: Color(0xFF515CC6), width: 2),
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+        ),
         backgroundColor: const Color(0xFF473FA0),
         child: const Icon(Icons.add),
       ),

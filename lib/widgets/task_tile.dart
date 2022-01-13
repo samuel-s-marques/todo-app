@@ -28,8 +28,7 @@ class _TaskTileState extends State<TaskTile> {
     Future<void> showBottomSheetDialog(BuildContext context) async {
       final formKey = GlobalKey<FormState>();
       final TextEditingController _newTaskController = TextEditingController();
-      final TextEditingController _taskDetailsController =
-      TextEditingController();
+      final TextEditingController _taskDetailsController = TextEditingController();
 
       _newTaskController.text = widget.task.name;
       _taskDetailsController.text = widget.task.description!;
@@ -64,8 +63,7 @@ class _TaskTileState extends State<TaskTile> {
                       children: [
                         IconButton(
                           onPressed: () {
-                            Provider.of<MyDb>(context, listen: false)
-                                .deleteTaskById(widget.task.id);
+                            Provider.of<MyDb>(context, listen: false).deleteTaskById(widget.task.id);
                             Navigator.pop(context);
                           },
                           icon: const Icon(
@@ -111,9 +109,10 @@ class _TaskTileState extends State<TaskTile> {
                       children: [
                         Text(
                           translate("all_pages.created_at", args: {
-                            "date": dateTimeFormatter.format(
-                                DateTime.fromMicrosecondsSinceEpoch(
-                                    widget.task.createdAt * 1000))
+                            "date": dateTimeFormatter
+                                .format(DateTime.fromMicrosecondsSinceEpoch(
+                              widget.task.createdAt * 1000,
+                            ))
                           }),
                           style: GoogleFonts.getFont(
                             "Inter",
@@ -123,9 +122,10 @@ class _TaskTileState extends State<TaskTile> {
                         ),
                         Text(
                           translate("all_pages.updated_at", args: {
-                            "date": dateTimeFormatter.format(
-                                DateTime.fromMicrosecondsSinceEpoch(
-                                    widget.task.updatedAt * 1000))
+                            "date": dateTimeFormatter
+                                .format(DateTime.fromMicrosecondsSinceEpoch(
+                              widget.task.updatedAt * 1000,
+                            ))
                           }),
                           style: GoogleFonts.getFont(
                             "Inter",
@@ -149,19 +149,19 @@ class _TaskTileState extends State<TaskTile> {
                   child: TextButton(
                     onPressed: widget.task.isDone == 0
                         ? () {
-                      if (formKey.currentState!.validate()) {
-                        Provider.of<MyDb>(context, listen: false)
-                            .updateTaskById(
-                          _newTaskController.text.trim(),
-                          _taskDetailsController.text.trim(),
-                          widget.task.isDone,
-                          DateTime.now().millisecondsSinceEpoch,
-                          widget.task.id,
-                        );
+                            if (formKey.currentState!.validate()) {
+                              Provider.of<MyDb>(context, listen: false)
+                                  .updateTaskById(
+                                _newTaskController.text.trim(),
+                                _taskDetailsController.text.trim(),
+                                widget.task.isDone,
+                                DateTime.now().millisecondsSinceEpoch,
+                                widget.task.id,
+                              );
 
-                        Navigator.pop(context);
-                      }
-                    }
+                              Navigator.pop(context);
+                            }
+                          }
                         : null,
                     child: Text(
                       translate("all_pages.save"),
@@ -189,12 +189,19 @@ class _TaskTileState extends State<TaskTile> {
           if (widget.task.description != null &&
               widget.task.description!.isNotEmpty)
             Expanded(
-                child: Text(widget.task.description ?? "",
-                    style: Theme.of(context).textTheme.subtitle1)),
+              child: Text(
+                widget.task.description ?? "",
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ),
           Text(
-              dateFormatter.format(DateTime.fromMicrosecondsSinceEpoch(
-                  widget.task.updatedAt * 1000)),
-              style: Theme.of(context).textTheme.subtitle1),
+            dateFormatter.format(
+              DateTime.fromMicrosecondsSinceEpoch(
+                widget.task.updatedAt * 1000,
+              ),
+            ),
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
         ],
       ),
       onTap: () => WidgetsBinding.instance!
