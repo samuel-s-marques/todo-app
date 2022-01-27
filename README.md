@@ -36,6 +36,7 @@ The classic to-do application where a user can write down all the things he want
 - [ ] Drag and drop folders and tasks
 - [ ] Search folders and tasks
 - [ ] Add more languages
+- [ ] Add a reminder system
 
 ## My process
 ### Built with
