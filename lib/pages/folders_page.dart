@@ -22,12 +22,13 @@ class _FoldersPageState extends State<FoldersPage> {
 
   @override
   Widget build(BuildContext context) {
-    LocalizationDelegate localizedDelegate = LocalizedApp.of(context).delegate;
+    LocalizationDelegate localizedDelegate = LocalizedApp
+        .of(context)
+        .delegate;
     DateFormat dateTimeFormatter = DateFormat("yMd", localizedDelegate.currentLocale.languageCode).add_Hm();
     DateFormat dateFormatter = DateFormat("yMd", localizedDelegate.currentLocale.languageCode);
 
-    Future<void> showBottomSheetDialog(
-        {required BuildContext context, Folder? folder}) async {
+    Future<void> showBottomSheetDialog({required BuildContext context, Folder? folder}) async {
       final formKey = GlobalKey<FormState>();
       IconData _chosenIcon = Icons.folder;
       Color _chosenColor = Colors.grey;
@@ -60,134 +61,139 @@ class _FoldersPageState extends State<FoldersPage> {
               await controller.snapToExtent(0.3, duration: duration, clamp: false);
             }
           },
-          builder: (context, state) => Material(
-            child: Form(
-              key: formKey,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
-                child: Wrap(
-                  runSpacing: 15,
-                  children: [
-                    if (folder != null)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Provider.of<MyDb>(context, listen: false).deleteFolderById(folder.id);
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(
-                              Icons.delete_outline,
-                              color: Colors.red,
-                            ),
-                          )
-                        ],
-                      ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
+          builder: (context, state) =>
+              Material(
+                child: Form(
+                  key: formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
+                    child: Wrap(
+                      runSpacing: 15,
                       children: [
-                        IconButton(
-                          onPressed: () async {
-                            IconData? icon = await FlutterIconPicker.showIconPicker(context);
-
-                            setState(() {
-                              _chosenIcon = icon!;
-                            });
-                          },
-                          icon: Icon(
-                            _chosenIcon,
-                            color: _chosenColor,
+                        if (folder != null)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Provider.of<MyDb>(context, listen: false).deleteFolderById(folder.id);
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(
+                                  Icons.delete_outline,
+                                  color: Colors.red,
+                                ),
+                              )
+                            ],
                           ),
-                        ),
-                        Flexible(
-                          child: TextFormField(
-                            controller: _newFolderController,
-                            maxLines: null,
-                            textCapitalization: TextCapitalization.sentences,
-                            style: Theme.of(context).textTheme.bodyText1,
-                            autofocus: folder != null ? false : true,
-                            decoration: InputDecoration(
-                              labelText: folder != null
-                                  ? translate("folders_page.modify_folder")
-                                  : translate("folders_page.new_folder"),
-                              border: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            IconButton(
+                              onPressed: () async {
+                                IconData? icon = await FlutterIconPicker.showIconPicker(context);
+
+                                setState(() {
+                                  _chosenIcon = icon!;
+                                });
+                              },
+                              icon: Icon(
+                                _chosenIcon,
+                                color: _chosenColor,
                               ),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return translate("all_pages.required_field");
-                              }
-                              return null;
+                            Flexible(
+                              child: TextFormField(
+                                controller: _newFolderController,
+                                maxLines: null,
+                                textCapitalization: TextCapitalization.sentences,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .bodyText1,
+                                autofocus: folder != null ? false : true,
+                                decoration: InputDecoration(
+                                  labelText: folder != null
+                                      ? translate("folders_page.modify_folder")
+                                      : translate("folders_page.new_folder"),
+                                  border: const OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return translate("all_pages.required_field");
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton(
+                            onPressed: () async {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) =>
+                                      AlertDialog(
+                                        title: Text(translate("folders_page.choose_color")),
+                                        content: SingleChildScrollView(
+                                          child: BlockPicker(
+                                              pickerColor: _chosenColor,
+                                              onColorChanged: (Color color) {
+                                                setState(() {
+                                                  _chosenColor = color;
+                                                });
+                                              }),
+                                        ),
+                                        actions: [
+                                          ElevatedButton(
+                                            onPressed: () => Navigator.of(context).pop(),
+                                            child: Text(translate("folders_page.save_color")),
+                                          )
+                                        ],
+                                      ));
                             },
+                            child: Text(
+                              translate("folders_page.choose_color"),
+                              style: GoogleFonts.getFont("Inter", fontSize: 18),
+                            ),
                           ),
                         ),
+                        if (folder != null)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                translate("all_pages.created_at", args: {
+                                  'date': dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000))
+                                }),
+                                style: GoogleFonts.getFont(
+                                  "Inter",
+                                  color: const Color(0xFFB9B9BE),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                translate("all_pages.updated_at", args: {
+                                  'date': dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.updatedAt * 1000))
+                                }),
+                                style: GoogleFonts.getFont(
+                                  "Inter",
+                                  color: const Color(0xFFB9B9BE),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          )
                       ],
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton(
-                        onPressed: () async {
-                          showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                    title: Text(translate("folders_page.choose_color")),
-                                    content: SingleChildScrollView(
-                                      child: BlockPicker(
-                                          pickerColor: _chosenColor,
-                                          onColorChanged: (Color color) {
-                                            setState(() {
-                                              _chosenColor = color;
-                                            });
-                                          }),
-                                    ),
-                                    actions: [
-                                      ElevatedButton(
-                                        onPressed: () => Navigator.of(context).pop(),
-                                        child: Text(translate("folders_page.save_color")),
-                                      )
-                                    ],
-                                  ));
-                        },
-                        child: Text(
-                          translate("folders_page.choose_color"),
-                          style: GoogleFonts.getFont("Inter", fontSize: 18),
-                        ),
-                      ),
-                    ),
-                    if (folder != null)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            translate("all_pages.created_at", args: {
-                              'date': dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.createdAt * 1000))
-                            }),
-                            style: GoogleFonts.getFont(
-                              "Inter",
-                              color: const Color(0xFFB9B9BE),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            translate("all_pages.updated_at", args: {
-                              'date': dateTimeFormatter.format(DateTime.fromMicrosecondsSinceEpoch(folder.updatedAt * 1000))
-                            }),
-                            style: GoogleFonts.getFont(
-                              "Inter",
-                              color: const Color(0xFFB9B9BE),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      )
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
           footerBuilder: (context, state) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -201,7 +207,9 @@ class _FoldersPageState extends State<FoldersPage> {
                           _newFolderController.text.trim(),
                           _chosenColor.value,
                           _chosenIcon.codePoint,
-                          DateTime.now().millisecondsSinceEpoch,
+                          DateTime
+                              .now()
+                              .millisecondsSinceEpoch,
                           folder.id,
                         );
                       } else {
@@ -209,8 +217,12 @@ class _FoldersPageState extends State<FoldersPage> {
                           _newFolderController.text.trim(),
                           _chosenColor.value,
                           _chosenIcon.codePoint,
-                          DateTime.now().millisecondsSinceEpoch,
-                          DateTime.now().millisecondsSinceEpoch,
+                          DateTime
+                              .now()
+                              .millisecondsSinceEpoch,
+                          DateTime
+                              .now()
+                              .millisecondsSinceEpoch,
                         );
                       }
 
@@ -289,10 +301,16 @@ class _FoldersPageState extends State<FoldersPage> {
                 ),
                 child: ListTile(
                   dense: true,
-                  title: Text(title, style: Theme.of(context).textTheme.headline1),
+                  title: Text(title, style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline1),
                   subtitle: Text(
-                      translate("all_pages.created_at", args: {'date': dateFormatter.format(createdAt)}),
-                      style: Theme.of(context).textTheme.subtitle1,
+                    translate("all_pages.created_at", args: {'date': dateFormatter.format(createdAt)}),
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .subtitle1,
                   ),
                   leading: Icon(
                     IconData(iconCodePoint, fontFamily: "MaterialIcons"),
