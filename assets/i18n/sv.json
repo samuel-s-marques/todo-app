@@ -26,6 +26,21 @@
       "are_you_sure": "Är du säker på att du vill radera alla uppgifter?",
       "cancel": "Kan",
       "delete": "Ta bort"
+    },
+    "support_section": {
+      "title": "Stöd",
+      "about": "Om",
+      "share": {
+        "title": "Dela med vänner",
+        "content": "Kolla in den här fantastiska appen för att göra uppgifter!\nhttps://github.com/samuel-s-marques/todo-app"
+      },
+      "open_source": "Licens för öppen källkod"
+    },
+    "apps_section": {
+      "title": "Fler appar",
+      "weather_app": {
+        "description": "Intuitiv, enkel och vacker väderapp."
+      }
     }
   },
   "all_pages": {

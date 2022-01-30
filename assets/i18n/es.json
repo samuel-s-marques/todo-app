@@ -26,6 +26,21 @@
       "are_you_sure": "Está seguro de que desea eliminar todos los datos?",
       "cancel": "Cancelar",
       "delete": "Borrar"
+    },
+    "support_section": {
+      "title": "Soporte",
+      "about": "Sobre",
+      "share": {
+        "title": "Compartir con amigos",
+        "content": "¡Comprueba esta increíble aplicación de tareas!\nhttps://github.com/samuel-s-marques/todo-app"
+      },
+      "open_source": "Licencia de código abierto"
+    },
+    "apps_section": {
+      "title": "Más aplicaciones",
+      "weather_app": {
+        "description": "Intuitiva, sencilla y bonita app del tiempo."
+      }
     }
   },
   "all_pages": {

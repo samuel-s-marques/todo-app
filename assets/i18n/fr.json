@@ -26,6 +26,21 @@
       "are_you_sure": "Êtes-vous sûr de vouloir supprimer toutes les données?",
       "cancel": "Annuler",
       "delete": "Supprimer"
+    },
+    "support_section": {
+      "title": "Soutien",
+      "about": "Sur",
+      "share": {
+        "title": "Partager avec des amis",
+        "content": "Découvrez cette incroyable application de tâches à faire!\nhttps://github.com/samuel-s-marques/todo-app"
+      },
+      "open_source": "Licence open-source"
+    },
+    "apps_section": {
+      "title": "Autres applications",
+      "weather_app": {
+        "description": "Une application météo intuitive, simple et belle."
+      }
     }
   },
   "all_pages": {

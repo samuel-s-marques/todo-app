@@ -26,6 +26,21 @@
       "are_you_sure": "Are you sure you want to delete all data?",
       "cancel": "Cancel",
       "delete": "Delete"
+    },
+    "support_section": {
+      "title": "Support",
+      "about": "About",
+      "share": {
+        "title": "Share with friends",
+        "content": "Check this amazing todo app!\nhttps://github.com/samuel-s-marques/todo-app"
+      },
+      "open_source": "Open-source license"
+    },
+    "apps_section": {
+      "title": "More apps",
+      "weather_app": {
+        "description": "Intuitive, simple and beautiful weather app."
+      }
     }
   },
   "all_pages": {
