@@ -1,6 +1,9 @@
 # todo-app
 The classic to-do application where a user can write down all the things he wants to accomplish. Android only.
 
+## Download
+While it's not in Google's PlayStore, you can download it [here](https://github.com/samuel-s-marques/todo-app/releases).
+
 ## Table of Contents
 - [todo-app](#todo-app)
   - [Table of Contents](#table-of-contents)
