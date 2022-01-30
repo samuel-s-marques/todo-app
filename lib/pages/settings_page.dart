@@ -3,8 +3,10 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:share/share.dart';
 import 'package:todoapp/database/database.dart';
 import 'package:todoapp/models/theme_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -31,16 +33,28 @@ class _SettingsPageState extends State<SettingsPage> {
                 tiles: [
                   SettingsTile.navigation(
                     leading: const Icon(Icons.language_outlined),
-                    title: Text(translate("settings_page.settings_section.language"), style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
-                    value: Text(translate("language.name.${localizedDelegate.currentLocale.languageCode}"), style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),),
+                    title: Text(
+                      translate("settings_page.settings_section.language"),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
+                    ),
+                    value: Text(
+                      translate("language.name.${localizedDelegate.currentLocale.languageCode}"),
+                      style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                    ),
                     onPressed: (context) {
                       Navigator.pushNamed(context, "/languages");
                     },
                   ),
                   SettingsTile.navigation(
                     leading: const Icon(Icons.access_time_outlined),
-                    title: Text(translate("settings_page.settings_section.hour_pattern"), style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
-                    value: Text("24H", style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),),
+                    title: Text(
+                      translate("settings_page.settings_section.hour_pattern"),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
+                    ),
+                    value: Text(
+                      "24H",
+                      style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                    ),
                   ),
                   SettingsTile.switchTile(
                     leading: const Icon(Icons.light_mode_outlined),
@@ -48,16 +62,28 @@ class _SettingsPageState extends State<SettingsPage> {
                     onToggle: (bool value) {
                       themeNotifier.isDark = !themeNotifier.isDark;
                     },
-                    title: Text(translate("settings_page.settings_section.light_theme"), style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
+                    title: Text(
+                      translate("settings_page.settings_section.light_theme"),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
+                    ),
                   ),
                 ],
               ),
               SettingsSection(
-                title: Text(translate("settings_page.danger_section.title"), style: Theme.of(context).textTheme.headline3,),
+                title: Text(
+                  translate("settings_page.danger_section.title"),
+                  style: Theme.of(context).textTheme.headline3,
+                ),
                 tiles: [
                   SettingsTile(
-                    leading: const Icon(Icons.dangerous_outlined, color: Colors.redAccent,),
-                    title: Text(translate("settings_page.danger_section.delete_all"), style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),),
+                    leading: const Icon(
+                      Icons.dangerous_outlined,
+                      color: Colors.redAccent,
+                    ),
+                    title: Text(
+                      translate("settings_page.danger_section.delete_all"),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
+                    ),
                     onPressed: (context) {
                       showDialog(
                         context: context,
@@ -79,10 +105,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             TextButton(
                               onPressed: () {
-                                Provider.of<MyDb>(context, listen: false)
-                                    .deleteAllFolders();
-                                Provider.of<MyDb>(context, listen: false)
-                                    .deleteAllTasks();
+                                Provider.of<MyDb>(context, listen: false).deleteAllFolders();
+                                Provider.of<MyDb>(context, listen: false).deleteAllTasks();
 
                                 Navigator.pop(context);
                               },
@@ -98,6 +122,51 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       );
                     },
+                  ),
+                ],
+              ),
+              SettingsSection(
+                title: Text(translate("settings_page.support_section.title"), style: Theme.of(context).textTheme.headline3),
+                tiles: [
+                  SettingsTile(
+                    title: Text(
+                      translate("settings_page.support_section.about"),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
+                    ),
+                    trailing: Text(
+                      "v1.0.0",
+                      style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                    ),
+                  ),
+                  SettingsTile(
+                    title: Text(
+                      translate("settings_page.support_section.share.title"),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
+                    ),
+                    onPressed: (context) => Share.share(translate("settings_page.support_section.share.content")),
+                  ),
+                  SettingsTile(
+                    title: Text(
+                      translate("settings_page.support_section.open_source"),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
+                    ),
+                    onPressed: (context) => Navigator.pushNamed(context, "/license"),
+                  ),
+                ],
+              ),
+              SettingsSection(
+                title: Text(translate("settings_page.apps_section.title"), style: Theme.of(context).textTheme.headline3),
+                tiles: [
+                  SettingsTile(
+                    title: Text(
+                      "weather-app",
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
+                    ),
+                    description: Text(
+                      translate("settings_page.apps_section.weather_app.description"),
+                      style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                    ),
+                    onPressed: (context) async => await launch("https://github.com/samuel-s-marques/weather-app#readme"),
                   ),
                 ],
               ),
