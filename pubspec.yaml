@@ -22,6 +22,8 @@ dependencies:
   settings_ui: ^2.0.0
   shared_preferences: ^2.0.11
   flutter_translate: ^3.0.1
+  url_launcher: ^6.0.18
+  share: ^2.0.4
   flutter_localizations:
     sdk: flutter
 
@@ -39,6 +41,7 @@ flutter:
   assets:
     - assets/i18n/
     - assets/icon/
+    - LICENSE
 
 flutter_native_splash:
   color: "#ffffff"
