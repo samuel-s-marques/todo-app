@@ -7,6 +7,7 @@ import 'package:todoapp/database/database.dart';
 import 'package:todoapp/models/theme_model.dart';
 import 'package:todoapp/pages/folders_page.dart';
 import 'package:todoapp/pages/languages_page.dart';
+import 'package:todoapp/pages/license_page.dart';
 import 'package:todoapp/pages/settings_page.dart';
 import 'package:todoapp/pages/tasks_page.dart';
 import 'package:todoapp/utils/translate_preferences.dart';
@@ -142,7 +143,8 @@ class MyApp extends StatelessWidget {
                 "/folders": (context) => const FoldersPage(),
                 "/tasks": (context) => const TasksPage(),
                 "/settings": (context) => const SettingsPage(),
-                "/languages": (context) => const LanguagesPage()
+                "/languages": (context) => const LanguagesPage(),
+                "/license": (context) => const ShowLicensePage(),
               },
             );
           },
