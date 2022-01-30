@@ -6,6 +6,7 @@ While it's not in Google's PlayStore, you can download it [here](https://github.
 
 ## Table of Contents
 - [todo-app](#todo-app)
+  - [Download](#download)
   - [Table of Contents](#table-of-contents)
   - [Images](#images)
   - [Features](#features)
