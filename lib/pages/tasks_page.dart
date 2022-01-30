@@ -127,7 +127,10 @@ class _TasksPageState extends State<TasksPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(args.folderName, overflow: TextOverflow.fade,),
+        title: Text(
+          args.folderName,
+          overflow: TextOverflow.fade,
+        ),
         centerTitle: true,
       ),
       body: StreamBuilder(
@@ -148,12 +151,7 @@ class _TasksPageState extends State<TasksPage> {
                   ),
                   Text(
                     translate("tasks_page.no_tasks"),
-                    style: GoogleFonts.getFont(
-                        "Inter",
-                        color: const Color(0xFFB9B9BE),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 28
-                    ),
+                    style: GoogleFonts.getFont("Inter", color: const Color(0xFFB9B9BE), fontWeight: FontWeight.w500, fontSize: 28),
                   )
                 ],
               ),
@@ -176,8 +174,9 @@ class _TasksPageState extends State<TasksPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async => showBottomSheetDialog(context),
         shape: const RoundedRectangleBorder(
-            side: BorderSide(color: Color(0xFF515CC6), width: 2),
-            borderRadius: BorderRadius.all(Radius.circular(50))),
+          side: BorderSide(color: Color(0xFF515CC6), width: 2),
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+        ),
         backgroundColor: const Color(0xFF473FA0),
         child: const Icon(Icons.add),
       ),
