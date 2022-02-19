@@ -26,6 +26,21 @@
       "are_you_sure": "هل أنت متأكد أنك تريد حذف كافة البيانات؟",
       "cancel": "لغي",
       "delete": "حذف"
+    },
+    "support_section": {
+      "title": "الدعم",
+      "about": "حول",
+      "share": {
+        "title": "شارك مع الاصدقاء",
+        "content": "تحقق من تطبيق المهام المذهل هذا!\nhttps://github.com/samuel-s-marques/todo-app"
+      },
+      "open_source": "ترخيص مفتوح المصدر"
+    },
+    "apps_section": {
+      "title": "تطبيقات أكثر",
+      "weather_app": {
+        "description": "تطبيق طقس بديهي وبسيط وجميل."
+      }
     }
   },
   "all_pages": {
