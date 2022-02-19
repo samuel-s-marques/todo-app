@@ -26,6 +26,21 @@
       "are_you_sure": "データを完全に削除しますか?",
       "cancel": "キャンセル",
       "delete": "削除"
+    },
+    "support_section": {
+      "title": "サポート",
+      "about": "について",
+      "share": {
+        "title": "友達と共有する",
+        "content": "この素晴らしいタスクアプリをチェックしてみてください\nhttps://github.com/samuel-s-marques/todo-app"
+      },
+      "open_source": "オープンソースライセンス"
+    },
+    "apps_section": {
+      "title": "その他のアプリ",
+      "weather_app": {
+        "description": "直感的でシンプルで美しいお天気アプリ。"
+      }
     }
   },
   "all_pages": {
