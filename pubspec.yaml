@@ -26,6 +26,7 @@ dependencies:
   share: ^2.0.4
   flutter_localizations:
     sdk: flutter
+  flutter_markdown: ^0.6.9
 
 dev_dependencies:
   flutter_test:
@@ -42,6 +43,8 @@ flutter:
     - assets/i18n/
     - assets/icon/
     - LICENSE
+    - terms_and_conditions.md
+    - privacy_policy.md
 
 flutter_native_splash:
   color: "#ffffff"

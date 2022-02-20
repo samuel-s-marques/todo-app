@@ -64,6 +64,7 @@ While it's not in Google's PlayStore, you can download it [here](https://github.
 - settings_ui: [link](https://pub.dev/packages/settings_ui)
 - shared_preferences: [link](https://pub.dev/packages/shared_preferences)
 - flutter_translate: [link](https://pub.dev/packages/flutter_translate)
+- flutter_markdown: [link](https://pub.dev/packages/flutter_markdown)
 
 ## How to use
 ### Requirements
