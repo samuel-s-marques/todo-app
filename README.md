@@ -95,3 +95,5 @@ I welcome and encourage all pull requests. It usually will take me within 24-48 
 Mockups provided by [Previewed](https://previewed.app/template/CFA62417)
 
 Icon provided by [FreeIconsPng](https://www.freeiconspng.com/img/5383)
+
+Privacy policy and terms and conditions provided by [App privacy policy generator](https://app-privacy-policy-generator.firebaseapp.com/)
