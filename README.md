@@ -1,3 +1,5 @@
+<img src="screenshots/feature-graphic_en-US.jpg">
+
 # todo-app
 The classic to-do application where a user can write down all the things he wants to accomplish. Android only.
 
