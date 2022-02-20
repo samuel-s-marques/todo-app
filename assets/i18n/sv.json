@@ -34,7 +34,10 @@
         "title": "Dela med vänner",
         "content": "Kolla in den här fantastiska appen för att göra uppgifter!\nhttps://github.com/samuel-s-marques/todo-app"
       },
-      "open_source": "Licens för öppen källkod"
+      "open_source": "Licens för öppen källkod",
+      "loading": "Laddar",
+      "terms": "Villkor och bestämmelser",
+      "privacy": "Integritetspolicy"
     },
     "apps_section": {
       "title": "Fler appar",

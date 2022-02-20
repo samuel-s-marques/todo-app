@@ -34,7 +34,10 @@
         "title": "شارك مع الاصدقاء",
         "content": "تحقق من تطبيق المهام المذهل هذا!\nhttps://github.com/samuel-s-marques/todo-app"
       },
-      "open_source": "ترخيص مفتوح المصدر"
+      "open_source": "ترخيص مفتوح المصدر",
+      "loading": "جار التحميل",
+      "terms": "الأحكام والشروط",
+      "privacy": "سياسة خاصة"
     },
     "apps_section": {
       "title": "تطبيقات أكثر",

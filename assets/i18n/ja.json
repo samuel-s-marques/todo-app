@@ -34,7 +34,10 @@
         "title": "友達と共有する",
         "content": "この素晴らしいタスクアプリをチェックしてみてください\nhttps://github.com/samuel-s-marques/todo-app"
       },
-      "open_source": "オープンソースライセンス"
+      "open_source": "オープンソースライセンス",
+      "loading": "ローディング",
+      "terms": "ご利用条件",
+      "privacy": "個人情報保護方針"
     },
     "apps_section": {
       "title": "その他のアプリ",

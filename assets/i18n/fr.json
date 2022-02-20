@@ -34,7 +34,10 @@
         "title": "Partager avec des amis",
         "content": "Découvrez cette incroyable application de tâches à faire!\nhttps://github.com/samuel-s-marques/todo-app"
       },
-      "open_source": "Licence open-source"
+      "open_source": "Licence open-source",
+      "loading": "Chargement",
+      "terms": "Termes et conditions ",
+      "privacy": "Politique de confidentialité "
     },
     "apps_section": {
       "title": "Autres applications",

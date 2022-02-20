@@ -34,7 +34,10 @@
         "title": "Compartir con amigos",
         "content": "¡Comprueba esta increíble aplicación de tareas!\nhttps://github.com/samuel-s-marques/todo-app"
       },
-      "open_source": "Licencia de código abierto"
+      "open_source": "Licencia de código abierto",
+      "loading": "Cargando",
+      "terms": "Términos y condiciones",
+      "privacy": "Política de privacidad"
     },
     "apps_section": {
       "title": "Más aplicaciones",
