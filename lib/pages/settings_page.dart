@@ -129,6 +129,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 title: Text(translate("settings_page.support_section.title"), style: Theme.of(context).textTheme.headline3),
                 tiles: [
                   SettingsTile(
+                    leading: const Icon(Icons.device_unknown_outlined),
                     title: Text(
                       translate("settings_page.support_section.about"),
                       style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
@@ -139,6 +140,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                   SettingsTile(
+                    leading: const Icon(Icons.share_outlined),
                     title: Text(
                       translate("settings_page.support_section.share.title"),
                       style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
@@ -146,11 +148,28 @@ class _SettingsPageState extends State<SettingsPage> {
                     onPressed: (context) => Share.share(translate("settings_page.support_section.share.content")),
                   ),
                   SettingsTile(
+                    leading: const Icon(Icons.source_outlined),
                     title: Text(
                       translate("settings_page.support_section.open_source"),
                       style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
                     ),
                     onPressed: (context) => Navigator.pushNamed(context, "/license"),
+                  ),
+                  SettingsTile(
+                    leading: const Icon(Icons.policy_outlined),
+                    title: Text(
+                      translate("settings_page.support_section.privacy"),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
+                    ),
+                    onPressed: (context) => Navigator.pushNamed(context, "/privacy"),
+                  ),
+                  SettingsTile(
+                    leading: const Icon(Icons.person_outlined),
+                    title: Text(
+                      translate("settings_page.support_section.terms"),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
+                    ),
+                    onPressed: (context) => Navigator.pushNamed(context, "/terms"),
                   ),
                 ],
               ),
