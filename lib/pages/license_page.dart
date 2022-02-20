@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class ShowLicensePage extends StatelessWidget {
   const ShowLicensePage({Key? key}) : super(key: key);
@@ -18,7 +19,10 @@ class ShowLicensePage extends StatelessWidget {
           child: FutureBuilder(
             future: getFileLines(),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              return Text(snapshot.data ?? "Loading...", textAlign: TextAlign.justify,);
+              return Text(
+                snapshot.data ?? translate("settings_page.support_section.loading"),
+                textAlign: TextAlign.justify,
+              );
             },
           ),
         ),
