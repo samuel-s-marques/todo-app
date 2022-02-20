@@ -45,17 +45,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       Navigator.pushNamed(context, "/languages");
                     },
                   ),
-                  SettingsTile.navigation(
-                    leading: const Icon(Icons.access_time_outlined),
-                    title: Text(
-                      translate("settings_page.settings_section.hour_pattern"),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
-                    ),
-                    value: Text(
-                      "24H",
-                      style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
-                    ),
-                  ),
                   SettingsTile.switchTile(
                     leading: const Icon(Icons.light_mode_outlined),
                     initialValue: lightMode,
