@@ -8,22 +8,24 @@ import 'package:todoapp/models/theme_model.dart';
 import 'package:todoapp/pages/folders_page.dart';
 import 'package:todoapp/pages/languages_page.dart';
 import 'package:todoapp/pages/license_page.dart';
+import 'package:todoapp/pages/privacy_policy_page.dart';
 import 'package:todoapp/pages/settings_page.dart';
 import 'package:todoapp/pages/tasks_page.dart';
+import 'package:todoapp/pages/terms_and_conditions_page.dart';
 import 'package:todoapp/utils/translate_preferences.dart';
 
 void main() async {
   var delegate = await LocalizationDelegate.create(
-    fallbackLocale: 'en',
-    supportedLocales: ['en', 'pt', 'ja', 'es', 'ar', 'sv', 'fr'],
-    preferences: TranslatePreferences()
-  );
+      fallbackLocale: 'en', supportedLocales: ['en', 'pt', 'ja', 'es', 'ar', 'sv', 'fr'], preferences: TranslatePreferences());
 
-  runApp(LocalizedApp(delegate, Provider<MyDb>(
-    create: (context) => MyDb(),
-    child: const MyApp(),
-    dispose: (context, db) => db.close(),
-  ),));
+  runApp(LocalizedApp(
+    delegate,
+    Provider<MyDb>(
+      create: (context) => MyDb(),
+      child: const MyApp(),
+      dispose: (context, db) => db.close(),
+    ),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -41,11 +43,7 @@ class MyApp extends StatelessWidget {
           builder: (context, ThemeModel themeNotifier, child) {
             return MaterialApp(
               title: 'To-do app',
-              localizationsDelegates: [
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                localizationDelegate
-              ],
+              localizationsDelegates: [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, localizationDelegate],
               supportedLocales: localizationDelegate.supportedLocales,
               locale: localizationDelegate.currentLocale,
               debugShowCheckedModeBanner: false,
@@ -61,10 +59,7 @@ class MyApp extends StatelessWidget {
                     color: const Color(0xFF575767),
                   ),
                   headline2: GoogleFonts.getFont("Inter",
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFFB9B9BE),
-                      decoration: TextDecoration.lineThrough),
+                      fontSize: 18, fontWeight: FontWeight.w500, color: const Color(0xFFB9B9BE), decoration: TextDecoration.lineThrough),
                   subtitle1: GoogleFonts.getFont(
                     "Inter",
                     fontSize: 14,
@@ -103,15 +98,9 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 textTheme: TextTheme(
-                  headline1: GoogleFonts.getFont("Inter",
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFFDADADA)),
+                  headline1: GoogleFonts.getFont("Inter", fontSize: 18, fontWeight: FontWeight.w500, color: const Color(0xFFDADADA)),
                   headline2: GoogleFonts.getFont("Inter",
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF575767),
-                      decoration: TextDecoration.lineThrough),
+                      fontSize: 18, fontWeight: FontWeight.w500, color: const Color(0xFF575767), decoration: TextDecoration.lineThrough),
                   subtitle1: GoogleFonts.getFont(
                     "Inter",
                     fontSize: 14,
@@ -145,6 +134,8 @@ class MyApp extends StatelessWidget {
                 "/settings": (context) => const SettingsPage(),
                 "/languages": (context) => const LanguagesPage(),
                 "/license": (context) => const ShowLicensePage(),
+                "/privacy": (context) => const ShowPrivacyPolicyPage(),
+                "/terms": (context) => const ShowTermsPage(),
               },
             );
           },
