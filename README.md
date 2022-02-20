@@ -33,6 +33,8 @@ While it's not in Google's PlayStore, you can download it [here](https://github.
 - ✅ Fast
 - ✅ Dark mode
 - ✅ Language selector
+- ✅ Icon selector (for folders)
+- ✅ Color selector (for folders)
 
 ## To-Do
 - [ ] Change time format
