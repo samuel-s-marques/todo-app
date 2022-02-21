@@ -85,7 +85,7 @@ $ cd todo-app
 
 Now you can open the project with VSCode or Android Studio and build it. Or you can use
 ```
-$ flutter --no-color build apk --no-tree-shake-icons
+$ flutter build apk --no-tree-shake-icons --split-per-abi
 ```
 
 ## Pull requests
