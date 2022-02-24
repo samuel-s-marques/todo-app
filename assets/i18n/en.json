@@ -34,6 +34,7 @@
         "title": "Share with friends",
         "content": "Check this amazing todo app!\nhttps://github.com/samuel-s-marques/todo-app"
       },
+      "rate": "Rate the app!",
       "open_source": "Open-source license",
       "loading": "Loading",
       "terms": "Terms and conditions",
