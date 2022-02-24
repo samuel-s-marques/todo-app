@@ -97,6 +97,7 @@ class _FoldersPageState extends State<FoldersPage> {
                           icon: Icon(
                             _chosenIcon,
                             color: _chosenColor,
+                            semanticLabel: translate("folders_page.choose_icon"),
                           ),
                         ),
                         Flexible(
@@ -133,6 +134,29 @@ class _FoldersPageState extends State<FoldersPage> {
                                     content: SingleChildScrollView(
                                       child: BlockPicker(
                                           pickerColor: _chosenColor,
+                                          availableColors: const [
+                                            Colors.red,
+                                            Colors.blue,
+                                            Colors.lightBlue,
+                                            Colors.deepOrange,
+                                            Colors.black,
+                                            Colors.black38,
+                                            Colors.black54,
+                                            Colors.amber,
+                                            Colors.brown,
+                                            Colors.cyan,
+                                            Colors.deepPurple,
+                                            Colors.green,
+                                            Colors.greenAccent,
+                                            Colors.indigoAccent,
+                                            Colors.lightGreen,
+                                            Colors.lime,
+                                            Colors.orange,
+                                            Colors.pink,
+                                            Colors.purple,
+                                            Colors.teal,
+                                            Colors.yellow,
+                                          ],
                                           onColorChanged: (Color color) {
                                             setState(() {
                                               _chosenColor = color;
