@@ -27,6 +27,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_markdown: ^0.6.9
+  launch_review: ^3.0.1
 
 dev_dependencies:
   flutter_test:
