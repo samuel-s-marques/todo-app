@@ -230,7 +230,10 @@ class _FoldersPageState extends State<FoldersPage> {
         actions: [
           IconButton(
             onPressed: () => Navigator.pushNamed(context, "/settings"),
-            icon: const Icon(Icons.settings),
+            icon: Icon(
+              Icons.settings,
+              semanticLabel: translate("settings_page.settings_section.title"),
+            ),
           )
         ],
       ),
@@ -310,7 +313,10 @@ class _FoldersPageState extends State<FoldersPage> {
           borderRadius: BorderRadius.all(Radius.circular(50)),
         ),
         backgroundColor: const Color(0xFF473FA0),
-        child: const Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          semanticLabel: translate('folders_page.new_folder'),
+        ),
       ),
     );
   }
