@@ -62,7 +62,8 @@
       "ar": "Arábica",
       "ja": "Japonés",
       "sv": "Sueco",
-      "fr": "Francés"
+      "fr": "Francés",
+      "de": "Alemán"
     },
     "selection": {
       "message": "Seleccione un idioma de la lista",

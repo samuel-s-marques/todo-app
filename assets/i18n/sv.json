@@ -62,7 +62,8 @@
       "ar": "Arabiska",
       "ja": "Japanska",
       "sv": "Svenska",
-      "fr": "Franska"
+      "fr": "Franska",
+      "de": "Tyska"
     },
     "selection": {
       "message": "Välj ett språk från listan",
