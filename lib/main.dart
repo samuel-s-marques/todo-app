@@ -17,7 +17,7 @@ import 'package:todoapp/utils/translate_preferences.dart';
 void main() async {
   var delegate = await LocalizationDelegate.create(
     fallbackLocale: 'en',
-    supportedLocales: ['en', 'pt', 'ja', 'es', 'ar', 'sv', 'fr', 'de'],
+    supportedLocales: ['en', 'pt', 'ja', 'es', 'ar', 'sv', 'fr', 'de', 'ru'],
     preferences: TranslatePreferences(),
   );
 
