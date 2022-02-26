@@ -63,7 +63,8 @@
       "ja": "Japanska",
       "sv": "Svenska",
       "fr": "Franska",
-      "de": "Tyska"
+      "de": "Tyska",
+      "ru": "Ryska"
     },
     "selection": {
       "message": "Välj ett språk från listan",

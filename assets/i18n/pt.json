@@ -63,7 +63,8 @@
       "ja": "Japonês",
       "sv": "Sueco",
       "fr": "Francês",
-      "de": "Alemão"
+      "de": "Alemão",
+      "ru": "Russo"
     },
     "selection": {
       "message": "Por favor selecione uma linguagem da lista",
