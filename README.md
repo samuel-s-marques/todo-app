@@ -41,7 +41,7 @@ But the newest releases are available [here](https://github.com/samuel-s-marques
 - ✅ Icon selector (for folders)
 - ✅ Color selector (for folders)
 
-## Roadmap
+## [Roadmap](https://github.com/samuel-s-marques/todo-app/projects/1?fullscreen=true)
 - [ ] Change time format
 - [ ] Check updates section in settings page
 - [ ] Drag and drop folders and tasks
