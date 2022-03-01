@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:todoapp/database/database.dart';
+import 'package:todoapp/models/notification.dart';
 import 'package:todoapp/models/tasks_arguments.dart';
+import 'package:todoapp/widgets/notifications.dart';
 import 'package:todoapp/widgets/task_tile.dart';
 
 class TasksPage extends StatefulWidget {
@@ -25,6 +28,10 @@ class _TasksPageState extends State<TasksPage> {
     Future<void> showBottomSheetDialog(BuildContext context) async {
       final TextEditingController _newTaskController = TextEditingController();
       final TextEditingController _taskDetailsController = TextEditingController();
+      final TextEditingController _timeController = TextEditingController();
+      final TextEditingController _dateController = TextEditingController();
+      TimeOfDay? selectedTime;
+      DateTime? selectedDate;
       final formKey = GlobalKey<FormState>();
 
       await showSlidingBottomSheet(context, builder: (context) {
@@ -86,6 +93,62 @@ class _TasksPageState extends State<TasksPage> {
                         ),
                       ),
                     ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 5.0),
+                            child: TextFormField(
+                              controller: _timeController,
+                              onTap: () async {
+                                selectedTime = await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now(),
+                                );
+
+                                setState(() {
+                                  _timeController.text = selectedTime!.format(context);
+                                });
+                              },
+                              style: Theme.of(context).textTheme.bodyText1,
+                              decoration: InputDecoration(
+                                labelText: 'Time',
+                                border: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: TextFormField(
+                              controller: _dateController,
+                              onTap: () async {
+                                selectedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime(DateTime.now().year + 20),
+                                );
+
+                                setState(() {
+                                  _dateController.text = DateFormat.yMd().format(selectedDate!);
+                                });
+                              },
+                              style: Theme.of(context).textTheme.bodyText1,
+                              decoration: InputDecoration(
+                                labelText: 'Date',
+                                border: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -100,13 +163,31 @@ class _TasksPageState extends State<TasksPage> {
                   child: TextButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        Provider.of<MyDb>(context, listen: false).createTask(
+                        Provider.of<MyDb>(context, listen: false)
+                            .createTask(
                           _newTaskController.text.trim(),
                           _taskDetailsController.text.trim(),
                           0,
                           args.folderId,
                           DateTime.now().millisecondsSinceEpoch,
                           DateTime.now().millisecondsSinceEpoch,
+                        )
+                            .then(
+                          (value) {
+                            if (_dateController.text.trim().isNotEmpty && _timeController.text.trim().isNotEmpty) {
+                              createReminderNotification(
+                                title: _newTaskController.text.trim(),
+                                notificationSchedule: NotificationWeekAndTime(
+                                  dayOfTheWeek: selectedDate!.weekday,
+                                  timeOfDay: TimeOfDay(
+                                    hour: selectedTime!.hour,
+                                    minute: selectedTime!.minute,
+                                  ),
+                                  repeat: false,
+                                ),
+                              );
+                            }
+                          },
                         );
 
                         Navigator.pop(context);
