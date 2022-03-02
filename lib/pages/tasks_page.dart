@@ -125,7 +125,7 @@ class _TasksPageState extends State<TasksPage> {
                       },
                       style: Theme.of(context).textTheme.bodyText1,
                       decoration: InputDecoration(
-                        labelText: 'Date & Time',
+                        labelText: translate("tasks_page.datetime"),
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),

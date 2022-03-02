@@ -137,7 +137,7 @@ class _TaskTileState extends State<TaskTile> {
                       },
                       style: Theme.of(context).textTheme.bodyText1,
                       decoration: InputDecoration(
-                        labelText: 'Date & Time',
+                        labelText: translate("tasks_page.datetime"),
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
