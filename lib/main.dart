@@ -22,14 +22,17 @@ void main() async {
     preferences: TranslatePreferences(),
   );
 
-  AwesomeNotifications().initialize(null, [
-    NotificationChannel(
-      channelKey: 'tasks',
-      channelName: 'Tasks to-do',
-      channelDescription: 'There are tasks to do!',
-      importance: NotificationImportance.High,
-    )
-  ]);
+  AwesomeNotifications().initialize(
+    'resource://drawable/res_app_icon',
+    [
+      NotificationChannel(
+        channelKey: 'tasks',
+        channelName: 'Tasks to-do',
+        channelDescription: 'Tasks',
+        importance: NotificationImportance.High,
+      )
+    ],
+  );
 
   runApp(LocalizedApp(
     delegate,
