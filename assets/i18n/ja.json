@@ -3,13 +3,15 @@
     "no_tasks": "タスクなし",
     "new_task": "新しいタスク",
     "modify_task": "タスクを変更",
-    "details": "詳細"
+    "details": "詳細",
+    "datetime": "日時"
   },
   "folders_page": {
     "no_folders": "フォルダーなし",
     "new_folder": "新規フォルダー",
     "modify_folder": "フォルダーの変更",
     "choose_color": "フォルダの色を選択する",
+    "choose_icon": "フォルダーアイコンを選択",
     "choose": "選択",
     "save_color": "色の保存"
   },
@@ -34,6 +36,7 @@
         "title": "友達と共有する",
         "content": "この素晴らしいタスクアプリをチェックしてみてください\nhttps://github.com/samuel-s-marques/todo-app"
       },
+      "rate": "アプリを評価しよう",
       "open_source": "オープンソースライセンス",
       "loading": "ローディング",
       "terms": "ご利用条件",
@@ -60,7 +63,9 @@
       "ar": "アラビア語",
       "ja": "日本語",
       "sv": "スウェーデン語",
-      "fr": "フランス語"
+      "fr": "フランス語",
+      "de": "ドイツ語",
+      "ru": "ロシア語"
     },
     "selection": {
       "message": "言語",

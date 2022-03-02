@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -19,6 +20,30 @@ class FoldersPage extends StatefulWidget {
 
 class _FoldersPageState extends State<FoldersPage> {
   final controller = SheetController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Allow notification"),
+            content: Text("Our app would like to send you notifications"),
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(context), child: Text("Don't allow")),
+              TextButton(
+                onPressed: () => AwesomeNotifications().requestPermissionToSendNotifications().then((_) => Navigator.pop(context)),
+                child: Text("Allow"),
+              ),
+            ],
+          ),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +122,7 @@ class _FoldersPageState extends State<FoldersPage> {
                           icon: Icon(
                             _chosenIcon,
                             color: _chosenColor,
+                            semanticLabel: translate("folders_page.choose_icon"),
                           ),
                         ),
                         Flexible(
@@ -133,6 +159,29 @@ class _FoldersPageState extends State<FoldersPage> {
                                     content: SingleChildScrollView(
                                       child: BlockPicker(
                                           pickerColor: _chosenColor,
+                                          availableColors: const [
+                                            Colors.red,
+                                            Colors.blue,
+                                            Colors.lightBlue,
+                                            Colors.deepOrange,
+                                            Colors.black,
+                                            Colors.black38,
+                                            Colors.black54,
+                                            Colors.amber,
+                                            Colors.brown,
+                                            Colors.cyan,
+                                            Colors.deepPurple,
+                                            Colors.green,
+                                            Colors.greenAccent,
+                                            Colors.indigoAccent,
+                                            Colors.lightGreen,
+                                            Colors.lime,
+                                            Colors.orange,
+                                            Colors.pink,
+                                            Colors.purple,
+                                            Colors.teal,
+                                            Colors.yellow,
+                                          ],
                                           onColorChanged: (Color color) {
                                             setState(() {
                                               _chosenColor = color;
@@ -230,7 +279,10 @@ class _FoldersPageState extends State<FoldersPage> {
         actions: [
           IconButton(
             onPressed: () => Navigator.pushNamed(context, "/settings"),
-            icon: const Icon(Icons.settings),
+            icon: Icon(
+              Icons.settings,
+              semanticLabel: translate("settings_page.settings_section.title"),
+            ),
           )
         ],
       ),
@@ -310,7 +362,10 @@ class _FoldersPageState extends State<FoldersPage> {
           borderRadius: BorderRadius.all(Radius.circular(50)),
         ),
         backgroundColor: const Color(0xFF473FA0),
-        child: const Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          semanticLabel: translate('folders_page.new_folder'),
+        ),
       ),
     );
   }

@@ -21,7 +21,6 @@ class ShowTermsPage extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
             return Markdown(
               data: snapshot.data ?? translate("settings_page.support_section.loading"),
-              selectable: true,
             );
           },
         ),

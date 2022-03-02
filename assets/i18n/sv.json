@@ -3,13 +3,15 @@
     "no_tasks": "Inga uppgifter",
     "new_task": "Ny uppgift",
     "modify_task": "Ändra uppgift",
-    "details": "Detaljer"
+    "details": "Detaljer",
+    "datetime": "Datum och tid"
   },
   "folders_page": {
     "no_folders": "Inga mappar",
     "new_folder": "Ny mapp",
     "modify_folder": "Ändra mapp",
     "choose_color": "Välj färg på mappen",
+    "choose_icon": "Välj mappikonen",
     "choose": "Välj",
     "save_color": "Spara färg"
   },
@@ -34,6 +36,7 @@
         "title": "Dela med vänner",
         "content": "Kolla in den här fantastiska appen för att göra uppgifter!\nhttps://github.com/samuel-s-marques/todo-app"
       },
+      "rate": "Betygsätt ansökan!",
       "open_source": "Licens för öppen källkod",
       "loading": "Laddar",
       "terms": "Villkor och bestämmelser",
@@ -60,7 +63,9 @@
       "ar": "Arabiska",
       "ja": "Japanska",
       "sv": "Svenska",
-      "fr": "Franska"
+      "fr": "Franska",
+      "de": "Tyska",
+      "ru": "Ryska"
     },
     "selection": {
       "message": "Välj ett språk från listan",
