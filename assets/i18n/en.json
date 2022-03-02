@@ -3,7 +3,8 @@
     "no_tasks": "No tasks",
     "new_task": "New task",
     "modify_task": "Modify task",
-    "details": "Details"
+    "details": "Details",
+    "datetime": "Date and time"
   },
   "folders_page": {
     "no_folders": "No folders",

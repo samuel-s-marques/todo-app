@@ -3,7 +3,8 @@
     "no_tasks": "タスクなし",
     "new_task": "新しいタスク",
     "modify_task": "タスクを変更",
-    "details": "詳細"
+    "details": "詳細",
+    "datetime": "日時"
   },
   "folders_page": {
     "no_folders": "フォルダーなし",

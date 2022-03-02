@@ -3,7 +3,8 @@
     "no_tasks": "لا مهام موجودة",
     "new_task": "مهمة جديدة",
     "modify_task": "تغيير مهمة",
-    "details": "تفاصيل"
+    "details": "تفاصيل",
+    "datetime": "التاريخ و الوقت"
   },
   "folders_page": {
     "no_folders": "عدم وجود ملفات",

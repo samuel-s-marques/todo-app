@@ -3,7 +3,8 @@
     "no_tasks": "Sin tareas",
     "new_task": "Nueva tarea",
     "modify_task": "Modificar tarea",
-    "details": "Detalles"
+    "details": "Detalles",
+    "datetime": "Fecha y hora"
   },
   "folders_page": {
     "no_folders": "Sin carpetas",
