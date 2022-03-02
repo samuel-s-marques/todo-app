@@ -26,6 +26,7 @@ class _TaskTileState extends State<TaskTile> {
 
   @override
   Widget build(BuildContext context) {
+    final Locale locale = Localizations.localeOf(context);
     bool isDone = widget.task.isDone == 0 ? false : true;
     LocalizationDelegate localizedDelegate = LocalizedApp.of(context).delegate;
     DateFormat dateTimeFormatter = DateFormat("yMd", localizedDelegate.currentLocale.languageCode).add_Hm();
@@ -126,6 +127,7 @@ class _TaskTileState extends State<TaskTile> {
                           minTime: DateTime.now(),
                           maxTime: DateTime(DateTime.now().year + 3),
                           currentTime: DateTime.now(),
+                          locale: languageFromCode(locale.languageCode),
                           onConfirm: (date) {
                             selectedDate = date;
 

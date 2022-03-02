@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -37,12 +36,12 @@ class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as TasksArguments;
+    final Locale locale = Localizations.localeOf(context);
 
     Future<void> showBottomSheetDialog(BuildContext context) async {
       final TextEditingController _newTaskController = TextEditingController();
       final TextEditingController _taskDetailsController = TextEditingController();
       final TextEditingController _dateController = TextEditingController();
-      TimeOfDay? selectedTime;
       DateTime? selectedDate;
       final formKey = GlobalKey<FormState>();
 
@@ -114,6 +113,7 @@ class _TasksPageState extends State<TasksPage> {
                           minTime: DateTime.now(),
                           maxTime: DateTime(DateTime.now().year + 3),
                           currentTime: DateTime.now(),
+                          locale: languageFromCode(locale.languageCode),
                           onConfirm: (date) {
                             selectedDate = date;
 
