@@ -29,6 +29,7 @@ dependencies:
   flutter_markdown: ^0.6.9
   launch_review: ^3.0.1
   awesome_notifications: ^0.6.21
+  flutter_datetime_picker: ^1.5.1
 
 dev_dependencies:
   flutter_test:
