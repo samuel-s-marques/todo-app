@@ -1,5 +1,7 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +10,7 @@ import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:todoapp/database/database.dart';
 import 'package:todoapp/models/notification.dart';
 import 'package:todoapp/models/tasks_arguments.dart';
+import 'package:todoapp/utils/utils.dart';
 import 'package:todoapp/widgets/notifications.dart';
 import 'package:todoapp/widgets/task_tile.dart';
 
@@ -22,13 +25,22 @@ class _TasksPageState extends State<TasksPage> {
   final controller = SheetController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as TasksArguments;
 
     Future<void> showBottomSheetDialog(BuildContext context) async {
       final TextEditingController _newTaskController = TextEditingController();
       final TextEditingController _taskDetailsController = TextEditingController();
-      final TextEditingController _timeController = TextEditingController();
       final TextEditingController _dateController = TextEditingController();
       TimeOfDay? selectedTime;
       DateTime? selectedDate;
@@ -93,62 +105,32 @@ class _TasksPageState extends State<TasksPage> {
                         ),
                       ),
                     ),
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 5.0),
-                            child: TextFormField(
-                              controller: _timeController,
-                              onTap: () async {
-                                selectedTime = await showTimePicker(
-                                  context: context,
-                                  initialTime: TimeOfDay.now(),
-                                );
+                    TextFormField(
+                      controller: _dateController,
+                      readOnly: true,
+                      onTap: () async {
+                        selectedDate = await DatePicker.showDateTimePicker(
+                          context,
+                          minTime: DateTime.now(),
+                          maxTime: DateTime(DateTime.now().year + 3),
+                          currentTime: DateTime.now(),
+                          onConfirm: (date) {
+                            selectedDate = date;
 
-                                setState(() {
-                                  _timeController.text = selectedTime!.format(context);
-                                });
-                              },
-                              style: Theme.of(context).textTheme.bodyText1,
-                              decoration: InputDecoration(
-                                labelText: 'Time',
-                                border: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                ),
-                              ),
-                            ),
-                          ),
+                            setState(() {
+                              _dateController.text = DateFormat('H:m d/M/y').format(date);
+                            });
+                          },
+                        );
+                      },
+                      style: Theme.of(context).textTheme.bodyText1,
+                      decoration: InputDecoration(
+                        labelText: 'Date & Time',
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5.0),
-                            child: TextFormField(
-                              controller: _dateController,
-                              onTap: () async {
-                                selectedDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime.now(),
-                                  lastDate: DateTime(DateTime.now().year + 20),
-                                );
-
-                                setState(() {
-                                  _dateController.text = DateFormat.yMd().format(selectedDate!);
-                                });
-                              },
-                              style: Theme.of(context).textTheme.bodyText1,
-                              decoration: InputDecoration(
-                                labelText: 'Date',
-                                border: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -161,28 +143,29 @@ class _TasksPageState extends State<TasksPage> {
                 SizedBox(
                   width: 120,
                   child: TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (formKey.currentState!.validate()) {
+                        int id = generateId();
+
                         Provider.of<MyDb>(context, listen: false)
                             .createTask(
+                          id,
                           _newTaskController.text.trim(),
                           _taskDetailsController.text.trim(),
                           0,
                           args.folderId,
                           DateTime.now().millisecondsSinceEpoch,
                           DateTime.now().millisecondsSinceEpoch,
+                          selectedDate?.millisecondsSinceEpoch ?? 0,
                         )
                             .then(
                           (value) {
-                            if (_dateController.text.trim().isNotEmpty && _timeController.text.trim().isNotEmpty) {
+                            if (_dateController.text.trim().isNotEmpty) {
                               createReminderNotification(
+                                id: id,
                                 title: _newTaskController.text.trim(),
                                 notificationSchedule: NotificationWeekAndTime(
-                                  dayOfTheWeek: selectedDate!.weekday,
-                                  timeOfDay: TimeOfDay(
-                                    hour: selectedTime!.hour,
-                                    minute: selectedTime!.minute,
-                                  ),
+                                  dateTime: selectedDate!,
                                   repeat: false,
                                 ),
                               );
