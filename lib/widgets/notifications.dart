@@ -1,11 +1,11 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:todoapp/models/notification.dart';
-import 'package:todoapp/utils/utils.dart';
 
-Future<void> createReminderNotification({required String title, required NotificationWeekAndTime notificationSchedule}) async {
+Future<void> createReminderNotification(
+    {required int id, required String title, required NotificationWeekAndTime notificationSchedule}) async {
   await AwesomeNotifications().createNotification(
     content: NotificationContent(
-      id: generateId(),
+      id: id,
       channelKey: 'tasks',
       title: 'Ei! Há tarefas pendentes!',
       body: title,
@@ -18,9 +18,9 @@ Future<void> createReminderNotification({required String title, required Notific
     ],
     schedule: NotificationCalendar(
       repeats: notificationSchedule.repeat,
-      weekday: notificationSchedule.dayOfTheWeek,
-      hour: notificationSchedule.timeOfDay.hour,
-      minute: notificationSchedule.timeOfDay.minute,
+      weekday: notificationSchedule.dateTime.weekday,
+      hour: notificationSchedule.dateTime.hour,
+      minute: notificationSchedule.dateTime.minute,
       second: 0,
       millisecond: 0,
     ),
