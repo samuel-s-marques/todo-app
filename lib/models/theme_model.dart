@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/utils/theme_preferences.dart';
+import 'package:todoapp/utils/utils.dart';
 
 class ThemeModel extends ChangeNotifier {
   late bool _isDark;

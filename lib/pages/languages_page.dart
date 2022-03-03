@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:todoapp/utils/translate_preferences.dart';
+import 'package:todoapp/utils/utils.dart';
 
 class LanguagesPage extends StatefulWidget {
   const LanguagesPage({Key? key}) : super(key: key);
