@@ -1,4 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:todoapp/models/notification.dart';
 
 Future<void> createReminderNotification(
@@ -7,7 +8,7 @@ Future<void> createReminderNotification(
     content: NotificationContent(
       id: id,
       channelKey: 'tasks',
-      title: 'Ei! Há tarefas pendentes!',
+      title: translate('notifications.task_todo'),
       body: title,
     ),
     schedule: NotificationCalendar(
