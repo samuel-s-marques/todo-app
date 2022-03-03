@@ -3,7 +3,8 @@
     "no_tasks": "Keine aufgaben",
     "new_task": "Neue aufgabe",
     "modify_task": "Aufgabe ändern",
-    "details": "Einzelheiten"
+    "details": "Einzelheiten",
+    "datetime": "Datum und Uhrzeit"
   },
   "folders_page": {
     "no_folders": "Keine Ordner",
@@ -73,5 +74,8 @@
     "snackbar": {
       "message": "Die App muss neu gestartet werden, um diese Änderungen zu übernehmen"
     }
+  },
+  "notifications": {
+    "task_todo": "Hey! Es gibt noch offene Aufgaben!"
   }
 }

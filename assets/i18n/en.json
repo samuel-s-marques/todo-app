@@ -3,7 +3,8 @@
     "no_tasks": "No tasks",
     "new_task": "New task",
     "modify_task": "Modify task",
-    "details": "Details"
+    "details": "Details",
+    "datetime": "Date and time"
   },
   "folders_page": {
     "no_folders": "No folders",
@@ -73,5 +74,8 @@
     "snackbar": {
       "message": "The app needs to restart to apply these changes"
     }
+  },
+  "notifications": {
+    "task_todo": "Hey! There are tasks to do!"
   }
 }

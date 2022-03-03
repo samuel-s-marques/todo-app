@@ -3,7 +3,8 @@
     "no_tasks": "Sin tareas",
     "new_task": "Nueva tarea",
     "modify_task": "Modificar tarea",
-    "details": "Detalles"
+    "details": "Detalles",
+    "datetime": "Fecha y hora"
   },
   "folders_page": {
     "no_folders": "Sin carpetas",
@@ -73,5 +74,8 @@
     "snackbar": {
       "message": "La aplicación debe reiniciarse para aplicar estos cambios"
     }
+  },
+  "notifications": {
+    "task_todo": "¡Hey! ¡Hay tareas que hacer!"
   }
 }

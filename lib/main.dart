@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -19,6 +20,18 @@ void main() async {
     fallbackLocale: 'en',
     supportedLocales: ['en', 'pt', 'ja', 'es', 'ar', 'sv', 'fr', 'de', 'ru'],
     preferences: TranslatePreferences(),
+  );
+
+  AwesomeNotifications().initialize(
+    'resource://drawable/res_app_icon',
+    [
+      NotificationChannel(
+        channelKey: 'tasks',
+        channelName: 'Tasks to-do',
+        channelDescription: 'Tasks',
+        importance: NotificationImportance.High,
+      )
+    ],
   );
 
   runApp(LocalizedApp(

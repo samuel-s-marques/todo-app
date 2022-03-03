@@ -3,7 +3,8 @@
     "no_tasks": "Inga uppgifter",
     "new_task": "Ny uppgift",
     "modify_task": "Ändra uppgift",
-    "details": "Detaljer"
+    "details": "Detaljer",
+    "datetime": "Datum och tid"
   },
   "folders_page": {
     "no_folders": "Inga mappar",
@@ -73,5 +74,8 @@
     "snackbar": {
       "message": "Appen måste startas om för att ändringarna ska kunna tillämpas"
     }
+  },
+  "notifications": {
+    "task_todo": "Hallå! Det finns uppgifter att göra!"
   }
 }

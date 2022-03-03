@@ -3,7 +3,8 @@
     "no_tasks": "タスクなし",
     "new_task": "新しいタスク",
     "modify_task": "タスクを変更",
-    "details": "詳細"
+    "details": "詳細",
+    "datetime": "日時"
   },
   "folders_page": {
     "no_folders": "フォルダーなし",
@@ -73,5 +74,8 @@
     "snackbar": {
       "message": "これらの変更を適用するには、アプリを再起動する必要があります"
     }
+  },
+  "notifications": {
+    "task_todo": "用事がある！"
   }
 }
