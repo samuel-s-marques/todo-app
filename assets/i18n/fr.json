@@ -3,15 +3,13 @@
     "no_tasks": "Aucune tâche",
     "new_task": "Nouvelle tâche",
     "modify_task": "Modifier une tâche",
-    "details": "Détails",
-    "datetime": "Date et heure"
+    "details": "Détails"
   },
   "folders_page": {
     "no_folders": "Aucun dossier",
     "new_folder": "Nouveau dossier",
     "modify_folder": "Modifier dossi",
     "choose_color": "Choisissez la couleur du dossier",
-    "choose_icon": "Sélectionnez l'icône du dossier",
     "choose": "Choisissez",
     "save_color": "Sauvegarder la couleur"
   },
@@ -36,7 +34,6 @@
         "title": "Partager avec des amis",
         "content": "Découvrez cette incroyable application de tâches à faire!\nhttps://github.com/samuel-s-marques/todo-app"
       },
-      "rate": "Passez en revue l'application !",
       "open_source": "Licence open-source",
       "loading": "Chargement",
       "terms": "Termes et conditions ",
@@ -63,9 +60,7 @@
       "ar": "Arabe",
       "ja": "Japonaise",
       "sv": "Suédoise",
-      "fr": "Français",
-      "de": "Allemand",
-      "ru": "Russe"
+      "fr": "Français"
     },
     "selection": {
       "message": "Veuillez sélectionner une langue dans la liste",

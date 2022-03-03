@@ -3,15 +3,13 @@
     "no_tasks": "Sem tarefas",
     "new_task": "Nova tarefa",
     "modify_task": "Modificar tarefa",
-    "details": "Detalhes",
-    "datetime": "Data e hora"
+    "details": "Detalhes"
   },
   "folders_page": {
     "no_folders": "Sem pastas",
     "new_folder": "Nova pasta",
     "modify_folder": "Modificar pasta",
     "choose_color": "Escolha a cor da pasta",
-    "choose_icon": "Escolher ícone da pasta",
     "choose": "Escolher",
     "save_color": "Salvar cor"
   },
@@ -36,7 +34,6 @@
         "title": "Compartilhe com amigos",
         "content": "Olhe que app de tarefas incrível!\nhttps://github.com/samuel-s-marques/todo-app"
       },
-      "rate": "Avalie o aplicativo!",
       "open_source": "Licença open-source",
       "loading": "Carregando",
       "terms": "Termos e condições",
@@ -63,9 +60,7 @@
       "ar": "Árabe",
       "ja": "Japonês",
       "sv": "Sueco",
-      "fr": "Francês",
-      "de": "Alemão",
-      "ru": "Russo"
+      "fr": "Francês"
     },
     "selection": {
       "message": "Por favor selecione uma linguagem da lista",

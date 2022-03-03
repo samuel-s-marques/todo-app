@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:launch_review/launch_review.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:share/share.dart';
@@ -136,19 +135,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
                     ),
                     onPressed: (context) => Share.share(translate("settings_page.support_section.share.content")),
-                  ),
-                  SettingsTile(
-                    leading: const Icon(
-                      Icons.star_border_outlined,
-                      color: Colors.deepOrange,
-                    ),
-                    title: Text(
-                      translate("settings_page.support_section.rate"),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
-                    ),
-                    onPressed: (context) => LaunchReview.launch(
-                      androidAppId: 'com.samuel.todoapp',
-                    ),
                   ),
                   SettingsTile(
                     leading: const Icon(Icons.source_outlined),

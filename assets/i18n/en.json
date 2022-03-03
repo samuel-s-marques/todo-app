@@ -3,15 +3,13 @@
     "no_tasks": "No tasks",
     "new_task": "New task",
     "modify_task": "Modify task",
-    "details": "Details",
-    "datetime": "Date and time"
+    "details": "Details"
   },
   "folders_page": {
     "no_folders": "No folders",
     "new_folder": "New folder",
     "modify_folder": "Modify folder",
     "choose_color": "Choose the folder color",
-    "choose_icon": "Choose the folder icon",
     "choose": "Choose",
     "save_color": "Save color"
   },
@@ -36,7 +34,6 @@
         "title": "Share with friends",
         "content": "Check this amazing todo app!\nhttps://github.com/samuel-s-marques/todo-app"
       },
-      "rate": "Rate the app!",
       "open_source": "Open-source license",
       "loading": "Loading",
       "terms": "Terms and conditions",
@@ -63,9 +60,7 @@
       "ar": "Arabic",
       "ja": "Japanese",
       "sv": "Swedish",
-      "fr": "French",
-      "de": "German",
-      "ru": "Russian"
+      "fr": "French"
     },
     "selection": {
       "message": "Please select a language from the list",

@@ -9,14 +9,12 @@ CREATE TABLE folders (
 
 CREATE TABLE tasks (
     id INT NOT NULL PRIMARY KEY AUTOINCREMENT,
-    notification_id INT,
     name TEXT NOT NULL,
     description TEXT,
     isDone TINYINT NOT NULL DEFAULT 0,
     folder_id INT NOT NULL,
     createdAt INT NOT NULL,
     updatedAt INT NOT NULL,
-    notification_time INT NOT NULL DEFAULT 0,
     FOREIGN KEY (folder_id) REFERENCES folders (id) ON DELETE CASCADE
 );
 
@@ -29,6 +27,6 @@ deleteFolderById: DELETE FROM folders WHERE id = :id;
 deleteAllFolders: DELETE FROM folders;
 deleteAllTasks: DELETE FROM tasks;
 createFolder: INSERT INTO folders (title, colorHexCode, iconCodePoint, createdAt, updatedAt) VALUES (:title, :colorHexCode, :iconCodePoint, :createdAt, :updatedAt);
-createTask: INSERT INTO tasks (notification_id, name, description, isDone, folder_id, createdAt, updatedAt, notification_time) VALUES (:notification_id, :name, :description, :isDone, :folder_id, :createdAt, :updatedAt, :notification_time);
-updateTaskById: UPDATE tasks SET notification_id = :notification_id, name = :name, description = :description, isDone = :isDone, updatedAt = :updatedAt, notification_time = :notification_time WHERE id = :id;
+createTask: INSERT INTO tasks (name, description, isDone, folder_id, createdAt, updatedAt) VALUES (:name, :description, :isDone, :folder_id, :createdAt, :updatedAt);
+updateTaskById: UPDATE tasks SET name = :name, description = :description, isDone = :isDone, updatedAt = :updatedAt WHERE id = :id;
 updateFolderById: UPDATE folders SET title = :title, colorHexCode = :colorHexCode, iconCodePoint = :iconCodePoint, updatedAt = :updatedAt WHERE id = :id;
