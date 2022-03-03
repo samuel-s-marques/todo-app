@@ -74,5 +74,8 @@
     "snackbar": {
       "message": "Appen måste startas om för att ändringarna ska kunna tillämpas"
     }
+  },
+  "notifications": {
+    "task_todo": "Hallå! Det finns uppgifter att göra!"
   }
 }

@@ -74,5 +74,8 @@
     "snackbar": {
       "message": "La aplicación debe reiniciarse para aplicar estos cambios"
     }
+  },
+  "notifications": {
+    "task_todo": "¡Hey! ¡Hay tareas que hacer!"
   }
 }

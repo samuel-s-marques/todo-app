@@ -74,5 +74,8 @@
     "snackbar": {
       "message": "L'application doit redémarrer pour appliquer ces changements"
     }
+  },
+  "notifications": {
+    "task_todo": "Hé ! Il y a des tâches à faire !"
   }
 }

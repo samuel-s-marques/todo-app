@@ -74,5 +74,8 @@
     "snackbar": {
       "message": "Die App muss neu gestartet werden, um diese Änderungen zu übernehmen"
     }
+  },
+  "notifications": {
+    "task_todo": "Hey! Es gibt noch offene Aufgaben!"
   }
 }

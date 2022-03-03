@@ -74,5 +74,8 @@
     "snackbar": {
       "message": "O aplicativo precisa reiniciar para aplicar essas alterações"
     }
+  },
+  "notifications": {
+    "task_todo": "Ei! Há tarefas pendentes!"
   }
 }

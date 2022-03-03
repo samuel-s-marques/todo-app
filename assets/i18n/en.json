@@ -74,5 +74,8 @@
     "snackbar": {
       "message": "The app needs to restart to apply these changes"
     }
+  },
+  "notifications": {
+    "task_todo": "Hey! There are tasks to do!"
   }
 }
