@@ -344,31 +344,25 @@ class Folders extends Table with TableInfo<Folders, Folder> {
 
 class Task extends DataClass implements Insertable<Task> {
   final int id;
-  final int? notificationId;
   final String name;
   final String? description;
   final int isDone;
   final int folderId;
   final int createdAt;
   final int updatedAt;
-  final int notificationTime;
   Task(
       {required this.id,
-      this.notificationId,
       required this.name,
       this.description,
       required this.isDone,
       required this.folderId,
       required this.createdAt,
-      required this.updatedAt,
-      required this.notificationTime});
+      required this.updatedAt});
   factory Task.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return Task(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      notificationId: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}notification_id']),
       name: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
       description: const StringType()
@@ -381,17 +375,12 @@ class Task extends DataClass implements Insertable<Task> {
           .mapFromDatabaseResponse(data['${effectivePrefix}createdAt'])!,
       updatedAt: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}updatedAt'])!,
-      notificationTime: const IntType().mapFromDatabaseResponse(
-          data['${effectivePrefix}notification_time'])!,
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    if (!nullToAbsent || notificationId != null) {
-      map['notification_id'] = Variable<int?>(notificationId);
-    }
     map['name'] = Variable<String>(name);
     if (!nullToAbsent || description != null) {
       map['description'] = Variable<String?>(description);
@@ -400,16 +389,12 @@ class Task extends DataClass implements Insertable<Task> {
     map['folder_id'] = Variable<int>(folderId);
     map['createdAt'] = Variable<int>(createdAt);
     map['updatedAt'] = Variable<int>(updatedAt);
-    map['notification_time'] = Variable<int>(notificationTime);
     return map;
   }
 
   TasksCompanion toCompanion(bool nullToAbsent) {
     return TasksCompanion(
       id: Value(id),
-      notificationId: notificationId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(notificationId),
       name: Value(name),
       description: description == null && nullToAbsent
           ? const Value.absent()
@@ -418,7 +403,6 @@ class Task extends DataClass implements Insertable<Task> {
       folderId: Value(folderId),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
-      notificationTime: Value(notificationTime),
     );
   }
 
@@ -427,14 +411,12 @@ class Task extends DataClass implements Insertable<Task> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Task(
       id: serializer.fromJson<int>(json['id']),
-      notificationId: serializer.fromJson<int?>(json['notification_id']),
       name: serializer.fromJson<String>(json['name']),
       description: serializer.fromJson<String?>(json['description']),
       isDone: serializer.fromJson<int>(json['isDone']),
       folderId: serializer.fromJson<int>(json['folder_id']),
       createdAt: serializer.fromJson<int>(json['createdAt']),
       updatedAt: serializer.fromJson<int>(json['updatedAt']),
-      notificationTime: serializer.fromJson<int>(json['notification_time']),
     );
   }
   @override
@@ -442,151 +424,127 @@ class Task extends DataClass implements Insertable<Task> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'notification_id': serializer.toJson<int?>(notificationId),
       'name': serializer.toJson<String>(name),
       'description': serializer.toJson<String?>(description),
       'isDone': serializer.toJson<int>(isDone),
       'folder_id': serializer.toJson<int>(folderId),
       'createdAt': serializer.toJson<int>(createdAt),
       'updatedAt': serializer.toJson<int>(updatedAt),
-      'notification_time': serializer.toJson<int>(notificationTime),
     };
   }
 
   Task copyWith(
           {int? id,
-          int? notificationId,
           String? name,
           String? description,
           int? isDone,
           int? folderId,
           int? createdAt,
-          int? updatedAt,
-          int? notificationTime}) =>
+          int? updatedAt}) =>
       Task(
         id: id ?? this.id,
-        notificationId: notificationId ?? this.notificationId,
         name: name ?? this.name,
         description: description ?? this.description,
         isDone: isDone ?? this.isDone,
         folderId: folderId ?? this.folderId,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
-        notificationTime: notificationTime ?? this.notificationTime,
       );
   @override
   String toString() {
     return (StringBuffer('Task(')
           ..write('id: $id, ')
-          ..write('notificationId: $notificationId, ')
           ..write('name: $name, ')
           ..write('description: $description, ')
           ..write('isDone: $isDone, ')
           ..write('folderId: $folderId, ')
           ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('notificationTime: $notificationTime')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, notificationId, name, description, isDone,
-      folderId, createdAt, updatedAt, notificationTime);
+  int get hashCode => Object.hash(
+      id, name, description, isDone, folderId, createdAt, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Task &&
           other.id == this.id &&
-          other.notificationId == this.notificationId &&
           other.name == this.name &&
           other.description == this.description &&
           other.isDone == this.isDone &&
           other.folderId == this.folderId &&
           other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt &&
-          other.notificationTime == this.notificationTime);
+          other.updatedAt == this.updatedAt);
 }
 
 class TasksCompanion extends UpdateCompanion<Task> {
   final Value<int> id;
-  final Value<int?> notificationId;
   final Value<String> name;
   final Value<String?> description;
   final Value<int> isDone;
   final Value<int> folderId;
   final Value<int> createdAt;
   final Value<int> updatedAt;
-  final Value<int> notificationTime;
   const TasksCompanion({
     this.id = const Value.absent(),
-    this.notificationId = const Value.absent(),
     this.name = const Value.absent(),
     this.description = const Value.absent(),
     this.isDone = const Value.absent(),
     this.folderId = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
-    this.notificationTime = const Value.absent(),
   });
   TasksCompanion.insert({
     this.id = const Value.absent(),
-    this.notificationId = const Value.absent(),
     required String name,
     this.description = const Value.absent(),
     this.isDone = const Value.absent(),
     required int folderId,
     required int createdAt,
     required int updatedAt,
-    this.notificationTime = const Value.absent(),
   })  : name = Value(name),
         folderId = Value(folderId),
         createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
   static Insertable<Task> custom({
     Expression<int>? id,
-    Expression<int?>? notificationId,
     Expression<String>? name,
     Expression<String?>? description,
     Expression<int>? isDone,
     Expression<int>? folderId,
     Expression<int>? createdAt,
     Expression<int>? updatedAt,
-    Expression<int>? notificationTime,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (notificationId != null) 'notification_id': notificationId,
       if (name != null) 'name': name,
       if (description != null) 'description': description,
       if (isDone != null) 'isDone': isDone,
       if (folderId != null) 'folder_id': folderId,
       if (createdAt != null) 'createdAt': createdAt,
       if (updatedAt != null) 'updatedAt': updatedAt,
-      if (notificationTime != null) 'notification_time': notificationTime,
     });
   }
 
   TasksCompanion copyWith(
       {Value<int>? id,
-      Value<int?>? notificationId,
       Value<String>? name,
       Value<String?>? description,
       Value<int>? isDone,
       Value<int>? folderId,
       Value<int>? createdAt,
-      Value<int>? updatedAt,
-      Value<int>? notificationTime}) {
+      Value<int>? updatedAt}) {
     return TasksCompanion(
       id: id ?? this.id,
-      notificationId: notificationId ?? this.notificationId,
       name: name ?? this.name,
       description: description ?? this.description,
       isDone: isDone ?? this.isDone,
       folderId: folderId ?? this.folderId,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      notificationTime: notificationTime ?? this.notificationTime,
     );
   }
 
@@ -595,9 +553,6 @@ class TasksCompanion extends UpdateCompanion<Task> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
-    }
-    if (notificationId.present) {
-      map['notification_id'] = Variable<int?>(notificationId.value);
     }
     if (name.present) {
       map['name'] = Variable<String>(name.value);
@@ -617,9 +572,6 @@ class TasksCompanion extends UpdateCompanion<Task> {
     if (updatedAt.present) {
       map['updatedAt'] = Variable<int>(updatedAt.value);
     }
-    if (notificationTime.present) {
-      map['notification_time'] = Variable<int>(notificationTime.value);
-    }
     return map;
   }
 
@@ -627,14 +579,12 @@ class TasksCompanion extends UpdateCompanion<Task> {
   String toString() {
     return (StringBuffer('TasksCompanion(')
           ..write('id: $id, ')
-          ..write('notificationId: $notificationId, ')
           ..write('name: $name, ')
           ..write('description: $description, ')
           ..write('isDone: $isDone, ')
           ..write('folderId: $folderId, ')
           ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('notificationTime: $notificationTime')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
@@ -650,13 +600,6 @@ class Tasks extends Table with TableInfo<Tasks, Task> {
       type: const IntType(),
       requiredDuringInsert: false,
       $customConstraints: 'NOT NULL PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _notificationIdMeta =
-      const VerificationMeta('notificationId');
-  late final GeneratedColumn<int?> notificationId = GeneratedColumn<int?>(
-      'notification_id', aliasedName, true,
-      type: const IntType(),
-      requiredDuringInsert: false,
-      $customConstraints: '');
   final VerificationMeta _nameMeta = const VerificationMeta('name');
   late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
       'name', aliasedName, false,
@@ -695,26 +638,9 @@ class Tasks extends Table with TableInfo<Tasks, Task> {
       type: const IntType(),
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
-  final VerificationMeta _notificationTimeMeta =
-      const VerificationMeta('notificationTime');
-  late final GeneratedColumn<int?> notificationTime = GeneratedColumn<int?>(
-      'notification_time', aliasedName, false,
-      type: const IntType(),
-      requiredDuringInsert: false,
-      $customConstraints: 'NOT NULL DEFAULT 0',
-      defaultValue: const CustomExpression<int>('0'));
   @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        notificationId,
-        name,
-        description,
-        isDone,
-        folderId,
-        createdAt,
-        updatedAt,
-        notificationTime
-      ];
+  List<GeneratedColumn> get $columns =>
+      [id, name, description, isDone, folderId, createdAt, updatedAt];
   @override
   String get aliasedName => _alias ?? 'tasks';
   @override
@@ -726,12 +652,6 @@ class Tasks extends Table with TableInfo<Tasks, Task> {
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('notification_id')) {
-      context.handle(
-          _notificationIdMeta,
-          notificationId.isAcceptableOrUnknown(
-              data['notification_id']!, _notificationIdMeta));
     }
     if (data.containsKey('name')) {
       context.handle(
@@ -766,12 +686,6 @@ class Tasks extends Table with TableInfo<Tasks, Task> {
           updatedAt.isAcceptableOrUnknown(data['updatedAt']!, _updatedAtMeta));
     } else if (isInserting) {
       context.missing(_updatedAtMeta);
-    }
-    if (data.containsKey('notification_time')) {
-      context.handle(
-          _notificationTimeMeta,
-          notificationTime.isAcceptableOrUnknown(
-              data['notification_time']!, _notificationTimeMeta));
     }
     return context;
   }
@@ -885,48 +799,31 @@ abstract class _$MyDb extends GeneratedDatabase {
     );
   }
 
-  Future<int> createTask(
-      int? notification_id,
-      String name,
-      String? description,
-      int isDone,
-      int folder_id,
-      int createdAt,
-      int updatedAt,
-      int notification_time) {
+  Future<int> createTask(String name, String? description, int isDone,
+      int folder_id, int createdAt, int updatedAt) {
     return customInsert(
-      'INSERT INTO tasks (notification_id, name, description, isDone, folder_id, createdAt, updatedAt, notification_time) VALUES (:notification_id, :name, :description, :isDone, :folder_id, :createdAt, :updatedAt, :notification_time)',
+      'INSERT INTO tasks (name, description, isDone, folder_id, createdAt, updatedAt) VALUES (:name, :description, :isDone, :folder_id, :createdAt, :updatedAt)',
       variables: [
-        Variable<int?>(notification_id),
         Variable<String>(name),
         Variable<String?>(description),
         Variable<int>(isDone),
         Variable<int>(folder_id),
         Variable<int>(createdAt),
-        Variable<int>(updatedAt),
-        Variable<int>(notification_time)
+        Variable<int>(updatedAt)
       ],
       updates: {tasks},
     );
   }
 
   Future<int> updateTaskById(
-      int? notification_id,
-      String name,
-      String? description,
-      int isDone,
-      int updatedAt,
-      int notification_time,
-      int id) {
+      String name, String? description, int isDone, int updatedAt, int id) {
     return customUpdate(
-      'UPDATE tasks SET notification_id = :notification_id, name = :name, description = :description, isDone = :isDone, updatedAt = :updatedAt, notification_time = :notification_time WHERE id = :id',
+      'UPDATE tasks SET name = :name, description = :description, isDone = :isDone, updatedAt = :updatedAt WHERE id = :id',
       variables: [
-        Variable<int?>(notification_id),
         Variable<String>(name),
         Variable<String?>(description),
         Variable<int>(isDone),
         Variable<int>(updatedAt),
-        Variable<int>(notification_time),
         Variable<int>(id)
       ],
       updates: {tasks},

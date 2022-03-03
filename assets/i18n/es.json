@@ -3,15 +3,13 @@
     "no_tasks": "Sin tareas",
     "new_task": "Nueva tarea",
     "modify_task": "Modificar tarea",
-    "details": "Detalles",
-    "datetime": "Fecha y hora"
+    "details": "Detalles"
   },
   "folders_page": {
     "no_folders": "Sin carpetas",
     "new_folder": "Nueva carpeta",
     "modify_folder": "Modificar carpeta",
     "choose_color": "Elija el color de la carpeta",
-    "choose_icon": "Seleccione el icono de la carpeta",
     "choose": "Elegir",
     "save_color": "Guardar color"
   },
@@ -36,7 +34,6 @@
         "title": "Compartir con amigos",
         "content": "¡Comprueba esta increíble aplicación de tareas!\nhttps://github.com/samuel-s-marques/todo-app"
       },
-      "rate": "¡Valora la aplicación!",
       "open_source": "Licencia de código abierto",
       "loading": "Cargando",
       "terms": "Términos y condiciones",
@@ -63,9 +60,7 @@
       "ar": "Arábica",
       "ja": "Japonés",
       "sv": "Sueco",
-      "fr": "Francés",
-      "de": "Alemán",
-      "ru": "Ruso"
+      "fr": "Francés"
     },
     "selection": {
       "message": "Seleccione un idioma de la lista",

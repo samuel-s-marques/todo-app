@@ -32,7 +32,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 30
     ndkVersion "23.1.7779620"
 
     compileOptions {
@@ -51,8 +51,8 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.samuel.todoapp"
-        minSdkVersion 21
-        targetSdkVersion 31
+        minSdkVersion 16
+        targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
