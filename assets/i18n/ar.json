@@ -15,6 +15,13 @@
     "choose": "اختر",
     "save_color": "حفظ اللون"
   },
+  "update_check": {
+    "new_update_available": "هناك تحديث جديد متاح!",
+    "do_want_to_download": "هل تريد التحميل؟",
+    "info": "يمكنك تعطيل البحث التلقائي عن التحديثات في صفحة الإعدادات",
+    "sure": "بالتأكيد",
+    "no": "لا شكرا"
+  },
   "settings_page": {
     "settings_section": {
       "title": "إعدادات",
@@ -76,6 +83,10 @@
     }
   },
   "notifications": {
-    "task_todo": "يا! هناك مهام معلقة!"
+    "task_todo": "يا! هناك مهام معلقة!",
+    "yes": "السماح",
+    "allow_notification": "السماح بالإشعارات؟",
+    "do_want_notifications": "يود هذا التطبيق إرسال إشعارات إليك",
+    "no":"لا تسمح"
   }
 }

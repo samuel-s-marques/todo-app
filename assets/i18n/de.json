@@ -15,6 +15,13 @@
     "choose": "Wählen Sie",
     "save_color": "Farbe speichern"
   },
+  "update_check": {
+    "new_update_available": "Es ist ein neues Update verfügbar!",
+    "do_want_to_download": "Möchten Sie herunterladen?",
+    "info": "Sie können die automatische Suche nach Updates auf der Einstellungsseite deaktivieren",
+    "sure": "Ja",
+    "no": "Nein, danke"
+  },
   "settings_page": {
     "settings_section": {
       "title": "Einstellungen",
@@ -76,6 +83,10 @@
     }
   },
   "notifications": {
-    "task_todo": "Hey! Es gibt noch offene Aufgaben!"
+    "task_todo": "Hey! Es gibt noch offene Aufgaben!",
+    "yes": "Erlauben Sie",
+    "allow_notification": "Benachrichtigungen zulassen?",
+    "do_want_notifications": "Diese App möchte Ihnen Benachrichtigungen senden",
+    "no":"Erlauben Sie nicht"
   }
 }
