@@ -6,10 +6,14 @@ import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:todoapp/database/database.dart';
 import 'package:todoapp/models/tasks_arguments.dart';
+import 'package:todoapp/utils/utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FoldersPage extends StatefulWidget {
   const FoldersPage({Key? key}) : super(key: key);
@@ -25,13 +29,39 @@ class _FoldersPageState extends State<FoldersPage> {
   void initState() {
     super.initState();
 
+    checkUpdate().then((response) {
+      SharedPreferences.getInstance().then((sharedPreferences) {
+        bool autoUpdate = sharedPreferences.getBool('autoUpdate') ?? true;
+
+        if (response.containsKey('success') && autoUpdate) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text("Há uma nova atualização disponível!"),
+              content: Text("Gostaria de baixá-la?\n\n*Você pode desativar a verificação automática nas configurações"),
+              actions: [
+                TextButton(onPressed: () => Navigator.pop(context), child: Text("No, thanks")),
+                TextButton(
+                  onPressed: () {
+                    launch('https://play.google.com/store/apps/details?id=com.samuel.todoapp');
+                    Navigator.pop(context);
+                  },
+                  child: Text("Sure"),
+                ),
+              ],
+            ),
+          );
+        }
+      });
+    });
+
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
             title: Text("Allow notification"),
-            content: Text("Our app would like to send you notifications"),
+            content: Text("This app would like to send you notifications"),
             actions: [
               TextButton(onPressed: () => Navigator.pop(context), child: Text("Don't allow")),
               TextButton(
