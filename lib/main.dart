@@ -13,7 +13,7 @@ import 'package:todoapp/pages/privacy_policy_page.dart';
 import 'package:todoapp/pages/settings_page.dart';
 import 'package:todoapp/pages/tasks_page.dart';
 import 'package:todoapp/pages/terms_and_conditions_page.dart';
-import 'package:todoapp/utils/translate_preferences.dart';
+import 'package:todoapp/utils/utils.dart';
 
 void main() async {
   var delegate = await LocalizationDelegate.create(
