@@ -57,7 +57,7 @@ class TranslatePreferences implements ITranslatePreferences {
 }
 
 class ThemePreferences {
-  static const preferenceKey = "pref_key";
+  static const preferenceKey = "themePrefs";
 
   setTheme(bool value) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
