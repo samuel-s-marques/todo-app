@@ -5,8 +5,10 @@ import 'package:launch_review/launch_review.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:share/share.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/database/database.dart';
 import 'package:todoapp/models/theme_model.dart';
+import 'package:todoapp/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -17,6 +19,18 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  bool? autoUpdate;
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((sharedPreferences) {
+      setState(() {
+        autoUpdate = sharedPreferences.getBool('autoUpdate') ?? true;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeModel>(
@@ -56,6 +70,22 @@ class _SettingsPageState extends State<SettingsPage> {
                       translate("settings_page.settings_section.light_theme"),
                       style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
                     ),
+                  ),
+                  SettingsTile.switchTile(
+                    leading: const Icon(Icons.update_outlined),
+                    title: Text(
+                      translate("settings_page.support_section.update"),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
+                    ),
+                    initialValue: autoUpdate,
+                    onToggle: (bool value) async {
+                      final preferences = await SharedPreferences.getInstance();
+
+                      setState(() {
+                        preferences.setBool('autoUpdate', value);
+                        autoUpdate = value;
+                      });
+                    },
                   ),
                 ],
               ),
@@ -128,6 +158,29 @@ class _SettingsPageState extends State<SettingsPage> {
                       "v1.0.0",
                       style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
                     ),
+                    onPressed: (context) async {
+                      Map<String, dynamic> response = await checkUpdate();
+
+                      if (response.containsKey('success')) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text("Há uma nova atualização disponível!"),
+                            content: Text("Gostaria de baixá-la?"),
+                            actions: [
+                              TextButton(onPressed: () => Navigator.pop(context), child: Text("No, thanks")),
+                              TextButton(
+                                onPressed: () {
+                                  launch('https://play.google.com/store/apps/details?id=com.samuel.todoapp');
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Sure"),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
                   ),
                   SettingsTile(
                     leading: const Icon(Icons.share_outlined),
