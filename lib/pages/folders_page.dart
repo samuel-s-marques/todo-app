@@ -6,7 +6,6 @@ import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:launch_review/launch_review.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
@@ -37,16 +36,16 @@ class _FoldersPageState extends State<FoldersPage> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text("Há uma nova atualização disponível!"),
-              content: Text("Gostaria de baixá-la?\n\n*Você pode desativar a verificação automática nas configurações"),
+              title: Text(translate("update_check.new_update_available")),
+              content: Text("${translate("update_check.do_want_to_download")}\n\n*${translate("update_check.info")}"),
               actions: [
-                TextButton(onPressed: () => Navigator.pop(context), child: Text("No, thanks")),
+                TextButton(onPressed: () => Navigator.pop(context), child: Text(translate("update_check.no"))),
                 TextButton(
                   onPressed: () {
                     launch('https://play.google.com/store/apps/details?id=com.samuel.todoapp');
                     Navigator.pop(context);
                   },
-                  child: Text("Sure"),
+                  child: Text(translate("update_check.sure")),
                 ),
               ],
             ),
@@ -60,13 +59,13 @@ class _FoldersPageState extends State<FoldersPage> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text("Allow notification"),
-            content: Text("This app would like to send you notifications"),
+            title: Text(translate("notifications.allow_notification")),
+            content: Text(translate("notifications.do_want_notifications")),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(context), child: Text("Don't allow")),
+              TextButton(onPressed: () => Navigator.pop(context), child: Text(translate("notifications.no"))),
               TextButton(
                 onPressed: () => AwesomeNotifications().requestPermissionToSendNotifications().then((_) => Navigator.pop(context)),
-                child: Text("Allow"),
+                child: Text(translate("notifications.yes")),
               ),
             ],
           ),
