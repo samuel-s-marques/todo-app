@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:launch_review/launch_review.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:share/share.dart';
@@ -154,9 +155,24 @@ class _SettingsPageState extends State<SettingsPage> {
                       translate("settings_page.support_section.about"),
                       style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16),
                     ),
-                    trailing: Text(
-                      "v1.0.0",
-                      style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                    trailing: FutureBuilder(
+                      future: PackageInfo.fromPlatform(),
+                      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                        if (snapshot.hasData) {
+                          PackageInfo packageInfo = snapshot.data;
+                          String version = packageInfo.version;
+
+                          return Text(
+                            "v$version",
+                            style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                          );
+                        }
+
+                        return Text(
+                          "v1.0.0",
+                          style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                        );
+                      },
                     ),
                     onPressed: (context) async {
                       Map<String, dynamic> response = await checkUpdate();
@@ -165,16 +181,16 @@ class _SettingsPageState extends State<SettingsPage> {
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                            title: Text("Há uma nova atualização disponível!"),
-                            content: Text("Gostaria de baixá-la?"),
+                            title: Text(translate("update_check.new_update_available")),
+                            content: Text(translate("update_check.do_want_to_download")),
                             actions: [
-                              TextButton(onPressed: () => Navigator.pop(context), child: Text("No, thanks")),
+                              TextButton(onPressed: () => Navigator.pop(context), child: Text(translate("update_check.no"))),
                               TextButton(
                                 onPressed: () {
                                   launch('https://play.google.com/store/apps/details?id=com.samuel.todoapp');
                                   Navigator.pop(context);
                                 },
-                                child: Text("Sure"),
+                                child: Text(translate("update_check.sure")),
                               ),
                             ],
                           ),
