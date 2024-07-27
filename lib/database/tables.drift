@@ -4,7 +4,7 @@ CREATE TABLE folders (
     colorHexCode INT DEFAULT 4288585374,
     iconCodePoint INT NOT NULL,
     createdAt INT NOT NULL,
-    updatedAt INT NOT NULL,
+    updatedAt INT NOT NULL
 );
 
 CREATE TABLE tasks (
