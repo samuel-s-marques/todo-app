@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 class ShowLicensePage extends StatelessWidget {
-  const ShowLicensePage({Key? key}) : super(key: key);
+  const ShowLicensePage({super.key});
 
   @override
   Widget build(BuildContext context) {

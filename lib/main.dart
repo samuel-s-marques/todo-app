@@ -52,27 +52,32 @@ class MyApp extends StatelessWidget {
                 brightness: Brightness.light,
                 dialogBackgroundColor: const Color(0xFFFAFAFA),
                 textTheme: TextTheme(
-                  headline1: GoogleFonts.getFont(
+                  headlineLarge: GoogleFonts.getFont(
                     "Inter",
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                     color: const Color(0xFF575767),
                   ),
-                  headline2: GoogleFonts.getFont("Inter",
-                      fontSize: 18, fontWeight: FontWeight.w500, color: const Color(0xFFB9B9BE), decoration: TextDecoration.lineThrough),
-                  subtitle1: GoogleFonts.getFont(
+                  headlineMedium: GoogleFonts.getFont(
+                    "Inter",
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xFFB9B9BE),
+                    decoration: TextDecoration.lineThrough,
+                  ),
+                  headlineSmall: GoogleFonts.getFont(
                     "Inter",
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: const Color(0xFFB9B9BE),
                   ),
-                  headline3: GoogleFonts.getFont(
+                  titleLarge: GoogleFonts.getFont(
                     "Inter",
                     fontWeight: FontWeight.bold,
                     color: const Color(0xFF0E0E11),
                     fontSize: 20,
                   ),
-                  subtitle2: GoogleFonts.getFont(
+                  titleMedium: GoogleFonts.getFont(
                     "Inter",
                     fontWeight: FontWeight.w600,
                     color: const Color(0xFF575757),
@@ -98,27 +103,37 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 textTheme: TextTheme(
-                  headline1: GoogleFonts.getFont("Inter", fontSize: 18, fontWeight: FontWeight.w500, color: const Color(0xFFDADADA)),
-                  headline2: GoogleFonts.getFont("Inter",
-                      fontSize: 18, fontWeight: FontWeight.w500, color: const Color(0xFF575767), decoration: TextDecoration.lineThrough),
-                  subtitle1: GoogleFonts.getFont(
+                  headlineLarge: GoogleFonts.getFont(
+                    "Inter",
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xFFDADADA),
+                  ),
+                  headlineMedium: GoogleFonts.getFont(
+                    "Inter",
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xFF575767),
+                    decoration: TextDecoration.lineThrough,
+                  ),
+                  headlineSmall: GoogleFonts.getFont(
                     "Inter",
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: const Color(0xFF575767),
                   ),
-                  bodyText1: GoogleFonts.getFont(
+                  bodyMedium: GoogleFonts.getFont(
                     "Inter",
                     fontSize: 16,
                     color: const Color(0xFFDADADA),
                   ),
-                  headline3: GoogleFonts.getFont(
+                  titleLarge: GoogleFonts.getFont(
                     "Inter",
                     fontWeight: FontWeight.bold,
                     color: const Color(0xFFDADADA),
                     fontSize: 20,
                   ),
-                  subtitle2: GoogleFonts.getFont(
+                  titleMedium: GoogleFonts.getFont(
                     "Inter",
                     fontWeight: FontWeight.w600,
                     color: const Color(0xFF575757),

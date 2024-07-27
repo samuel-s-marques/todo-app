@@ -3,126 +3,110 @@ import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:todoapp/database/database.dart';
 import 'package:todoapp/models/tasks_arguments.dart';
 import 'package:todoapp/widgets/task_tile.dart';
 
 class TasksPage extends StatefulWidget {
-  const TasksPage({Key? key}) : super(key: key);
+  const TasksPage({super.key});
 
   @override
-  _TasksPageState createState() => _TasksPageState();
+  State<TasksPage> createState() => _TasksPageState();
 }
 
 class _TasksPageState extends State<TasksPage> {
-  final controller = SheetController();
-
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as TasksArguments;
 
     Future<void> showBottomSheetDialog(BuildContext context) async {
-      final TextEditingController _newTaskController = TextEditingController();
-      final TextEditingController _taskDetailsController = TextEditingController();
+      final TextEditingController newTaskController = TextEditingController();
+      final TextEditingController taskDetailsController = TextEditingController();
       final formKey = GlobalKey<FormState>();
 
-      await showSlidingBottomSheet(context, builder: (context) {
-        return SlidingSheetDialog(
-          cornerRadius: 15,
-          controller: controller,
-          duration: const Duration(milliseconds: 500),
-          isDismissable: true,
-          dismissOnBackdropTap: true,
-          isBackdropInteractable: true,
-          snapSpec: const SnapSpec(
-            snap: true,
-            snappings: [1.0],
-            positioning: SnapPositioning.relativeToSheetHeight,
-          ),
-          onDismissPrevented: (backButton, backDrop) async {
-            HapticFeedback.heavyImpact();
-
-            if (backButton || backDrop) {
-              const duration = Duration(milliseconds: 300);
-              await controller.snapToExtent(0.3, duration: duration, clamp: false);
-            }
-          },
-          builder: (context, state) => Material(
-            child: Form(
-              key: formKey,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
-                child: Wrap(
-                  runSpacing: 15,
-                  children: [
-                    TextFormField(
-                      controller: _newTaskController,
-                      maxLines: null,
-                      textCapitalization: TextCapitalization.sentences,
-                      style: Theme.of(context).textTheme.bodyText1,
-                      autofocus: true,
-                      decoration: InputDecoration(
-                        labelText: translate("tasks_page.new_task"),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+      await showModalBottomSheet(
+          context: context,
+          enableDrag: true,
+          isDismissible: true,
+          builder: (context) {
+            return Material(
+              child: Form(
+                key: formKey,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 25,
+                    right: 25,
+                    top: 25,
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                  ),
+                  child: Wrap(
+                    runSpacing: 15,
+                    children: [
+                      TextFormField(
+                        controller: newTaskController,
+                        maxLines: null,
+                        textCapitalization: TextCapitalization.sentences,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          labelText: translate("tasks_page.new_task"),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return translate("all_pages.required_field");
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        controller: taskDetailsController,
+                        maxLines: null,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        decoration: InputDecoration(
+                          labelText: translate("tasks_page.details"),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
                         ),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return translate("all_pages.required_field");
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _taskDetailsController,
-                      maxLines: null,
-                      style: Theme.of(context).textTheme.bodyText1,
-                      decoration: InputDecoration(
-                        labelText: translate("tasks_page.details"),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          footerBuilder: (context, state) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                  width: 120,
-                  child: TextButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        Provider.of<MyDb>(context, listen: false).createTask(
-                          _newTaskController.text.trim(),
-                          _taskDetailsController.text.trim(),
-                          0,
-                          args.folderId,
-                          DateTime.now().millisecondsSinceEpoch,
-                          DateTime.now().millisecondsSinceEpoch,
-                        );
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            width: 120,
+                            child: TextButton(
+                              onPressed: () {
+                                if (formKey.currentState!.validate()) {
+                                  Provider.of<MyDb>(context, listen: false).createTask(
+                                    newTaskController.text.trim(),
+                                    taskDetailsController.text.trim(),
+                                    0,
+                                    args.folderId,
+                                    DateTime.now().millisecondsSinceEpoch,
+                                    DateTime.now().millisecondsSinceEpoch,
+                                  );
 
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: Text(
-                      translate("all_pages.save"),
-                      style: GoogleFonts.getFont("Inter", fontSize: 18),
-                    ),
+                                  Navigator.pop(context);
+                                }
+                              },
+                              child: Text(
+                                translate("all_pages.save"),
+                                style: GoogleFonts.getFont("Inter", fontSize: 18),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             );
-          },
-        );
-      });
+          });
     }
 
     return Scaffold(

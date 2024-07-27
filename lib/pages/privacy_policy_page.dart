@@ -4,7 +4,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 class ShowPrivacyPolicyPage extends StatelessWidget {
-  const ShowPrivacyPolicyPage({Key? key}) : super(key: key);
+  const ShowPrivacyPolicyPage({super.key});
 
   @override
   Widget build(BuildContext context) {
